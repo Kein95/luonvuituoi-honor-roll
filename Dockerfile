@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # The honor roll is single-process by design (SQLite store, no KV backend),
 # so WEB_CONCURRENCY stays at 1 unless you move the store to a shared host.
