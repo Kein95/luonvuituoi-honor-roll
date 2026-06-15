@@ -1,0 +1,81 @@
+{
+  "brand": {
+    "default_tagline": "Bảng Vinh Danh Học Sinh"
+  },
+  "roll": {
+    "title": "Bảng Vinh Danh",
+    "subtitle": "Vinh danh thành tích của các em học sinh",
+    "filter_all": "Tất cả",
+    "filter_competition": "Cuộc thi",
+    "filter_year": "Năm",
+    "filter_medal": "Giải",
+    "filter_subject": "Môn",
+    "search_placeholder": "Tra cứu học sinh theo tên…",
+    "search_button": "Tra cứu",
+    "view_cards": "Thẻ",
+    "view_table": "Bảng",
+    "rank_label": "Xếp hạng",
+    "grade_label": "Lớp",
+    "school_label": "Trường",
+    "subject_label": "Môn",
+    "no_results": "Không có thành tích phù hợp với bộ lọc.",
+    "showing_count": "Hiển thị {count} / {total}",
+    "download": "Tải về",
+    "download_board": "Tải cả bảng",
+    "upcoming": "Sắp diễn ra"
+  },
+  "stats": {
+    "achievements": "Thành tích",
+    "students": "Học sinh",
+    "schools": "Trường học",
+    "by_medal": "Theo giải",
+    "top_schools": "Trường dẫn đầu"
+  },
+  "hall": {
+    "title": "Bảng Vàng",
+    "subtitle": "Những gương mặt xuất sắc nhất qua các mùa giải",
+    "medals": "huy chương",
+    "empty": "Chưa có gương mặt nào được vinh danh."
+  },
+  "teams": {
+    "title": "Đội Tuyển Xuất Sắc",
+    "subtitle": "Thành tích thi đấu đồng đội",
+    "members": "Thành viên",
+    "empty": "Chưa có giải đồng đội."
+  },
+  "search": {
+    "title": "Tra cứu học sinh",
+    "subtitle": "Nhập tên để xem toàn bộ thành tích.",
+    "query_label": "Tên học sinh",
+    "results_for": "Kết quả cho",
+    "no_results": "Không tìm thấy học sinh với tên này.",
+    "back": "Về bảng vinh danh"
+  },
+  "admin": {
+    "title": "Quản trị",
+    "subtitle": "Quản lý thành tích bảng vinh danh",
+    "add": "Thêm thành tích",
+    "competition": "Cuộc thi",
+    "year": "Năm",
+    "name": "Họ tên",
+    "grade": "Lớp",
+    "photo": "Ảnh (URL)",
+    "school": "Trường",
+    "subject": "Môn",
+    "medal": "Giải",
+    "rank": "Xếp hạng",
+    "candidate_no": "Số báo danh",
+    "save": "Lưu",
+    "delete": "Xoá",
+    "saved": "Đã lưu.",
+    "deleted": "Đã xoá.",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "password": "Mật khẩu",
+    "login_error": "Sai mật khẩu.",
+    "login_unconfigured": "Máy chủ chưa đặt ADMIN_PASSWORD."
+  },
+  "footer": {
+    "powered_by": "Vận hành bởi LUONVUITUOI-HONOR ROLL"
+  }
+}

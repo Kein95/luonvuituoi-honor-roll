@@ -1,0 +1,362 @@
+{% extends "base.html.j2" %}
+{% block styles %}
+.stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.stat{flex:1 1 0;min-width:150px;border-radius:22px;padding:24px 18px;color:#fff;box-shadow:0 8px 0 rgba(0,0,0,.10);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.stat:nth-child(1){background:linear-gradient(135deg,var(--sky),#0ea5e9)}
+.stat:nth-child(2){background:linear-gradient(135deg,var(--leaf),#10b981)}
+.stat:nth-child(3){background:linear-gradient(135deg,var(--grape),#8b5cf6)}
+.stat .ico{font-size:2.1em;line-height:1}
+.stat .n{font-family:'Baloo 2',cursive;font-size:2.8em;font-weight:800;line-height:1;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.92em;font-weight:800;margin-top:6px;opacity:.96}
+.medal-leg{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.medal-chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:2px solid var(--line);
+  border-radius:999px;padding:6px 14px;font-size:.84em;font-weight:800;box-shadow:0 3px 0 rgba(0,0,0,.06)}
+.medal-chip .dot{width:13px;height:13px;border-radius:50%}
+.filters{background:#fbf8ff;border:3px solid var(--line);border-radius:22px;padding:16px 18px;margin-bottom:22px}
+.filters form{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.filters label{font-size:.74em;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:5px}
+.filters select{border:2px solid var(--line);border-radius:14px;padding:9px 12px;font-size:.92em;font-family:inherit;font-weight:700;background:#fff;color:var(--ink);max-width:220px}
+.filters .btn{background:var(--primary);color:#fff;border:none;border-radius:14px;padding:10px 22px;font-weight:800;cursor:pointer;font-size:.95em;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .12s}
+.filters .btn:hover{transform:translateY(-2px)}
+.filters .btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.count{color:var(--muted);font-size:.92em;font-weight:700;margin-bottom:14px}
+.count b{color:var(--ink)}
+.upcoming{background:linear-gradient(135deg,var(--sun),var(--tangerine));color:#3a2e00;font-weight:800;border-radius:16px;padding:12px 18px;margin-bottom:18px;box-shadow:0 5px 0 rgba(0,0,0,.10)}
+.board-dl{background:var(--leaf);color:#fff;border:none;border-radius:14px;padding:9px 18px;font-weight:800;font-size:.9em;cursor:pointer;margin-bottom:16px;box-shadow:0 5px 0 rgba(0,0,0,.14);transition:transform .12s}
+.board-dl:hover{transform:translateY(-2px)}
+.board-dl:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.14)}
+.cards{display:grid;gap:18px;grid-template-columns:repeat({{ cards_per_row }},minmax(0,1fr))}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cards{grid-template-columns:1fr}}
+.card{background:#fff;border:3px solid var(--line);border-top:8px solid var(--mc,var(--primary));border-radius:22px;padding:20px 16px;text-align:center;
+  box-shadow:0 8px 0 rgba(60,40,120,.10);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;animation:fadeUp .4s ease both}
+.card:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:0 16px 30px rgba(60,40,120,.20)}
+.card:active{transform:translateY(-1px)}
+.card:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.card .medal-ico{font-size:2.9em;line-height:1}
+.card .avatar{width:82px;height:82px;border-radius:50%;object-fit:cover;display:block;margin:0 auto;border:4px solid var(--mc,var(--primary));box-shadow:0 5px 12px rgba(0,0,0,.14)}
+.card .medal-badge{display:inline-block;margin:10px auto 2px;padding:5px 16px;border-radius:999px;color:#fff;
+  font-size:.76em;font-weight:800;letter-spacing:.4px;box-shadow:0 3px 0 rgba(0,0,0,.14)}
+.card .nm{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.18em;margin-top:8px;color:var(--ink);text-wrap:balance}
+.card .sub{font-size:.82em;font-weight:700;color:var(--muted);margin-top:4px}
+.card .yr{font-size:.74em;font-weight:700;color:#b3aacf;margin-top:8px}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:.9em;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 6px 0 rgba(60,40,120,.08);border:3px solid var(--line)}
+.tbl thead tr{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;text-align:left}
+.tbl th{padding:12px 14px;font-weight:800;font-size:.82em}
+.tbl td{padding:11px 14px;font-weight:700;border-bottom:2px solid var(--line)}
+.tbl tbody tr:nth-child(even){background:#fbf8ff}
+.empty{text-align:center;padding:54px 20px;color:var(--muted);font-weight:700}
+.empty .big{font-size:3.4em;animation:wiggle 2.5s ease-in-out infinite;display:inline-block}
+.sec-h{font-family:'Baloo 2',cursive;margin:30px 0 12px;font-size:1.25em;color:var(--ink)}
+.modal{display:none;position:fixed;inset:0;background:rgba(40,30,80,.55);z-index:60;align-items:center;justify-content:center;padding:20px;overscroll-behavior:contain}
+.modal.open{display:flex}
+.modal .box{background:var(--paper);border-radius:26px;border:4px solid #fff;max-width:440px;width:100%;padding:28px;box-shadow:0 24px 64px rgba(0,0,0,.4);position:relative;max-height:85vh;overflow:auto;animation:pop .28s ease}
+.modal .d-close{position:absolute;top:12px;right:16px;font-size:1.7em;color:var(--muted);cursor:pointer;border:none;background:none;line-height:1;font-weight:800}
+.modal .d-photo{width:104px;height:104px;border-radius:50%;margin:4px auto 12px;display:flex;align-items:center;justify-content:center;font-size:2.8em;overflow:hidden;border:5px solid var(--sun);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.modal .d-photo img{width:100%;height:100%;object-fit:cover}
+.modal h3{font-family:'Baloo 2',cursive;text-align:center;font-size:1.45em;color:var(--ink)}
+.modal .d-meta{text-align:center;color:var(--muted);font-weight:700;font-size:.92em;margin:4px 0 18px}
+.modal ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.modal li{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:9px 13px;font-size:.86em;font-weight:700;color:var(--ink)}
+.modal .d-badge{padding:4px 11px;border-radius:999px;color:#fff;font-size:.78em;font-weight:800;white-space:nowrap}
+.modal .d-dl{display:block;width:100%;margin-top:18px;background:var(--primary);color:#fff;border:none;border-radius:14px;padding:12px;font-weight:800;font-size:.98em;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .12s}
+.modal .d-dl:hover{transform:translateY(-2px)}
+.modal .d-dl:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+{% endblock %}
+{% block content %}
+<div class="stats">
+  <div class="stat"><div class="ico" aria-hidden="true">🏅</div><div class="n">{{ stats.total_achievements }}</div><div class="l">{{ locale.stats.achievements }}</div></div>
+  <div class="stat"><div class="ico" aria-hidden="true">🧑‍🎓</div><div class="n">{{ stats.total_students }}</div><div class="l">{{ locale.stats.students }}</div></div>
+  <div class="stat"><div class="ico" aria-hidden="true">🏫</div><div class="n">{{ stats.total_schools }}</div><div class="l">{{ locale.stats.schools }}</div></div>
+</div>
+<div class="medal-leg">
+  {% for code, md in medals.items() %}
+  <span class="medal-chip"><span class="dot" style="background:{{ md.color }}"></span>{{ md.icon }} {{ locale_code == 'vi' and md.label_vi or md.label_en }} · {{ stats.medals.get(code, 0) }}</span>
+  {% endfor %}
+</div>
+<div class="filters">
+  <form method="get" action="/">
+    <div><label for="f-comp">{{ locale.roll.filter_competition }}</label>
+      <select id="f-comp" name="competition"><option value="">{{ locale.roll.filter_all }}</option>
+      {% for c in competitions %}<option value="{{ c.id }}" {{ 'selected' if active_competition == c.id }}>{{ (c.name_vi or c.name) if locale_code == 'vi' else c.name }}</option>{% endfor %}</select></div>
+    <div><label for="f-year">{{ locale.roll.filter_year }}</label>
+      <select id="f-year" name="year"><option value="">{{ locale.roll.filter_all }}</option>
+      {% for y in years %}<option value="{{ y }}" {{ 'selected' if active_year == y }}>{{ y }}</option>{% endfor %}</select></div>
+    <div><label for="f-medal">{{ locale.roll.filter_medal }}</label>
+      <select id="f-medal" name="medal"><option value="">{{ locale.roll.filter_all }}</option>
+      {% for code, md in medals.items() %}<option value="{{ code }}" {{ 'selected' if active_medal == code }}>{{ md.icon }} {{ locale_code == 'vi' and md.label_vi or md.label_en }}</option>{% endfor %}</select></div>
+    {% if subject_options %}
+    <div><label for="f-subject">{{ locale.roll.filter_subject }}</label>
+      <select id="f-subject" name="subject"><option value="">{{ locale.roll.filter_all }}</option>
+      {% for code, nm, ic in subject_options %}<option value="{{ code }}" {{ 'selected' if active_subject == code }}>{{ ic }} {{ nm }}</option>{% endfor %}</select></div>
+    {% endif %}
+    {% if schools %}
+    <div><label for="f-school">{{ locale.roll.school_label }}</label>
+      <select id="f-school" name="school"><option value="">{{ locale.roll.filter_all }}</option>
+      {% for s in schools %}<option value="{{ s }}" {{ 'selected' if active_school == s }}>{{ s }}</option>{% endfor %}</select></div>
+    {% endif %}
+    <button class="btn" type="submit">🔍 {{ locale.roll.search_button }}</button>
+  </form>
+</div>
+<div class="count">{{ locale.roll.showing_count.replace('{count}', achievements|length|string).replace('{total}', total|string) }}</div>
+{% if upcoming_editions %}
+<div class="upcoming">🔜 {{ locale.roll.upcoming }}: {{ upcoming_editions|join(' · ') }}</div>
+{% endif %}
+
+{% if achievements %}
+<button id="board-dl" class="board-dl" type="button">📸 {{ locale.roll.download_board }}</button>
+<div class="cards">
+  {% for a in achievements %}
+  <div class="card" role="button" tabindex="0" aria-label="{{ a.name }}"
+       style="--mc:{{ a.medal_color }}"
+       data-name="{{ a.name }}" data-grade="{{ a.grade }}" data-school="{{ a.school }}" data-photo="{{ a.photo_url }}" data-icon="{{ a.medal_icon }}" data-medallabel="{{ a.medal_label }}" data-color="{{ a.medal_color }}" data-subject="{{ a.subject_name }}" data-comp="{{ a.competition_name }}" data-year="{{ a.year }}" data-rank="{{ a.rank }}">
+    {% if a.photo_url %}<img class="avatar" src="{{ a.photo_url }}" alt="{{ a.name }}" width="82" height="82" loading="lazy">{% else %}<div class="medal-ico" aria-hidden="true">{{ a.medal_icon }}</div>{% endif %}
+    <span class="medal-badge" style="background:{{ a.medal_color }}">{{ a.medal_label }}</span>
+    <div class="nm">{{ a.name }}</div>
+    {% if a.grade %}<div class="sub">{{ locale.roll.grade_label }} {{ a.grade }}</div>{% endif %}
+    <div class="sub">{{ a.subject_name }}{% if a.school %} · {{ a.school }}{% endif %}</div>
+    {% if show_rank and a.rank %}<div class="sub">{{ locale.roll.rank_label }} #{{ a.rank }}</div>{% endif %}
+    {% if show_percentile and a.percentile %}<div class="sub">{{ a.percentile }}%</div>{% endif %}
+    <div class="yr">{{ a.competition_name }} {{ a.year }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<h3 class="sec-h">📋 {{ locale.roll.view_table }}</h3>
+<div class="tbl-wrap">
+<table class="tbl">
+  <thead>
+    <tr>
+      <th>{{ locale.admin.name }}</th>
+      <th>{{ locale.roll.grade_label }}</th>
+      <th>{{ locale.roll.subject_label }}</th>
+      <th>{{ locale.roll.filter_medal }}</th>
+      <th>{{ locale.roll.rank_label }}</th>
+      <th>{{ locale.roll.school_label }}</th>
+      <th>{{ locale.roll.filter_competition }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in achievements %}
+    <tr>
+      <td>{{ a.name }}</td>
+      <td>{{ a.grade }}</td>
+      <td>{{ a.subject_name }}</td>
+      <td><span style="color:{{ a.medal_color }};font-weight:800">{{ a.medal_icon }} {{ a.medal_label }}</span></td>
+      <td>{{ a.rank }}</td>
+      <td>{{ a.school }}</td>
+      <td style="color:var(--muted)">{{ a.competition_name }} {{ a.year }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<div class="empty">
+  <div class="big" aria-hidden="true">🏅</div>
+  <p style="margin-top:12px">{{ locale.roll.no_results }}</p>
+</div>
+{% endif %}
+
+<div class="modal" id="detail" aria-hidden="true">
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="d-name">
+    <button class="d-close" type="button" aria-label="close">×</button>
+    <div class="d-photo" id="d-photo" aria-hidden="true"></div>
+    <h3 id="d-name"></h3>
+    <div class="d-meta" id="d-meta"></div>
+    <ul id="d-awards"></ul>
+    <button class="d-dl" id="d-download" type="button">⬇️ {{ locale.roll.download }}</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script nonce="{{ csp_nonce }}">
+(function () {
+  var modal = document.getElementById('detail');
+  if (!modal) return;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-name]'));
+  var photo = document.getElementById('d-photo');
+  var nameEl = document.getElementById('d-name');
+  var metaEl = document.getElementById('d-meta');
+  var list = document.getElementById('d-awards');
+  var dlBtn = document.getElementById('d-download');
+  var boardBtn = document.getElementById('board-dl');
+  var currentCard = null;
+  var PROJECT = {{ project_name|tojson }};
+  var ROLL_TITLE = {{ locale.roll.title|tojson }};
+  var FOOTER = {{ locale.footer.powered_by|tojson }};
+
+  function awardsFor(name) {
+    return cards.filter(function (c) { return c.dataset.name === name; });
+  }
+  function openCard(card) {
+    var d = card.dataset;
+    currentCard = card;
+    photo.textContent = '';
+    if (d.photo) {
+      var img = document.createElement('img');
+      img.src = d.photo; img.alt = '';
+      photo.appendChild(img);
+    } else {
+      photo.textContent = d.icon || '🏅';
+    }
+    nameEl.textContent = d.name;
+    var meta = [];
+    if (d.grade) meta.push(d.grade);
+    if (d.school) meta.push(d.school);
+    metaEl.textContent = meta.join(' · ');
+    list.textContent = '';
+    awardsFor(d.name).forEach(function (c) {
+      var a = c.dataset;
+      var li = document.createElement('li');
+      var b = document.createElement('span');
+      b.className = 'd-badge';
+      b.style.background = a.color || '#888888';
+      b.textContent = (a.icon || '') + ' ' + a.medallabel;
+      li.appendChild(b);
+      var t = document.createElement('span');
+      var line = a.subject + ' · ' + a.comp + ' ' + a.year;
+      if (a.rank) line += ' · #' + a.rank;
+      t.textContent = line;
+      li.appendChild(t);
+      list.appendChild(li);
+    });
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+  function close() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  cards.forEach(function (c) {
+    c.addEventListener('click', function () { openCard(c); });
+    c.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(c); }
+    });
+  });
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal || e.target.classList.contains('d-close')) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+
+  if (dlBtn) dlBtn.addEventListener('click', function () { if (currentCard) downloadCert(currentCard); });
+
+  function roundRect(c, x, y, w, h, r) {
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.arcTo(x + w, y, x + w, y + h, r);
+    c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r);
+    c.arcTo(x, y, x + w, y, r);
+    c.closePath();
+  }
+  function downloadCert(card) {
+    var d = card.dataset;
+    var awards = awardsFor(d.name).map(function (c) { return c.dataset; });
+    var W = 760, headerH = 160, nameH = 110, rowH = 70, footerH = 56;
+    var H = headerH + nameH + Math.max(awards.length, 1) * rowH + footerH;
+    var s = 2, cv = document.createElement('canvas');
+    cv.width = W * s; cv.height = H * s;
+    var x = cv.getContext('2d'); x.scale(s, s);
+    roundRect(x, 0, 0, W, H, 28); x.clip();
+    var cs = getComputedStyle(document.documentElement);
+    var primary = (cs.getPropertyValue('--primary') || '#667eea').trim();
+    var accent = (cs.getPropertyValue('--accent') || '#764ba2').trim();
+    x.fillStyle = '#fffdf7'; x.fillRect(0, 0, W, H);
+    var g = x.createLinearGradient(0, 0, W, headerH);
+    g.addColorStop(0, primary); g.addColorStop(1, accent);
+    x.fillStyle = g; x.fillRect(0, 0, W, headerH);
+    x.textAlign = 'center'; x.fillStyle = '#ffffff';
+    x.font = '800 30px Nunito, Arial, sans-serif';
+    x.fillText('🏆 ' + PROJECT + ' 🏆', W / 2, 60);
+    x.font = '700 18px Nunito, Arial, sans-serif';
+    x.fillText(ROLL_TITLE, W / 2, 96);
+    x.fillStyle = '#3a3266'; x.font = '800 34px Nunito, Arial, sans-serif';
+    x.fillText(d.name, W / 2, headerH + 52);
+    var meta = [];
+    if (d.grade) meta.push(d.grade);
+    if (d.school) meta.push(d.school);
+    x.fillStyle = '#7c75a3'; x.font = '700 18px Nunito, Arial, sans-serif';
+    x.fillText(meta.join(' · '), W / 2, headerH + 84);
+    awards.forEach(function (a, i) {
+      var y = headerH + nameH + i * rowH;
+      x.fillStyle = '#ffffff'; roundRect(x, 40, y, W - 80, rowH - 14, 16); x.fill();
+      x.strokeStyle = '#efe9ff'; x.lineWidth = 2; roundRect(x, 40, y, W - 80, rowH - 14, 16); x.stroke();
+      x.fillStyle = a.color || '#888888'; roundRect(x, 56, y + 13, 180, 30, 15); x.fill();
+      x.fillStyle = '#ffffff'; x.font = '800 14px Nunito, Arial, sans-serif'; x.textAlign = 'center';
+      x.fillText(((a.icon || '') + ' ' + a.medallabel).trim(), 56 + 90, y + 33);
+      x.fillStyle = '#3a3266'; x.font = '700 16px Nunito, Arial, sans-serif'; x.textAlign = 'left';
+      var line = a.subject + ' · ' + a.comp + ' ' + a.year + (a.rank ? ' · #' + a.rank : '');
+      x.fillText(line, 252, y + 33);
+    });
+    x.textAlign = 'center'; x.fillStyle = '#b3aacf'; x.font = '700 13px Nunito, Arial, sans-serif';
+    x.fillText(FOOTER, W / 2, H - 22);
+    cv.toBlob(function (blob) {
+      if (!blob) return;
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = (d.name || 'hoc-sinh').replace(/\s+/g, '-') + '-thanh-tich.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }, 'image/png');
+  }
+
+  if (boardBtn) boardBtn.addEventListener('click', downloadBoard);
+  function downloadBoard() {
+    var data = cards.map(function (c) { return c.dataset; });
+    if (!data.length) return;
+    var W = 820, headerH = 150, rowH = 58, footerH = 50;
+    var H = headerH + 16 + data.length * rowH + footerH;
+    var s = 2, cv = document.createElement('canvas');
+    cv.width = W * s; cv.height = H * s;
+    var x = cv.getContext('2d'); x.scale(s, s);
+    roundRect(x, 0, 0, W, H, 28); x.clip();
+    var cs = getComputedStyle(document.documentElement);
+    var primary = (cs.getPropertyValue('--primary') || '#667eea').trim();
+    var accent = (cs.getPropertyValue('--accent') || '#764ba2').trim();
+    x.fillStyle = '#fffdf7'; x.fillRect(0, 0, W, H);
+    var g = x.createLinearGradient(0, 0, W, headerH);
+    g.addColorStop(0, primary); g.addColorStop(1, accent);
+    x.fillStyle = g; x.fillRect(0, 0, W, headerH);
+    x.textAlign = 'center'; x.fillStyle = '#ffffff';
+    x.font = '800 30px Nunito, Arial, sans-serif';
+    x.fillText('🏆 ' + PROJECT + ' 🏆', W / 2, 64);
+    x.font = '700 18px Nunito, Arial, sans-serif';
+    x.fillText(ROLL_TITLE + ' · ' + data.length, W / 2, 100);
+    data.forEach(function (a, i) {
+      var y = headerH + 16 + i * rowH;
+      x.fillStyle = i % 2 ? '#f7f3ff' : '#ffffff'; roundRect(x, 24, y, W - 48, rowH - 10, 12); x.fill();
+      x.strokeStyle = '#efe9ff'; x.lineWidth = 1.5; roundRect(x, 24, y, W - 48, rowH - 10, 12); x.stroke();
+      x.fillStyle = a.color || '#888888'; roundRect(x, 38, y + 12, 150, 26, 13); x.fill();
+      x.fillStyle = '#ffffff'; x.font = '800 13px Nunito, Arial, sans-serif'; x.textAlign = 'center';
+      x.fillText(((a.icon || '') + ' ' + a.medallabel).trim(), 38 + 75, y + 30);
+      x.textAlign = 'left'; x.fillStyle = '#3a3266'; x.font = '800 16px Nunito, Arial, sans-serif';
+      x.fillText(a.name, 204, y + 24);
+      x.fillStyle = '#7c75a3'; x.font = '700 12.5px Nunito, Arial, sans-serif';
+      var meta = [];
+      if (a.grade) meta.push(a.grade);
+      if (a.subject) meta.push(a.subject);
+      if (a.school) meta.push(a.school);
+      meta.push(a.comp + ' ' + a.year);
+      if (a.rank) meta.push('#' + a.rank);
+      x.fillText(meta.join(' · '), 204, y + 42);
+    });
+    x.textAlign = 'center'; x.fillStyle = '#b3aacf'; x.font = '700 13px Nunito, Arial, sans-serif';
+    x.fillText(FOOTER, W / 2, H - 20);
+    cv.toBlob(function (blob) {
+      if (!blob) return;
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'bang-vinh-danh.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }, 'image/png');
+  }
+})();
+</script>
+{% endblock %}

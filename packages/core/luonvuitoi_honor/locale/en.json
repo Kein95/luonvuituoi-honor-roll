@@ -1,0 +1,81 @@
+{
+  "brand": {
+    "default_tagline": "Student Honor Roll"
+  },
+  "roll": {
+    "title": "Honor Roll",
+    "subtitle": "Celebrating our students' achievements",
+    "filter_all": "All",
+    "filter_competition": "Competition",
+    "filter_year": "Year",
+    "filter_medal": "Medal",
+    "filter_subject": "Subject",
+    "search_placeholder": "Search a student by name…",
+    "search_button": "Search",
+    "view_cards": "Cards",
+    "view_table": "Table",
+    "rank_label": "Rank",
+    "grade_label": "Grade",
+    "school_label": "School",
+    "subject_label": "Subject",
+    "no_results": "No achievements match these filters.",
+    "showing_count": "Showing {count} of {total}",
+    "download": "Download",
+    "download_board": "Download board",
+    "upcoming": "Coming soon"
+  },
+  "stats": {
+    "achievements": "Achievements",
+    "students": "Students",
+    "schools": "Schools",
+    "by_medal": "By medal",
+    "top_schools": "Top schools"
+  },
+  "hall": {
+    "title": "Hall of Fame",
+    "subtitle": "Our all-time top achievers",
+    "medals": "medals",
+    "empty": "No achievers yet."
+  },
+  "teams": {
+    "title": "All-Star Teams",
+    "subtitle": "Team and group awards",
+    "members": "Members",
+    "empty": "No team awards yet."
+  },
+  "search": {
+    "title": "Find a student",
+    "subtitle": "Enter a name to see all of their awards.",
+    "query_label": "Student name",
+    "results_for": "Results for",
+    "no_results": "No student found with that name.",
+    "back": "Back to honor roll"
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Manage honor-roll achievements",
+    "add": "Add achievement",
+    "competition": "Competition",
+    "year": "Year",
+    "name": "Name",
+    "grade": "Grade",
+    "photo": "Photo URL",
+    "school": "School",
+    "subject": "Subject",
+    "medal": "Medal",
+    "rank": "Rank",
+    "candidate_no": "Candidate no.",
+    "save": "Save",
+    "delete": "Delete",
+    "saved": "Saved.",
+    "deleted": "Deleted.",
+    "login": "Login",
+    "logout": "Log out",
+    "password": "Password",
+    "login_error": "Wrong password.",
+    "login_unconfigured": "ADMIN_PASSWORD is not set on the server."
+  },
+  "footer": {
+    "powered_by": "Powered by LUONVUITUOI-HONOR ROLL"
+  }
+}

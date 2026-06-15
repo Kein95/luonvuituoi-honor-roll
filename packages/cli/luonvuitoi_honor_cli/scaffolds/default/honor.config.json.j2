@@ -1,0 +1,82 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Kein95/luonvuituoi-honor-roll/main/honor.schema.json",
+  "project": {
+    "name": "{{ project_name }}",
+    "slug": "{{ project_slug }}",
+    "locale": "{{ project_locale }}",
+    "tagline": "{{ 'Bảng Vinh Danh Học Sinh' if project_locale == 'vi' else 'Student Honor Roll' }}",
+    "tagline_en": "Student Honor Roll",
+    "branding": {
+      "primary_color": "#667eea",
+      "accent_color": "#764ba2"
+    }
+  },
+  "competitions": [
+    {
+      "id": "demo-a",
+      "name": "Demo Olympiad A",
+      "name_vi": "Demo Olympiad A",
+      "candidate_field": "sbd",
+      "subjects": [
+        { "code": "MATH", "name": "Mathematics", "name_vi": "Toán học", "icon": "🔢" },
+        { "code": "ENGLISH", "name": "English", "name_vi": "Tiếng Anh", "icon": "📖" },
+        { "code": "SCIENCE", "name": "Science", "name_vi": "Khoa học", "icon": "🔬" }
+      ],
+      "medals": ["GOLD", "SILVER", "BRONZE", "HONORABLE", "MERIT"]
+    },
+    {
+      "id": "demo-b",
+      "name": "Demo Olympiad B",
+      "name_vi": "Demo Olympiad B",
+      "candidate_field": "candidate_no",
+      "subjects": [
+        { "code": "PAPER_A", "name": "Paper A", "name_vi": "Đề A" },
+        { "code": "PAPER_B", "name": "Paper B", "name_vi": "Đề B" },
+        { "code": "PAPER_C", "name": "Paper C", "name_vi": "Đề C" },
+        { "code": "PAPER_D", "name": "Paper D", "name_vi": "Đề D" },
+        { "code": "PAPER_E", "name": "Paper E", "name_vi": "Đề E" },
+        { "code": "PAPER_F", "name": "Paper F", "name_vi": "Đề F" }
+      ],
+      "medals": ["GOLD", "SILVER", "BRONZE", "MERIT", "CREDIT"]
+    }
+  ],
+  "editions": [
+    { "competition_id": "demo-a", "year": 2025, "label": "Demo Olympiad A 2025" },
+    { "competition_id": "demo-b", "year": 2025, "label": "Demo Olympiad B 2025" }
+  ],
+  "medals": {
+    "GOLD":      { "rank": 1, "label_en": "Gold Medal",   "label_vi": "Huy chương Vàng", "color": "#FFD700", "icon": "🥇" },
+    "SILVER":    { "rank": 2, "label_en": "Silver Medal", "label_vi": "Huy chương Bạc",  "color": "#C0C0C0", "icon": "🥈" },
+    "BRONZE":    { "rank": 3, "label_en": "Bronze Medal", "label_vi": "Huy chương Đồng", "color": "#CD7F32", "icon": "🥉" },
+    "HONORABLE": { "rank": 4, "label_en": "Honorable",    "label_vi": "Khuyến khích",   "color": "#10b981", "icon": "🎖️" },
+    "MERIT":     { "rank": 5, "label_en": "Merit",        "label_vi": "Chứng nhận",     "color": "#3b82f6", "icon": "📜" },
+    "CREDIT":    { "rank": 6, "label_en": "Credit",       "label_vi": "Ghi nhận",       "color": "#8b5cf6", "icon": "🎗️" }
+  },
+  "data_mapping": {
+    "candidate_no_col": "candidate_no",
+    "name_col": "name",
+    "grade_col": "grade",
+    "photo_col": "photo",
+    "school_col": "school",
+    "rank_col": "rank",
+    "medal_col": "medal",
+    "subject_col": "subject",
+    "percentile_col": "percentile"
+  },
+  "display": {
+    "layout": "both",
+    "show_rank": true,
+    "show_percentile": false,
+    "cards_per_row": 4
+  },
+  "admin": {
+    "enabled": true,
+    "auth_mode": "password"
+  },
+  "team_awards": {
+    "CHAMPION":    { "rank": 1, "label_en": "Champion",      "label_vi": "Vô địch",      "color": "#FFD700", "icon": "🏆" },
+    "RUNNER_UP_1": { "rank": 2, "label_en": "1st Runner-up", "label_vi": "Á quân 1",     "color": "#C0C0C0", "icon": "🥈" },
+    "RUNNER_UP_2": { "rank": 3, "label_en": "2nd Runner-up", "label_vi": "Á quân 2",     "color": "#CD7F32", "icon": "🥉" },
+    "BEST":        { "rank": 4, "label_en": "Best Team",     "label_vi": "Đội xuất sắc", "color": "#10b981", "icon": "⭐" }
+  }
+}

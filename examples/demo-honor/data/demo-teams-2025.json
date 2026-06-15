@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Team X",
+    "award": "CHAMPION",
+    "subject": "MATH",
+    "category": "Lower Secondary",
+    "members": [
+      {
+        "name": "X",
+        "grade": "X",
+        "school": "School"
+      },
+      {
+        "name": "Y",
+        "grade": "Y",
+        "school": "School"
+      },
+      {
+        "name": "Z",
+        "grade": "Z",
+        "school": "School"
+      }
+    ]
+  },
+  {
+    "name": "Team Y",
+    "award": "RUNNER_UP_1",
+    "subject": "ENGLISH",
+    "category": "Lower Secondary",
+    "members": [
+      {
+        "name": "Y",
+        "grade": "Y",
+        "school": "School"
+      },
+      {
+        "name": "Z",
+        "grade": "Z",
+        "school": "School"
+      },
+      {
+        "name": "X",
+        "grade": "X",
+        "school": "School"
+      }
+    ]
+  },
+  {
+    "name": "Team Z",
+    "award": "RUNNER_UP_2",
+    "subject": "SCIENCE",
+    "category": "Lower Secondary",
+    "members": [
+      {
+        "name": "Z",
+        "grade": "Z",
+        "school": "School"
+      },
+      {
+        "name": "X",
+        "grade": "X",
+        "school": "School"
+      },
+      {
+        "name": "Y",
+        "grade": "Y",
+        "school": "School"
+      }
+    ]
+  },
+  {
+    "name": "Team X",
+    "award": "BEST",
+    "subject": "MATH",
+    "category": "Lower Secondary",
+    "members": [
+      {
+        "name": "X",
+        "grade": "X",
+        "school": "School"
+      },
+      {
+        "name": "Y",
+        "grade": "Y",
+        "school": "School"
+      },
+      {
+        "name": "Z",
+        "grade": "Z",
+        "school": "School"
+      }
+    ]
+  }
+]

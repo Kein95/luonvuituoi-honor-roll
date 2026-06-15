@@ -1,0 +1,33 @@
+name: lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install ruff
+      - name: ruff check
+        run: ruff check packages scripts
+      - name: ruff format check
+        run: ruff format --check packages scripts
+
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ./packages/core[dev] -e ./packages/cli mypy
+      - run: mypy packages/core/luonvuitoi_honor packages/cli/luonvuitoi_honor_cli

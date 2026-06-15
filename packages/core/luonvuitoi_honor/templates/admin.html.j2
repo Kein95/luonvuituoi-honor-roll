@@ -1,0 +1,85 @@
+{% extends "base.html.j2" %}
+{% block nav_roll %}{% endblock %}{% block nav_admin %}active{% endblock %}
+{% block styles %}
+h2.admin-h{font-family:'Baloo 2',cursive;font-size:1.4em;color:var(--ink);margin-bottom:2px}
+.admin-sub{color:var(--muted);font-weight:700;font-size:.9em;margin-bottom:18px}
+.add-form{background:#fbf8ff;border:3px solid var(--line);border-radius:22px;padding:20px;margin-bottom:24px}
+.add-form h3{font-family:'Baloo 2',cursive;font-size:1.1em;color:var(--ink);margin-bottom:14px}
+.add-form .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.add-form label{font-size:.72em;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:4px}
+.add-form input,.add-form select{width:100%;border:2px solid var(--line);border-radius:12px;padding:9px 12px;font-size:.9em;font-family:inherit;font-weight:700;background:#fff;color:var(--ink)}
+.add-form input:focus-visible,.add-form select:focus-visible{border-color:var(--primary)}
+.add-form .actions{margin-top:16px}
+.btn-save{background:var(--primary);color:#fff;border:none;border-radius:14px;padding:11px 26px;font-weight:800;cursor:pointer;font-size:.95em;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .12s}
+.btn-save:hover{transform:translateY(-2px)}
+.btn-save:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.flash{padding:10px 16px;border-radius:12px;margin-bottom:14px;font-size:.9em;font-weight:800}
+.flash.ok{background:#dcfce7;color:#166534}
+.flash.err{background:#fee2e2;color:#b91c1c}
+.tbl-wrap{overflow-x:auto}
+table.atbl{width:100%;border-collapse:collapse;font-size:.88em;background:#fff;border-radius:18px;overflow:hidden;border:3px solid var(--line);box-shadow:0 6px 0 rgba(60,40,120,.08)}
+.atbl thead tr{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;text-align:left}
+.atbl th{padding:11px 13px;font-weight:800;font-size:.78em}
+.atbl td{padding:9px 13px;font-weight:700;border-bottom:2px solid var(--line)}
+.atbl tbody tr:nth-child(even){background:#fbf8ff}
+.atbl .thumb{width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;border:2px solid var(--line)}
+.del-btn{background:#fee2e2;color:#b91c1c;border:none;border-radius:10px;padding:6px 12px;font-size:.8em;cursor:pointer;font-weight:800}
+.del-btn:hover{background:#fecaca}
+{% endblock %}
+{% block content %}
+<h2 class="admin-h">⚙️ {{ locale.admin.title }}</h2>
+<p class="admin-sub">{{ locale.admin.subtitle }} · {{ total }}</p>
+
+<form id="addForm" class="add-form">
+  <h3>➕ {{ locale.admin.add }}</h3>
+  <div class="grid">
+    <div><label for="a-comp">{{ locale.admin.competition }}</label>
+      <select id="a-comp" name="competition_id" required>
+        {% for c in competitions %}<option value="{{ c.id }}">{{ (c.name_vi or c.name) if locale_code == 'vi' else c.name }}</option>{% endfor %}
+      </select></div>
+    <div><label for="a-year">{{ locale.admin.year }}</label><input id="a-year" name="year" type="number" value="{{ years[-1] if years else '' }}"></div>
+    <div><label for="a-name">{{ locale.admin.name }}</label><input id="a-name" name="name" required placeholder="Nguyễn Văn A"></div>
+    <div><label for="a-grade">{{ locale.admin.grade }}</label><input id="a-grade" name="grade" placeholder="Lớp 5"></div>
+    <div><label for="a-photo">{{ locale.admin.photo }}</label><input id="a-photo" name="photo_url" type="url" placeholder="https://…/photo.jpg"></div>
+    <div><label for="a-school">{{ locale.admin.school }}</label><input id="a-school" name="school" placeholder="Trường…"></div>
+    <div><label for="a-subject">{{ locale.admin.subject }}</label><input id="a-subject" name="subject_code" placeholder="MATH"></div>
+    <div><label for="a-medal">{{ locale.admin.medal }}</label>
+      <select id="a-medal" name="medal" required>
+        {% for code, md in medals.items() %}<option value="{{ code }}">{{ md.icon }} {{ locale_code == 'vi' and md.label_vi or md.label_en }}</option>{% endfor %}
+      </select></div>
+    <div><label for="a-rank">{{ locale.admin.rank }}</label><input id="a-rank" name="rank" placeholder="1"></div>
+    <div><label for="a-candidate">{{ locale.admin.candidate_no }}</label><input id="a-candidate" name="candidate_no" placeholder="—"></div>
+  </div>
+  <div class="actions"><button type="submit" class="btn-save">💾 {{ locale.admin.save }}</button></div>
+</form>
+<div id="flash" role="status" aria-live="polite"></div>
+
+<div class="tbl-wrap">
+<table class="atbl">
+  <thead><tr><th>#</th><th>{{ locale.admin.name }}</th><th>{{ locale.admin.grade }}</th><th>{{ locale.admin.competition }}</th><th>{{ locale.admin.medal }}</th><th>{{ locale.admin.rank }}</th><th>{{ locale.admin.school }}</th><th></th></tr></thead>
+  <tbody>
+  {% for a in achievements %}
+  <tr>
+    <td>{{ a.id }}</td>
+    <td>{% if a.photo_url %}<img class="thumb" src="{{ a.photo_url }}" alt="" width="28" height="28">{% endif %}{{ a.name }}</td>
+    <td>{{ a.grade }}</td>
+    <td>{{ a.competition_name }} {{ a.year }}</td>
+    <td>{{ a.medal }}</td><td>{{ a.rank }}</td><td>{{ a.school }}</td>
+    <td><button class="del-btn" type="button" data-id="{{ a.id }}" aria-label="{{ locale.admin.delete }} #{{ a.id }}">{{ locale.admin.delete }}</button></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<script nonce="{{ csp_nonce }}">
+const form=document.getElementById('addForm');const flash=document.getElementById('flash');
+function show(msg,ok){flash.className='flash '+(ok?'ok':'err');flash.textContent=msg;setTimeout(()=>flash.textContent='',3000);}
+form.addEventListener('submit',async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(form));
+  const r=await fetch('/api/admin/achievements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+  if(r.ok){show('{{ locale.admin.saved }}',true);location.reload();}else{const j=await r.json().catch(()=>({}));show(j.error||'Error',false);}});
+document.querySelectorAll('.del-btn').forEach(b=>b.addEventListener('click',async()=>{if(!confirm('Delete #'+b.dataset.id+'?'))return;
+  const r=await fetch('/api/admin/achievements/'+b.dataset.id,{method:'DELETE'});
+  if(r.ok){show('{{ locale.admin.deleted }}',true);location.reload();}else{show('Error',false);}}));
+</script>
+{% endblock %}

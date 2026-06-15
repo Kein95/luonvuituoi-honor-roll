@@ -1,0 +1,45 @@
+{% extends "base.html.j2" %}
+{% block nav_roll %}{% endblock %}{% block nav_teams %}active{% endblock %}
+{% block styles %}
+.tm-hero{text-align:center;margin-bottom:26px}
+.tm-hero h2{font-family:'Baloo 2',cursive;font-size:1.7em;color:var(--ink)}
+.tm-hero p{color:var(--muted);font-weight:700;margin-top:4px}
+.tm-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.tm-card{background:#fff;border:3px solid var(--line);border-top:8px solid var(--ac,var(--primary));border-radius:22px;padding:20px;box-shadow:0 8px 0 rgba(60,40,120,.10)}
+.tm-card .badge{display:inline-block;padding:5px 14px;border-radius:999px;color:#fff;font-size:.78em;font-weight:800;box-shadow:0 3px 0 rgba(0,0,0,.14)}
+.tm-card .tnm{font-family:'Baloo 2',cursive;font-size:1.22em;color:var(--ink);margin-top:10px}
+.tm-card .meta{font-size:.82em;font-weight:700;color:var(--muted);margin-top:3px}
+.tm-mlabel{font-size:.72em;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-top:14px;margin-bottom:6px}
+.tm-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.tm-card li{background:#fbf8ff;border:2px solid var(--line);border-radius:10px;padding:7px 11px;font-size:.85em;font-weight:700;color:var(--ink)}
+.tm-card li .mg{color:var(--muted)}
+.empty{text-align:center;padding:54px 20px;color:var(--muted);font-weight:700}
+.empty .big{font-size:3.4em;display:inline-block;animation:wiggle 2.5s ease-in-out infinite}
+{% endblock %}
+{% block content %}
+<div class="tm-hero">
+  <h2>⭐ {{ locale.teams.title }}</h2>
+  <p>{{ locale.teams.subtitle }}</p>
+</div>
+{% if teams %}
+<div class="tm-grid">
+  {% for t in teams %}
+  <div class="tm-card" style="--ac:{{ t.award_color }}">
+    <span class="badge" style="background:{{ t.award_color }}">{{ t.award_icon }} {{ t.award_label }}</span>
+    <div class="tnm">{{ t.name }}</div>
+    <div class="meta">{% if t.subject %}{{ t.subject }}{% endif %}{% if t.category %} · {{ t.category }}{% endif %} · {{ t.year }}</div>
+    {% if t.members %}
+    <div class="tm-mlabel">{{ locale.teams.members }}</div>
+    <ul>
+      {% for m in t.members %}
+      <li>{{ m.name }}{% if m.grade %} <span class="mg">· {{ locale.roll.grade_label }} {{ m.grade }}</span>{% endif %}{% if m.school %} <span class="mg">· {{ m.school }}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty"><div class="big" aria-hidden="true">⭐</div><p style="margin-top:12px">{{ locale.teams.empty }}</p></div>
+{% endif %}
+{% endblock %}

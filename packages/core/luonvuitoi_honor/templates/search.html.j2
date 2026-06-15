@@ -1,0 +1,54 @@
+{% extends "base.html.j2" %}
+{% block nav_roll %}{% endblock %}{% block nav_search %}active{% endblock %}
+{% block styles %}
+.search-box{max-width:580px;margin:6px auto 28px;text-align:center}
+.search-box h2{font-family:'Baloo 2',cursive;font-size:1.5em;color:var(--ink);margin-bottom:6px}
+.search-box p{color:var(--muted);font-weight:700;font-size:.94em;margin-bottom:16px}
+.search-box form{display:flex;gap:10px}
+.search-box input{flex:1;min-width:0;border:3px solid var(--primary);border-radius:16px;padding:13px 16px;font-size:1.05em;font-family:inherit;font-weight:700;color:var(--ink)}
+.search-box button{background:var(--primary);color:#fff;border:none;border-radius:16px;padding:0 24px;font-weight:800;font-size:1.2em;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .12s}
+.search-box button:hover{transform:translateY(-2px)}
+.search-box button:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.count{color:var(--muted);font-weight:700;font-size:.9em;margin-bottom:14px}
+.res-card{background:#fff;border:3px solid var(--line);border-radius:18px;padding:14px 18px;margin-bottom:12px;display:flex;gap:14px;align-items:center;box-shadow:0 6px 0 rgba(60,40,120,.08)}
+.res-card .ic{font-size:2.2em;width:56px;height:56px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.res-card .avatar-sm{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--primary)}
+.res-card .info{flex:1;min-width:0}
+.res-card .nm{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.1em;color:var(--ink)}
+.res-card .mt{font-size:.84em;font-weight:700;color:var(--muted);margin-top:3px}
+.res-card .badge{padding:5px 14px;border-radius:999px;color:#fff;font-size:.76em;font-weight:800;white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.empty{text-align:center;padding:48px 20px;color:var(--muted);font-weight:700}
+.empty .big{font-size:3.2em;display:inline-block;animation:wiggle 2.5s ease-in-out infinite}
+.back{display:block;text-align:center;margin-top:26px;color:var(--primary);font-weight:800;text-decoration:none}
+{% endblock %}
+{% block content %}
+<div class="search-box">
+  <h2>🔍 {{ locale.search.title }}</h2>
+  <p>{{ locale.search.subtitle }}</p>
+  <form method="get" action="/search">
+    <input type="search" name="q" value="{{ name_query }}" aria-label="{{ locale.search.query_label }}"
+           placeholder="{{ locale.search.query_label }}…" autocomplete="off" spellcheck="false" enterkeyhint="search" required>
+    <button type="submit" aria-label="{{ locale.search.title }}">🔍</button>
+  </form>
+</div>
+
+{% if has_query %}
+  {% if results %}
+  <p class="count" aria-live="polite">{{ locale.search.results_for }} <b>{{ name_query }}</b> · {{ results|length }}</p>
+  {% for r in results %}
+  <div class="res-card">
+    <div class="ic" aria-hidden="true">{% if r.photo_url %}<img class="avatar-sm" src="{{ r.photo_url }}" alt="" width="56" height="56" loading="lazy">{% else %}{{ r.medal_icon }}{% endif %}</div>
+    <div class="info">
+      <div class="nm">{{ r.name }}</div>
+      {% if r.grade %}<div class="mt">{{ locale.roll.grade_label }} {{ r.grade }}</div>{% endif %}
+      <div class="mt">{{ r.subject_name }} · {{ r.competition_name }} {{ r.year }}{% if r.school %} · {{ r.school }}{% endif %}{% if r.rank %} · #{{ r.rank }}{% endif %}</div>
+    </div>
+    <span class="badge" style="background:{{ r.medal_color }}">{{ r.medal_label }}</span>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="empty"><div class="big" aria-hidden="true">🔎</div><p style="margin-top:12px">{{ locale.search.no_results }}</p></div>
+  {% endif %}
+{% endif %}
+<a class="back" href="/">← {{ locale.search.back }}</a>
+{% endblock %}

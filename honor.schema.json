@@ -1,0 +1,622 @@
+{
+  "$defs": {
+    "AdminConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": true,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "auth_mode": {
+          "const": "password",
+          "default": "password",
+          "title": "Auth Mode",
+          "type": "string"
+        }
+      },
+      "title": "AdminConfig",
+      "type": "object"
+    },
+    "Branding": {
+      "additionalProperties": false,
+      "properties": {
+        "logo_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Logo Url"
+        },
+        "primary_color": {
+          "default": "#667eea",
+          "title": "Primary Color",
+          "type": "string"
+        },
+        "accent_color": {
+          "default": "#764ba2",
+          "title": "Accent Color",
+          "type": "string"
+        }
+      },
+      "title": "Branding",
+      "type": "object"
+    },
+    "Competition": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "name_vi": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name Vi"
+        },
+        "candidate_field": {
+          "default": "candidate_no",
+          "description": "Logical name of the candidate identifier (sbd / candidate_no).",
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Candidate Field",
+          "type": "string"
+        },
+        "subjects": {
+          "items": {
+            "$ref": "#/$defs/Subject"
+          },
+          "title": "Subjects",
+          "type": "array"
+        },
+        "medals": {
+          "description": "Ordered medal codes this competition awards.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Medals",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "medals"
+      ],
+      "title": "Competition",
+      "type": "object"
+    },
+    "Contact": {
+      "additionalProperties": false,
+      "description": "Optional public contact info shown in the footer.",
+      "properties": {
+        "email": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Email"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Phone"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "title": "Contact",
+      "type": "object"
+    },
+    "DataMapping": {
+      "additionalProperties": false,
+      "description": "Column-name mapping used when ingesting achievement source files.\n\nEach field names the header the operator's CSV/Excel/JSON uses for that\nlogical concept, so a renamed column only needs a config edit — no code change.",
+      "properties": {
+        "candidate_no_col": {
+          "default": "candidate_no",
+          "title": "Candidate No Col",
+          "type": "string"
+        },
+        "name_col": {
+          "default": "name",
+          "title": "Name Col",
+          "type": "string"
+        },
+        "grade_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "grade",
+          "title": "Grade Col"
+        },
+        "photo_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "photo",
+          "title": "Photo Col"
+        },
+        "school_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "school",
+          "title": "School Col"
+        },
+        "rank_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "rank",
+          "title": "Rank Col"
+        },
+        "medal_col": {
+          "default": "medal",
+          "title": "Medal Col",
+          "type": "string"
+        },
+        "subject_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "subject",
+          "title": "Subject Col"
+        },
+        "percentile_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Percentile Col"
+        },
+        "competition_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Competition Col"
+        },
+        "year_col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year Col"
+        }
+      },
+      "title": "DataMapping",
+      "type": "object"
+    },
+    "Display": {
+      "additionalProperties": false,
+      "properties": {
+        "layout": {
+          "default": "both",
+          "enum": [
+            "cards",
+            "table",
+            "both"
+          ],
+          "title": "Layout",
+          "type": "string"
+        },
+        "show_rank": {
+          "default": true,
+          "title": "Show Rank",
+          "type": "boolean"
+        },
+        "show_percentile": {
+          "default": false,
+          "title": "Show Percentile",
+          "type": "boolean"
+        },
+        "cards_per_row": {
+          "default": 4,
+          "maximum": 8,
+          "minimum": 1,
+          "title": "Cards Per Row",
+          "type": "integer"
+        },
+        "default_competition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Competition"
+        },
+        "default_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Year"
+        }
+      },
+      "title": "Display",
+      "type": "object"
+    },
+    "Edition": {
+      "additionalProperties": false,
+      "properties": {
+        "competition_id": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Competition Id",
+          "type": "string"
+        },
+        "year": {
+          "maximum": 2100,
+          "minimum": 1900,
+          "title": "Year",
+          "type": "integer"
+        },
+        "label": {
+          "description": "Human label shown in the UI.",
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "upcoming": {
+          "default": false,
+          "description": "Declared but no data yet — shown as a 'coming soon' note.",
+          "title": "Upcoming",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "competition_id",
+        "year",
+        "label"
+      ],
+      "title": "Edition",
+      "type": "object"
+    },
+    "Medal": {
+      "additionalProperties": false,
+      "properties": {
+        "rank": {
+          "description": "Sort rank; lower = more prestigious.",
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "label_en": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Label En",
+          "type": "string"
+        },
+        "label_vi": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Label Vi",
+          "type": "string"
+        },
+        "color": {
+          "default": "#888888",
+          "title": "Color",
+          "type": "string"
+        },
+        "icon": {
+          "default": "🏅",
+          "title": "Icon",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rank",
+        "label_en",
+        "label_vi"
+      ],
+      "title": "Medal",
+      "type": "object"
+    },
+    "Project": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "slug": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Slug",
+          "type": "string"
+        },
+        "locale": {
+          "default": "vi",
+          "enum": [
+            "en",
+            "vi"
+          ],
+          "title": "Locale",
+          "type": "string"
+        },
+        "tagline": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tagline"
+        },
+        "tagline_en": {
+          "anyOf": [
+            {
+              "maxLength": 160,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "English tagline (bilingual UI).",
+          "title": "Tagline En"
+        },
+        "branding": {
+          "$ref": "#/$defs/Branding"
+        }
+      },
+      "required": [
+        "name",
+        "slug"
+      ],
+      "title": "Project",
+      "type": "object"
+    },
+    "Subject": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "description": "Short code (e.g. MATH, ENGLISH).",
+          "maxLength": 20,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "name_vi": {
+          "anyOf": [
+            {
+              "maxLength": 60,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name Vi"
+        },
+        "icon": {
+          "default": "📚",
+          "description": "Emoji shown next to the subject.",
+          "maxLength": 8,
+          "title": "Icon",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "name"
+      ],
+      "title": "Subject",
+      "type": "object"
+    },
+    "TeamAward": {
+      "additionalProperties": false,
+      "description": "One team/group award type (e.g. Champion, Runner-up, Best).",
+      "properties": {
+        "rank": {
+          "description": "Sort rank; lower = more prestigious.",
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "label_en": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Label En",
+          "type": "string"
+        },
+        "label_vi": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Label Vi",
+          "type": "string"
+        },
+        "color": {
+          "default": "#888888",
+          "title": "Color",
+          "type": "string"
+        },
+        "icon": {
+          "default": "🏆",
+          "title": "Icon",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rank",
+        "label_en",
+        "label_vi"
+      ],
+      "title": "TeamAward",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Root document for ``honor.config.json``. All handlers read from this.",
+  "properties": {
+    "project": {
+      "$ref": "#/$defs/Project"
+    },
+    "competitions": {
+      "items": {
+        "$ref": "#/$defs/Competition"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Competitions",
+      "type": "array"
+    },
+    "editions": {
+      "items": {
+        "$ref": "#/$defs/Edition"
+      },
+      "maxItems": 200,
+      "minItems": 1,
+      "title": "Editions",
+      "type": "array"
+    },
+    "medals": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Medal"
+      },
+      "description": "Global medal registry: code → definition.",
+      "minProperties": 1,
+      "title": "Medals",
+      "type": "object"
+    },
+    "data_mapping": {
+      "$ref": "#/$defs/DataMapping"
+    },
+    "display": {
+      "$ref": "#/$defs/Display"
+    },
+    "admin": {
+      "$ref": "#/$defs/AdminConfig"
+    },
+    "contact": {
+      "$ref": "#/$defs/Contact"
+    },
+    "team_awards": {
+      "additionalProperties": {
+        "$ref": "#/$defs/TeamAward"
+      },
+      "description": "Optional registry of team/group award types (code -> definition).",
+      "title": "Team Awards",
+      "type": "object"
+    }
+  },
+  "required": [
+    "project",
+    "competitions",
+    "editions",
+    "medals"
+  ],
+  "title": "HonorConfig",
+  "type": "object"
+}
