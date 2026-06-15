@@ -23,7 +23,7 @@ Run only the fast unit tests (skip the Flask E2E suite):
 pytest -m "not e2e"
 ```
 
-From a source checkout without `pip install -e`, the root `conftest.py` puts both packages on `sys.path`, so `python scripts/run_tests.py` works too.
+From a source checkout without `pip install -e`, the root `conftest.py` puts both packages on `sys.path`, so `pytest` works directly.
 
 Lint + type-check:
 
