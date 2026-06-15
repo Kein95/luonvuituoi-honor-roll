@@ -86,14 +86,14 @@ def test_seed_creates_db(tmp_path: Path) -> None:
     cfg_file = target / "honor.config.json"
     result = runner.invoke(
         app,
-        ["seed", "--count", "5", "--config", str(cfg_file), "--db", str(target / "s.db"), "--seed", "42"],
+        ["seed", "--count", "40", "--config", str(cfg_file), "--db", str(target / "s.db"), "--seed", "42"],
     )
     assert result.exit_code == 0, result.stdout
     assert (target / "s.db").exists()
-    # At least one achievement landed
+    from luonvuitoi_honor.config import load_config
     from luonvuitoi_honor.honorroll import stats
 
-    s = stats(
-        __import__("luonvuitoi_honor.config", fromlist=["load_config"]).load_config(cfg_file), target / "s.db"
-    )
+    s = stats(load_config(cfg_file), target / "s.db")
     assert s["total_achievements"] >= 1
+    # Rows must spread across the scaffold's editions, not all land in one (regression guard).
+    assert len(s["editions"]) >= 2

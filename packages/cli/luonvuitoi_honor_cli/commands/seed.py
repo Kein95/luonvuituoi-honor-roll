@@ -49,12 +49,14 @@ def seed(
         comp = next(c for c in config.competitions if c.id == ed.competition_id)
         by_edition[(ed.competition_id, ed.year)] = comp.medals
 
-    rows = []
+    # Bucket rows by edition: ingest_rows binds a whole call to one (competition, year),
+    # so each edition's rows must be ingested in their own call (else all rows land in one).
+    buckets: dict[tuple[str, int], list[dict]] = {}
     for _ in range(count):
         (competition_id, year), medals = rng.choice(list(by_edition.items()))
         comp = next(c for c in config.competitions if c.id == competition_id)
         subject_code = rng.choice([s.code for s in comp.subjects]) if comp.subjects else ""
-        rows.append(
+        buckets.setdefault((competition_id, year), []).append(
             {
                 "name": fake.name(),
                 "grade": f"Grade {rng.randint(1, 12)}",
@@ -66,5 +68,7 @@ def seed(
             }
         )
 
-    result = ingest_rows(config, out, competition_id=competition_id, year=year, rows=rows)
-    console.print(f"[green]OK[/] seeded {result.rows_inserted} achievements -> {out}")
+    total = 0
+    for (competition_id, year), rows in buckets.items():
+        total += ingest_rows(config, out, competition_id=competition_id, year=year, rows=rows).rows_inserted
+    console.print(f"[green]OK[/] seeded {total} achievements across {len(buckets)} edition(s) -> {out}")

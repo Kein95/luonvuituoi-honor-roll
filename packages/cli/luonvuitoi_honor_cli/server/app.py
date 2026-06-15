@@ -35,7 +35,7 @@ MAX_BODY_BYTES = 32 * 1024
 def _json_body() -> dict:
     raw = request.get_data(cache=False) or b""
     if len(raw) > MAX_BODY_BYTES:
-        return jsonify({"error": "request body too large"}), 413  # type: ignore[return-value]
+        raise honor_api.ApiError("request body too large")
     if not raw:
         return {}
     try:
