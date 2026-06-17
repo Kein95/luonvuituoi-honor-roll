@@ -16,9 +16,9 @@ Config-driven student honor-roll toolkit. Bring your results CSV/Excel/JSON and 
 
 <div class="lvt-cta-row">
   <a href="https://honor-roll-vercel-demo.vercel.app" class="lvt-btn lvt-btn-primary">🌟 Live Demo</a>
-  <a href="quickstart/" class="lvt-btn lvt-btn-primary">🚀 Quickstart (10 min)</a>
   <a href="https://honor-roll-vercel-demo.vercel.app/login" class="lvt-btn lvt-btn-ghost" target="_blank" rel="noopener">🔐 Admin demo</a>
   <a href="https://github.com/Kein95/luonvuituoi-honor-roll" class="lvt-btn lvt-btn-ghost" target="_blank" rel="noopener">⭐ View on GitHub</a>
+  <a href="quickstart/" class="lvt-btn lvt-btn-primary">🚀 Quickstart (10 min)</a>
 </div>
 
 <div class="lvt-badges">
