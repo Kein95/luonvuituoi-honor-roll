@@ -1,0 +1,444 @@
+/* ============================================================
+   LUONVUITUOI-HONOR ROLL — Custom Material Theme Overrides
+   Brand: vibrant purple-blue + warm pink accent
+   ============================================================ */
+
+:root {
+  --lvt-purple-900: #5b21b6;
+  --lvt-purple-700: #7c5cff;
+  --lvt-purple-500: #a78bfa;
+  --lvt-purple-100: #ede9fe;
+  --lvt-pink-500: #fb7185;
+  --lvt-pink-600: #f43f5e;
+  --lvt-ink-900: #0f172a;
+  --lvt-ink-600: #475569;
+  --lvt-ink-300: #cbd5e1;
+  --lvt-surface: #ffffff;
+  --lvt-surface-alt: #f8fafc;
+}
+
+/* Light palette */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:        var(--lvt-purple-700);
+  --md-primary-fg-color--light: var(--lvt-purple-500);
+  --md-primary-fg-color--dark:  var(--lvt-purple-900);
+  --md-accent-fg-color:         var(--lvt-pink-600);
+  --md-typeset-a-color:         var(--lvt-purple-700);
+}
+
+/* Dark palette */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        var(--lvt-purple-500);
+  --md-primary-fg-color--light: var(--lvt-purple-100);
+  --md-primary-fg-color--dark:  var(--lvt-purple-900);
+  --md-accent-fg-color:         var(--lvt-pink-500);
+  --md-typeset-a-color:         var(--lvt-purple-500);
+  --md-default-bg-color:        #0b1220;
+  --md-code-bg-color:           #101a2c;
+}
+
+/* Smooth typography */
+body, .md-typeset {
+  font-feature-settings: "ss01", "cv11";
+  letter-spacing: -0.01em;
+}
+
+.md-typeset h1 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--lvt-purple-700) 0%, var(--lvt-purple-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h1 {
+  background: linear-gradient(135deg, var(--lvt-purple-100) 0%, var(--lvt-purple-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.md-typeset h2 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding-bottom: 0.35em;
+  margin-top: 2.4em;
+}
+
+/* ============================================================
+   Header polish
+   ============================================================ */
+.md-header {
+  background: linear-gradient(100deg, var(--lvt-purple-900) 0%, var(--lvt-purple-700) 60%, var(--lvt-purple-500) 100%);
+  box-shadow: 0 2px 12px rgba(124, 92, 255, 0.25);
+}
+
+.md-tabs {
+  background: rgba(91, 33, 182, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+/* ============================================================
+   Hero section (used in index.md)
+   ============================================================ */
+.lvt-hero {
+  position: relative;
+  padding: 4rem 1.5rem 3rem;
+  margin: 1rem -0.8rem 2rem;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 400px at 10% -10%, rgba(167, 139, 250, 0.22), transparent 60%),
+    radial-gradient(900px 500px at 90% 0%, rgba(251, 113, 133, 0.18), transparent 55%),
+    linear-gradient(135deg, #4c1d95 0%, #7c5cff 55%, #a78bfa 100%);
+  color: #ffffff;
+  text-align: center;
+}
+
+.lvt-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  pointer-events: none;
+}
+
+.lvt-hero > * { position: relative; z-index: 1; }
+
+.lvt-hero-logo {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 1.25rem;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.25));
+  animation: lvt-float 4s ease-in-out infinite;
+}
+
+@keyframes lvt-float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+
+.lvt-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-text-fill-color: #ffffff !important;
+  margin: 0 0 0.75rem;
+  line-height: 1.1;
+}
+
+.lvt-hero-tagline {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.88);
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  line-height: 1.55;
+}
+
+.lvt-cta-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.lvt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lvt-btn-primary {
+  background: var(--lvt-pink-500);
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(251, 113, 133, 0.35);
+}
+
+.lvt-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(251, 113, 133, 0.5);
+}
+
+.lvt-btn-ghost {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(6px);
+}
+
+.lvt-btn-ghost:hover {
+  background: rgba(255,255,255,0.16);
+  transform: translateY(-2px);
+}
+
+.lvt-badges {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.lvt-badges img { height: 22px; }
+
+/* ============================================================
+   Feature grid cards
+   ============================================================ */
+.lvt-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 3rem;
+}
+
+.lvt-feature {
+  padding: 1.5rem 1.25rem;
+  border-radius: 14px;
+  background: var(--lvt-surface-alt);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+[data-md-color-scheme="slate"] .lvt-feature {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.08);
+}
+
+.lvt-feature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(124, 92, 255, 0.12);
+  border-color: var(--lvt-purple-500);
+}
+
+.lvt-feature-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.lvt-feature h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.lvt-feature p {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Stats strip
+   ============================================================ */
+.lvt-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--lvt-purple-900) 0%, var(--lvt-purple-700) 100%);
+  color: #ffffff;
+}
+
+.lvt-stat {
+  text-align: center;
+}
+
+.lvt-stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--lvt-pink-500);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.lvt-stat-label {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ============================================================
+   Code blocks polish
+   ============================================================ */
+.highlight pre {
+  border-radius: 10px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.md-typeset code {
+  border-radius: 4px;
+  padding: 0.12em 0.35em;
+}
+
+/* ============================================================
+   Footer polish
+   ============================================================ */
+.md-footer-meta {
+  background: linear-gradient(100deg, var(--lvt-purple-900), var(--lvt-purple-700));
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: var(--lvt-purple-500);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--lvt-purple-700); }
+
+/* ============================================================
+   Theme picker (auto/light/dark direct-select) — replaces the
+   cycling Material toggle so users pick once instead of clicking
+   through schemes.
+   ============================================================ */
+.lvt-theme-picker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0.25rem;
+}
+
+.lvt-theme-picker > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.4rem 0.55rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #ffffff;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+.lvt-theme-picker > summary::-webkit-details-marker { display: none; }
+.lvt-theme-picker > summary:hover,
+.lvt-theme-picker[open] > summary {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.lvt-theme-picker-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  min-width: 240px;
+  padding: 0.35rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+  z-index: 1000;
+  backdrop-filter: none;
+}
+
+[data-md-color-scheme="slate"] .lvt-theme-picker-menu {
+  background: #1a2a44;
+  border-color: rgba(255,255,255,0.1);
+  color: #e6ebf5;
+}
+
+.lvt-theme-picker-menu button {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--md-default-fg-color);
+  font: inherit;
+  text-align: left;
+  transition: background 0.12s ease;
+}
+
+.lvt-theme-picker-menu button:hover {
+  background: var(--md-default-fg-color--lightest);
+}
+
+[data-md-color-scheme="slate"] .lvt-theme-picker-menu button:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.lvt-theme-picker-menu button.is-active {
+  background: var(--lvt-purple-100);
+  color: var(--lvt-purple-900);
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .lvt-theme-picker-menu button.is-active {
+  background: rgba(167, 139, 250, 0.2);
+  color: var(--lvt-purple-100);
+}
+
+.lvt-theme-picker-icon { font-size: 1.15rem; line-height: 1; }
+.lvt-theme-picker-label { font-size: 0.92rem; }
+.lvt-theme-picker-hint {
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+}
+.lvt-theme-picker-menu button.is-active .lvt-theme-picker-hint {
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* Hide the default Material palette toggle — we control the picker now. */
+.md-header [data-md-component="palette"] { display: none !important; }
+
+/* Credits strip — compact attribution shown above the hero. */
+.lvt-credits {
+  position: relative;
+  z-index: 2;
+  max-width: 980px;
+  margin: 0.75rem auto 1rem;
+  padding: 0.6rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--md-default-fg-color);
+  background: linear-gradient(90deg, rgba(237,233,254,0.35), rgba(251,113,133,0.2), rgba(237,233,254,0.35));
+  border-radius: 999px;
+}
+
+[data-md-color-scheme="slate"] .lvt-credits {
+  color: var(--lvt-purple-100);
+  background: linear-gradient(90deg, rgba(167,139,250,0.15), rgba(251,113,133,0.15), rgba(167,139,250,0.15));
+}
+.lvt-credits a {
+  color: var(--lvt-purple-700);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(124, 92, 255, 0.35);
+}
+.lvt-credits a:hover { border-bottom-style: solid; }
+
+[data-md-color-scheme="slate"] .lvt-credits a {
+  color: var(--lvt-purple-100);
+  border-bottom-color: rgba(237, 233, 254, 0.35);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .lvt-hero { padding: 2.5rem 1rem 2rem; }
+  .lvt-hero-logo { width: 64px; height: 64px; }
+  .lvt-features { grid-template-columns: 1fr; }
+}

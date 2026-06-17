@@ -1,43 +1,144 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
+<div class="lvt-hero" markdown>
+
+<img src="assets/logo.svg" alt="LUONVUITUOI-HONOR ROLL logo" class="lvt-hero-logo">
+
 # LUONVUITUOI-HONOR ROLL
 
-> Config-driven student honor-roll toolkit. Bring your results CSV/Excel/JSON + a config → ship a public honor roll (cards + table + stats), a student search, and an admin management surface to Vercel or Docker in an afternoon.
+<p class="lvt-hero-tagline">
+Config-driven student honor-roll toolkit. Bring your results CSV/Excel/JSON and a config — get a public honor roll with search, admin panel, and multi-competition galleries in minutes.
+</p>
 
-Sibling project of [**LUONVUITUOI-CERT**](https://github.com/Kein95/luonvuituoi-cert) — the certificate portal toolkit. Where CERT *issues and verifies* PDFs, HONOR ROLL **publishes and celebrates** the achievements.
+<div class="lvt-cta-row">
+  <a href="https://honor-roll-vercel-demo.vercel.app" class="lvt-btn lvt-btn-primary">🌟 Live Demo</a>
+  <a href="quickstart/" class="lvt-btn lvt-btn-primary">🚀 Quickstart (10 min)</a>
+  <a href="https://github.com/Kein95/luonvuituoi-honor-roll" class="lvt-btn lvt-btn-ghost" target="_blank" rel="noopener">⭐ View on GitHub</a>
+</div>
 
-## Why
+<div class="lvt-badges">
+  <img src="https://img.shields.io/github/v/release/Kein95/luonvuituoi-honor-roll?style=flat-square&color=7c5cff&label=release" alt="release">
+  <img src="https://img.shields.io/github/license/Kein95/luonvuituoi-honor-roll?style=flat-square&color=7c5cff" alt="license">
+  <img src="https://img.shields.io/github/actions/workflow/status/Kein95/luonvuituoi-honor-roll/test.yml?style=flat-square&color=7c5cff&label=tests" alt="tests">
+  <img src="https://img.shields.io/github/stars/Kein95/luonvuituoi-honor-roll?style=flat-square&color=fb7185" alt="stars">
+</div>
 
-You ran a competition (Demo Olympiad A, Demo Olympiad B, a school olympiad…) and now have a spreadsheet of medal winners. You need:
+</div>
 
-- A **public honor roll** where students, parents, and schools see the achievements, styled like a real award gallery.
-- A **student search** so anyone can look up a name and see every medal they've earned across editions.
-- An **admin surface** to add/correct/delete entries without touching files.
+## Why this exists
 
-This toolkit ships all three — config-driven, zero-code.
+Running a competition, awarding medals, hosting an olympiad? You typically need a public showcase where students see their achievements, parents confirm results, and schools track their medals — all searchable, styled beautifully, and easy to manage. **LUONVUITUOI-HONOR ROLL gives you all three**, deployable to Vercel's free tier or any Docker host, with zero boilerplate.
 
-## Features
+<div class="lvt-features" markdown>
 
-- :material-trophy: **Multi-competition / multi-year** — one config declares every competition, its subjects, and the editions you've run.
-- :material-medal: **Global medal registry** — define each medal once (rank, EN/VI label, color, icon); badges stay consistent everywhere.
-- :material-magnify: **Three surfaces** — honor roll, student search, admin.
-- :material-file-import: **Flexible ingest** — CSV / Excel / JSON, mapped through `data_mapping`.
-- :material-cellphone-link: **Animated, responsive UI** — desktop, tablet, mobile.
-- :material-translate: **i18n** — English + Vietnamese.
-- :material-rocket-launch: **Deploy-ready** — Vercel or Docker.
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🏆</span>
+### Multi-competition gallery
+Define one or many competitions across years. Each runs independently; students see all their medals across every edition.
+</div>
 
-## Reference demo
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🎖️</span>
+### Flexible medal registry
+Define each medal once (rank, label, color, icon). Badges stay consistent. CSV/Excel/JSON ingest.
+</div>
 
-`examples/demo-honor/` ships with the real **Demo Olympiad A 2025** results (66 awards across MATHS / ENGLISH / SCIENCE).
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🔍</span>
+### Public honor roll + search
+Beautiful card and table views. Visitors search by name or ID, see every achievement instantly.
+</div>
 
-```bash
-cd examples/demo-honor
-python prepare_demo.py
-lvt-honor import data/demo-2025.json --competition demo-a --year 2025 --replace
-lvt-honor dev
-```
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🛠️</span>
+### Admin surface built in
+Add, correct, or delete entries without touching files. Password-protected, audit log included.
+</div>
 
-## Quick links
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">⚡</span>
+### Deploy anywhere
+One-command Vercel deploy (free tier), production Dockerfile, docker-compose — pick your infra.
+</div>
 
-- [:material-fast-forward: Quickstart](quickstart.md)
-- [:material-cog: Configuration reference](config-reference.md)
-- [:material-sitemap: Architecture](architecture.md)
-- [:material-cloud: Deploy on Vercel](deploy-vercel.md) · [:material-docker: Deploy on Docker](deploy-docker.md)
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🌐</span>
+### Bilingual & mobile-ready
+English + Vietnamese. Responsive, animated UI that shines on desktop, tablet, phone.
+</div>
+
+</div>
+
+<div class="lvt-stats" markdown>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">10min</div>
+<div class="lvt-stat-label">First deploy</div>
+</div>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">0</div>
+<div class="lvt-stat-label">Boilerplate code</div>
+</div>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">$0</div>
+<div class="lvt-stat-label">Vercel free tier</div>
+</div>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">MIT</div>
+<div class="lvt-stat-label">License</div>
+</div>
+
+</div>
+
+## Getting started
+
+<div class="lvt-features" markdown>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🚀</span>
+### [Quickstart →](quickstart.md)
+Deploy your first honor roll in 10 minutes. CLI scaffold, config walk-through, local run, Vercel push.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">⚙️</span>
+### [Configuration →](config-reference.md)
+Every `honor.config.json` field + environment variable documented. Learn how to define competitions, medals, and rules.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🏛️</span>
+### [Architecture →](architecture.md)
+How the pieces fit — handlers, data model, search index, admin auth, and UI layers.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🔐</span>
+### [Security →](security.md)
+Hardening checklist for production. Admin auth, data validation, rate limiting.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🛠️</span>
+### [Operations →](operations.md)
+Health probe, log triage, backup strategy, incident checklist.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">❓</span>
+### [Troubleshooting →](troubleshooting.md)
+Common failure modes, data import issues, and their fixes.
+</div>
+
+</div>
+
+## Sibling projects
+
+- **[LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert)** — certificate portal toolkit. Issues and verifies PDF certificates with QR codes and admin panel. Where HONOR ROLL celebrates achievements, CERT proves them.

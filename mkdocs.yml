@@ -10,6 +10,9 @@ copyright: Copyright &copy; 2026 LUONVUITUOI-HONOR ROLL — MIT License
 theme:
   name: material
   language: en
+  custom_dir: overrides
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
   icon:
     repo: fontawesome/brands/github
     edit: material/pencil
@@ -18,10 +21,12 @@ theme:
     text: Inter
     code: JetBrains Mono
   features:
+    # navigation.instant incompatible with mkdocs-static-i18n language switcher.
     - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
+    - navigation.expand
     - navigation.top
     - navigation.footer
     - toc.follow
@@ -30,22 +35,37 @@ theme:
     - search.share
     - content.code.copy
     - content.code.annotate
+    - content.tabs.link
     - content.action.edit
+    - content.tooltips
   palette:
+    # Auto — follows OS preference. Must come first; no scheme key.
+    - media: "(prefers-color-scheme)"
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: purple
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/weather-night
+        icon: material/weather-sunny
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: purple
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
+        icon: material/weather-night
+        name: Switch to system preference
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/theme-picker.js
 
 extra:
   generator: false
@@ -60,6 +80,9 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/Kein95/luonvuituoi-honor-roll
       name: GitHub repository
+    - icon: fontawesome/brands/python
+      link: https://github.com/Kein95/luonvuituoi-honor-roll/tree/main/packages
+      name: Python packages
 
 nav:
   - Home: index.md
@@ -85,6 +108,7 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+      permalink_title: Anchor link
   - pymdownx.details
   - pymdownx.superfences:
       custom_fences:
@@ -98,13 +122,20 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.caret
+  - pymdownx.tilde
+  - pymdownx.mark
+  - pymdownx.keys
 
 plugins:
   - search:
-      separator: '[\s\u200b\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      separator: '[\s​\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - i18n:
       docs_structure: suffix
       languages:
