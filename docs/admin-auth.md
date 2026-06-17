@@ -11,7 +11,7 @@ The honor roll uses a single password-based login scheme, checked with a timing-
 
 ## Password configuration
 
-**Required.** The admin password is read from the environment only — never from the committed config:
+**Required.** The admin password is read from the environment only, never from the committed config:
 
 ```bash
 export ADMIN_PASSWORD="your-secure-password-here"
@@ -23,15 +23,15 @@ Change the password by restarting the application with a new `ADMIN_PASSWORD` va
 
 ### Timing-safe comparison
 
-The password is checked using `hmac.compare_digest()` — a constant-time comparison that prevents an observer from deducing password length or content via response-time analysis. Even for an invalid password, the server performs the same cryptographic work before rejecting the login.
+The password is checked using `hmac.compare_digest()`, a constant-time comparison that prevents an observer from deducing password length or content via response-time analysis. Even for an invalid password, the server performs the same cryptographic work before rejecting the login.
 
 ### Session cookies
 
 Sessions are stored in signed Flask cookies with the following protections:
 
-- **`SESSION_COOKIE_HTTPONLY=True`** — the session token is never accessible to JavaScript, closing XSS exfiltration paths.
-- **`SESSION_COOKIE_SAMESITE="Lax"`** — cookies are not sent on cross-site requests, mitigating CSRF.
-- **`SECRET_KEY`** — signs the cookie. If not set, a random ephemeral key is generated (sessions are lost on restart). For production, set a stable key:
+- **`SESSION_COOKIE_HTTPONLY=True`**: The session token is never accessible to JavaScript, closing XSS exfiltration paths.
+- **`SESSION_COOKIE_SAMESITE="Lax"`**: Cookies are not sent on cross-site requests, mitigating CSRF.
+- **`SECRET_KEY`**: Signs the cookie. If not set, a random ephemeral key is generated (sessions are lost on restart). For production, set a stable key:
 
 ```bash
 export SECRET_KEY="$(python -c 'import secrets; print(secrets.token_hex(32))')"
@@ -82,9 +82,9 @@ All admin forms (`<form method="POST">`) include a hidden CSRF token field. The 
 
 Every admin operation is logged:
 
-- **Login success** — timestamp, IP address, session start.
-- **Login failure** — timestamp, IP address, reason (incorrect password, lockout, etc.).
-- **Admin write** — timestamp, IP, action (add achievement, delete achievement), target student ID.
+- **Login success**: Timestamp, IP address, session start.
+- **Login failure**: Timestamp, IP address, reason (incorrect password, lockout, etc.).
+- **Admin write**: Timestamp, IP, action (add achievement, delete achievement), and target student ID.
 
 Logs are persisted in the SQLite database (`admin_activity` table) and are readable via SQL:
 

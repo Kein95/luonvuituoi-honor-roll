@@ -11,7 +11,7 @@ hide:
 # LUONVUITUOI-HONOR ROLL
 
 <p class="lvt-hero-tagline">
-Config-driven student honor-roll toolkit. Bring your results CSV/Excel/JSON and a config — get a public honor roll with search, admin panel, and multi-competition galleries in minutes.
+Config-driven student honor-roll toolkit. Bring your results CSV/Excel/JSON and a config to obtain a public honor roll with search, admin panel, and multi-competition galleries in minutes.
 </p>
 
 <div class="lvt-cta-row">
@@ -32,7 +32,7 @@ Config-driven student honor-roll toolkit. Bring your results CSV/Excel/JSON and 
 
 ## Why this exists
 
-Running a competition, awarding medals, hosting an olympiad? You typically need a public showcase where students see their achievements, parents confirm results, and schools track their medals — all searchable, styled beautifully, and easy to manage. **LUONVUITUOI-HONOR ROLL gives you all three**, deployable to Vercel's free tier or any Docker host, with zero boilerplate.
+Running a competition, awarding medals, or hosting an olympiad requires a public showcase where students see their achievements, parents confirm results, and schools track their medals, all searchable, styled beautifully, and easy to manage. **LUONVUITUOI-HONOR ROLL delivers all three capabilities**, deployable to Vercel's free tier or any Docker host, with zero boilerplate.
 
 <div class="lvt-features" markdown>
 
@@ -63,7 +63,7 @@ Add, correct, or delete entries without touching files. Password-protected, audi
 <div class="lvt-feature" markdown>
 <span class="lvt-feature-icon">⚡</span>
 ### Deploy anywhere
-One-command Vercel deploy (free tier), production Dockerfile, docker-compose — pick your infra.
+One-command Vercel deploy (free tier), production Dockerfile, or docker-compose. Select your preferred infrastructure.
 </div>
 
 <div class="lvt-feature" markdown>
@@ -117,7 +117,7 @@ Every `honor.config.json` field + environment variable documented. Learn how to 
 <div class="lvt-feature" markdown>
 <span class="lvt-feature-icon">🏛️</span>
 ### [Architecture →](architecture.md)
-How the pieces fit — handlers, data model, search index, admin auth, and UI layers.
+How the pieces fit: handlers, data model, search index, admin auth, and UI layers.
 </div>
 
 <div class="lvt-feature" markdown>
@@ -142,4 +142,4 @@ Common failure modes, data import issues, and their fixes.
 
 ## Sibling projects
 
-- **[LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert)** — certificate portal toolkit. Issues and verifies PDF certificates with QR codes and admin panel. Where HONOR ROLL celebrates achievements, CERT proves them.
+- **[LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert)**: A certificate portal toolkit. Issues and verifies PDF certificates with QR codes and admin panel. Whereas HONOR ROLL celebrates achievements, CERT proves them.

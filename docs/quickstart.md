@@ -70,6 +70,6 @@ lvt-honor seed --count 60
 
 ## Next steps
 
-- [:material-cog: Configuration reference](config-reference.md) — every `honor.config.json` key explained.
-- [:material-sitemap: Architecture](architecture.md) — how the layers fit.
-- [:material-cloud: Deploy](deploy-vercel.md) — ship to Vercel or Docker.
+- [:material-cog: Configuration reference](config-reference.md): Every `honor.config.json` key explained.
+- [:material-sitemap: Architecture](architecture.md): How the layers fit together.
+- [:material-cloud: Deploy](deploy-vercel.md): Deploy to Vercel or Docker.

@@ -11,7 +11,7 @@ hide:
 # LUONVUITUOI-HONOR ROLL
 
 <p class="lvt-hero-tagline">
-Bộ công cụ bảng vinh danh học sinh theo cấu hình. Chỉ cần file kết quả CSV/Excel/JSON và một file cấu hình — có ngay bảng vinh danh công khai kèm tra cứu, trang quản trị, và phòng trưng bày đa kỳ thi trong vài phút.
+Bộ công cụ bảng vinh danh học sinh theo cấu hình. Chỉ cần file kết quả CSV/Excel/JSON và một file cấu hình, có ngay bảng vinh danh công khai kèm tra cứu, trang quản trị, và phòng trưng bày đa kỳ thi trong vài phút.
 </p>
 
 <div class="lvt-cta-row">
@@ -32,7 +32,7 @@ Bộ công cụ bảng vinh danh học sinh theo cấu hình. Chỉ cần file k
 
 ## Vì sao có dự án này
 
-Tổ chức một cuộc thi, trao huy chương, chạy một kỳ olympic? Bạn thường cần một nơi trưng bày công khai để học sinh thấy thành tích, phụ huynh xác nhận kết quả, và nhà trường theo dõi huy chương — tất cả đều tra cứu được, trình bày đẹp, dễ quản lý. **LUONVUITUOI-HONOR ROLL cho bạn cả ba**, triển khai được lên gói miễn phí của Vercel hoặc bất kỳ máy chủ Docker nào, không cần viết khung sườn.
+Tổ chức một cuộc thi, trao huy chương, chạy một kỳ olympic? Bạn thường cần một nơi trưng bày công khai để học sinh thấy thành tích, phụ huynh xác nhận kết quả, và nhà trường theo dõi huy chương. Tất cả đều tra cứu được, trình bày đẹp, dễ quản lý. **LUONVUITUOI-HONOR ROLL cho bạn cả ba**, triển khai được lên gói miễn phí của Vercel hoặc bất kỳ máy chủ Docker nào, không cần viết khung sườn.
 
 <div class="lvt-features" markdown>
 
@@ -63,7 +63,7 @@ Thêm, sửa, xoá mục mà không cần đụng tới file. Bảo vệ bằng 
 <div class="lvt-feature" markdown>
 <span class="lvt-feature-icon">⚡</span>
 ### Triển khai ở đâu cũng được
-Một lệnh deploy Vercel (gói miễn phí), Dockerfile sản xuất, docker-compose — tuỳ hạ tầng của bạn.
+Một lệnh deploy Vercel (gói miễn phí), Dockerfile sản xuất, docker-compose tuỳ theo hạ tầng của bạn.
 </div>
 
 <div class="lvt-feature" markdown>
@@ -117,7 +117,7 @@ Mọi trường trong `honor.config.json` + biến môi trường đều đượ
 <div class="lvt-feature" markdown>
 <span class="lvt-feature-icon">🏛️</span>
 ### [Kiến trúc →](architecture.md)
-Các mảnh ghép — handler, mô hình dữ liệu, chỉ mục tra cứu, xác thực quản trị, và lớp giao diện.
+Các mảnh ghép gồm handler, mô hình dữ liệu, chỉ mục tra cứu, xác thực quản trị, và lớp giao diện.
 </div>
 
 <div class="lvt-feature" markdown>
@@ -142,4 +142,4 @@ Các lỗi thường gặp, vấn đề nạp dữ liệu, và cách xử lý.
 
 ## Dự án anh em
 
-- **[LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert)** — bộ công cụ cổng chứng chỉ. Cấp phát và xác thực chứng chỉ PDF kèm mã QR và trang quản trị. HONOR ROLL vinh danh thành tích, còn CERT chứng minh chúng.
+- **[LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert)**: bộ công cụ cổng chứng chỉ. Cấp phát và xác thực chứng chỉ PDF kèm mã QR và trang quản trị. HONOR ROLL vinh danh thành tích, còn CERT chứng minh chúng.

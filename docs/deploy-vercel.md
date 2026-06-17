@@ -10,7 +10,7 @@ cd my-awards
 lvt-honor import results.csv --competition demo-a --year 2025 --replace
 ```
 
-The `data/<slug>.db` is committed alongside the config so Vercel serves it. (For large rollouts, swap SQLite for a hosted DB — the query engine takes a `db_path`, so a connection-pool adapter is a small change.)
+The `data/<slug>.db` is committed alongside the config for Vercel to serve. (For large rollouts, swap SQLite for a hosted database; the query engine accepts a `db_path`, so a connection-pool adapter represents a small change.)
 
 ## 2. Deploy
 

@@ -41,5 +41,5 @@ Open `http://localhost:8000` for the honor roll, `/search`, and `/admin`.
 - **Non-root**: the container runs as a `app:app` system user.
 - **Healthcheck**: probes `/health` (dependency-free) every 30s.
 - **Single worker**: `WEB_CONCURRENCY=1` because the default SQLite store isn't multi-process safe. To scale horizontally, move the store to a shared host and bump `WEB_CONCURRENCY`.
-- **Editing config**: change `project/honor.config.json` on the host and `docker compose restart` — no rebuild needed.
+- **Editing config**: Change `project/honor.config.json` on the host and run `docker compose restart`. No rebuild is needed.
 - **Admin surface**: put the container behind a reverse proxy (Nginx / Caddy / Traefik) with TLS + auth before exposing `/admin` publicly.

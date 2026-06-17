@@ -1,6 +1,6 @@
 # luonvuitoi-honor
 
-Config-driven student honor-roll **engine** — config validation, SQLite storage, ingest, query engine, Jinja2 UI, and the admin write API. Web-framework-agnostic: the `luonvuitoi-honor-cli` package wires it into Flask; a future serverless handler can reuse every pure function.
+Config-driven student honor-roll **engine**: config validation, SQLite storage, ingest, query engine, Jinja2 UI, and the admin write API. Web-framework-agnostic. The `luonvuitoi-honor-cli` package wires it into Flask; a future serverless handler can reuse every pure function.
 
 Install from the monorepo root:
 

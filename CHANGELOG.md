@@ -6,31 +6,31 @@ All notable changes to LUONVUITUOI-HONOR ROLL. Format follows [Keep a Changelog]
 
 ### Added
 
-- **Login brute-force rate limiting** — per-IP guard locks the login form after `ADMIN_LOGIN_MAX_ATTEMPTS` (default 5) failed attempts for `ADMIN_LOGIN_LOCKOUT_SECONDS` (default 60); returns HTTP 429 + `Retry-After` while locked. In-process (single-instance) by design.
-- **CSRF protection on admin writes** — per-session token, hidden field on the login form and `X-CSRF-Token` header on the admin write API; missing/invalid token → 403 (API) or 400 (login form). Token rotates on login/logout.
-- **Audit logging** — login success/failure/lockout and admin add/delete are appended to an `admin_activity` SQLite table (timestamp, action, IP, target).
-- **Docs parity with LUONVUITUOI-CERT** — all docs now bilingual (EN + VI); new guides: user guide, admin auth, operations, security, troubleshooting.
+- **Login brute-force rate limiting**: Per-IP guard locks the login form after `ADMIN_LOGIN_MAX_ATTEMPTS` (default 5) failed attempts for `ADMIN_LOGIN_LOCKOUT_SECONDS` (default 60); returns HTTP 429 + `Retry-After` while locked. In-process (single-instance) by design.
+- **CSRF protection on admin writes**: Per-session token, hidden field on the login form and `X-CSRF-Token` header on the admin write API; missing/invalid token returns 403 (API) or 400 (login form). Token rotates on login and logout.
+- **Audit logging**: Login success/failure/lockout and admin add/delete are appended to an `admin_activity` SQLite table (timestamp, action, IP, target).
+- **Docs parity with LUONVUITUOI-CERT**: All docs now bilingual (EN + VI); new guides include user guide, admin auth, operations, security, and troubleshooting.
 
 ## [0.1.0] - 2026-06-15
 
-Initial public release. Config-driven student honor-roll toolkit — the publishing sibling of [LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert).
+Initial public release. Config-driven student honor-roll toolkit. This is the publishing sibling of [LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert).
 
 ### Added
 
-- **Config-driven honor-roll engine** (`packages/core/luonvuitoi_honor`) — Pydantic `HonorConfig` models with cross-field validation (editions reference declared competitions, medals are registered, IDs/codes/ranks unique), JSON loader with readable error messages, and an exported `honor.schema.json` for editor autocomplete.
-- **SQLite store** — a single flat `achievements` table (one row per award) with filter indexes. The natural unit for an honor roll: a student with three medals produces three rows, and every public listing is a single indexed SELECT rather than a fan-out across per-edition tables.
-- **Ingest layer** — CSV / Excel / JSON readers with a projection orchestrator that normalises medals to uppercase, skips rows without a name or recognised medal, and supports `--replace` for idempotent per-edition re-imports.
-- **Query engine** — medal-ranked listing (most prestigious first) with competition/year/medal/subject/school filters + facets, case-insensitive student name search across all editions, dashboard stats (totals + per-medal + top schools), and an admin listing.
-- **Public surfaces** — animated, responsive honor roll (`/`) with cards + table + stat dashboard + competition/year/medal/subject/school filters; student search (`/search`); all-time **Hall of Fame** (`/hall-of-fame`); **All-Star Teams** (`/teams`); and a password-gated admin (`/login` → `/admin`, add/delete via `/api/admin/*`). Student cards open a detail popup with per-student and whole-board PNG export.
-- **Student records** carry an optional grade and photo (shown as a round avatar); upcoming editions render a "coming soon" banner; team/group awards have their own configurable registry.
-- **Admin authentication** — password login (`ADMIN_PASSWORD`) over a signed-cookie session (`SECRET_KEY`, `SameSite=Lax`); `/admin` and the write API redirect/401 until authenticated. Registry codes are validated to safe identifiers (no SQL-injection path).
-- **Deploy hardening (env-driven)** — `FORCE_HSTS` (HSTS header), `TRUST_PROXY_HEADERS` (ProxyFix), `ALLOWED_ORIGINS` (CORS allow-list for `/api/*`), `PUBLIC_BASE_URL` (canonical / og:url).
-- **Multi-competition / multi-year** — one config declares every competition (Demo Olympiad A, Demo Olympiad B, …), their subjects, and editions (competition + year). A global medal registry (rank, EN/VI label, color, icon) keeps badges consistent across competitions.
-- **Bilingual UI (VI / EN)** — auto-detects the browser language (`Accept-Language`), with a manual VI|EN toggle remembered via cookie and English fallback for missing keys; medal / subject / competition labels and taglines all localise.
-- **CLI** (`lvt-honor`) — `init` (atomic scaffold with validation round-trip), `import` (CSV/Excel/JSON achievements, `--replace`), `import-teams` (team awards), `seed` (fake data), `dev` (Flask server with per-request CSP nonce + security headers).
-- **Reference demo** (`examples/demo-honor/`) with synthetic, anonymised placeholder data generated by `prepare_demo.py` (achievements + teams) — no real personal data.
-- **Deploy-ready** — Vercel serverless (`api/index.py`) and Docker (`wsgi.py` + `Dockerfile` + `docker-compose.yml`, non-root user, `/health` probe).
-- **CI/CD** — GitHub Actions `test.yml` (py 3.11 + 3.12 matrix, scaffold round-trip smoke), `lint.yml` (ruff + mypy), `publish-docs.yml` (MkDocs Material → GitHub Pages). Dependabot for pip + github-actions + docker.
-- **Test suite** — 98 tests: config models (positive + negative for every invariant, incl. unsafe-code rejection), loader, ingest (readers + orchestrator + teams), queries (filtering/ranking/search/stats/hall-of-fame/teams), API (add/delete/grade/photo validation), UI renderers, locale, schema sync, CLI smoke, and E2E tests hitting the full Flask surface (auth, HSTS/CORS, language switch).
-- **Docs** — MkDocs Material site with EN + VI, covering quickstart, configuration reference, architecture, and deploy guides.
-- **Governance** — `SECURITY.md` (threat model + hardening checklist), `CONTRIBUTING.md`, this changelog.
+- **Config-driven honor-roll engine** (`packages/core/luonvuitoi_honor`): Pydantic `HonorConfig` models with cross-field validation (editions reference declared competitions, medals are registered, IDs/codes/ranks unique), JSON loader with readable error messages, and an exported `honor.schema.json` for editor autocomplete.
+- **SQLite store**: A single flat `achievements` table (one row per award) with filter indexes. The natural unit for an honor roll is that a student with three medals produces three rows, and every public listing is a single indexed SELECT rather than a fan-out across per-edition tables.
+- **Ingest layer**: CSV / Excel / JSON readers with a projection orchestrator that normalizes medals to uppercase, skips rows without a name or recognized medal, and supports `--replace` for idempotent per-edition re-imports.
+- **Query engine**: Medal-ranked listing (most prestigious first) with competition/year/medal/subject/school filters and facets, case-insensitive student name search across all editions, dashboard stats (totals plus per-medal plus top schools), and an admin listing.
+- **Public surfaces**: Animated, responsive honor roll (`/`) with cards, table, stat dashboard, and competition/year/medal/subject/school filters; student search (`/search`); all-time **Hall of Fame** (`/hall-of-fame`); **All-Star Teams** (`/teams`); and a password-gated admin (`/login` → `/admin`, add/delete via `/api/admin/*`). Student cards open a detail popup with per-student and whole-board PNG export.
+- **Student records** carry an optional grade and photo (shown as a round avatar). Upcoming editions render a "coming soon" banner, and team/group awards have their own configurable registry.
+- **Admin authentication**: Password login (`ADMIN_PASSWORD`) over a signed-cookie session (`SECRET_KEY`, `SameSite=Lax`); `/admin` and the write API redirect/401 until authenticated. Registry codes are validated to safe identifiers (no SQL-injection path).
+- **Deploy hardening (env-driven)**: `FORCE_HSTS` (HSTS header), `TRUST_PROXY_HEADERS` (ProxyFix), `ALLOWED_ORIGINS` (CORS allow-list for `/api/*`), `PUBLIC_BASE_URL` (canonical and og:url).
+- **Multi-competition / multi-year**: One config declares every competition (Demo Olympiad A, Demo Olympiad B, and so on), their subjects, and editions (competition and year). A global medal registry (rank, EN/VI label, color, icon) keeps badges consistent across competitions.
+- **Bilingual UI (VI / EN)**: Auto-detects the browser language (`Accept-Language`), with a manual VI|EN toggle remembered via cookie and English fallback for missing keys. Medal, subject, and competition labels and taglines all localize.
+- **CLI** (`lvt-honor`): `init` (atomic scaffold with validation round-trip), `import` (CSV/Excel/JSON achievements, `--replace`), `import-teams` (team awards), `seed` (fake data), `dev` (Flask server with per-request CSP nonce and security headers).
+- **Reference demo** (`examples/demo-honor/`) with synthetic, anonymized placeholder data generated by `prepare_demo.py` (achievements and teams). No real personal data is included.
+- **Deploy-ready**: Vercel serverless (`api/index.py`) and Docker (`wsgi.py`, `Dockerfile`, `docker-compose.yml`, non-root user, `/health` probe).
+- **CI/CD**: GitHub Actions `test.yml` (py 3.11 and 3.12 matrix, scaffold round-trip smoke), `lint.yml` (ruff and mypy), `publish-docs.yml` (MkDocs Material to GitHub Pages). Dependabot for pip, github-actions, and docker.
+- **Test suite**: 98 tests covering config models (positive and negative cases for every invariant, including unsafe-code rejection), loader, ingest (readers, orchestrator, teams), queries (filtering, ranking, search, stats, hall-of-fame, teams), API (add/delete/grade/photo validation), UI renderers, locale, schema sync, CLI smoke, and E2E tests hitting the full Flask surface (auth, HSTS/CORS, language switch).
+- **Docs**: MkDocs Material site with EN and VI, covering quickstart, configuration reference, architecture, and deploy guides.
+- **Governance**: `SECURITY.md` (threat model and hardening checklist), `CONTRIBUTING.md`, and this changelog.

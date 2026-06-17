@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-A student honor-roll portal scaffolded by `lvt-honor`.
+A student honor-roll portal scaffolded by `lvt-honor`
 
 ## Quickstart
 
@@ -8,14 +8,14 @@ A student honor-roll portal scaffolded by `lvt-honor`.
 pip install -r requirements.txt
 lvt-honor import <your-results.csv> --competition demo-a --year 2025 --replace
 lvt-honor dev
-# → http://127.0.0.1:5000
+# Access at http://127.0.0.1:5000
 ```
 
 ## Files
 
-- `honor.config.json` — the whole portal config (competitions, medals, editions, display).
-- `data/` — the SQLite store (`{{ project_slug }}.db`) is created on first import/seed.
-- `api/index.py` — Vercel serverless entrypoint.
+- `honor.config.json`: The whole portal config (competitions, medals, editions, display).
+- `data/`: The SQLite store (`{{ project_slug }}.db`) is created on first import/seed.
+- `api/index.py`: Vercel serverless entrypoint.
 
 ## Data format
 
@@ -24,5 +24,5 @@ Minimal columns: `name`, `medal`. Optional: `candidate_no`, `school`, `rank`, `s
 
 ## Deploy
 
-- **Vercel** — `vercel deploy` (uses `api/index.py`).
-- **Docker** — build from the repo-root `Dockerfile`.
+- **Vercel**: Run `vercel deploy` (uses `api/index.py`).
+- **Docker**: Build from the repo-root `Dockerfile`.

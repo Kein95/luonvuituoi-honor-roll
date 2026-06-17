@@ -10,7 +10,7 @@ cd my-awards
 lvt-honor import results.csv --competition demo-a --year 2025 --replace
 ```
 
-`data/<slug>.db` được cam kết cùng với cấu hình vì vậy Vercel phục vụ nó. (Đối với các triển khai quy mô lớn, hãy hoán đổi SQLite cho cơ sở dữ liệu được lưu trữ — công cụ truy vấn lấy `db_path`, vì vậy một bộ điều hợp nhóm kết nối là một thay đổi nhỏ.)
+`data/<slug>.db` được cam kết cùng với cấu hình để Vercel phục vụ nó. Đối với các triển khai quy mô lớn, hãy hoán đổi SQLite cho cơ sở dữ liệu được lưu trữ. Công cụ truy vấn lấy `db_path`, vì vậy một bộ điều hợp nhóm kết nối chỉ là một thay đổi nhỏ.
 
 ## 2. Triển khai
 

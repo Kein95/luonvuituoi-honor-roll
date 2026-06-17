@@ -4,8 +4,8 @@ Cách sử dụng cổng thông tin bảng vinh danh: duyệt thư viện, tìm 
 
 ## Ai đọc cái này
 
-- **Khách truy cập** (học sinh, phụ huynh, nhà tuyển dụng tiềm năng) — xem phần "Duyệt bảng vinh danh".
-- **Nhà điều hành** (nhân viên cuộc thi, quản trị viên đào tạo) — xem phần "Bảng điều khiển quản trị".
+- **Khách truy cập** (học sinh, phụ huynh, nhà tuyển dụng tiềm năng): xem phần "Duyệt bảng vinh danh".
+- **Nhà điều hành** (nhân viên cuộc thi, quản trị viên đào tạo): xem phần "Bảng điều khiển quản trị".
 
 ## Duyệt bảng vinh danh
 
@@ -15,10 +15,10 @@ URL: `https://<your-portal>/`
 
 Bảng vinh danh hiển thị tất cả các thành tích theo mặc định. Sử dụng các menu thả xuống bộ lọc để thu hẹp chế độ xem:
 
-1. **Cuộc thi** — chọn cuộc thi hay cuộc đua nào để xem.
-2. **Năm** — chọn năm/mùa.
-3. **Huy chương** — lọc theo cấp độ giải thưởng (Vàng, Bạc, Đồng, Công lao hoặc các cấp tùy chỉnh).
-4. **Môn học** — nếu cuộc thi theo dõi các môn học (TOÁN, TIẾNG ANH, v.v.), hãy lọc theo môn.
+1. **Cuộc thi**: chọn cuộc thi hay cuộc đua nào để xem.
+2. **Năm**: chọn năm/mùa.
+3. **Huy chương**: lọc theo cấp độ giải thưởng (Vàng, Bạc, Đồng, Công lao hoặc các cấp tùy chỉnh).
+4. **Môn học**: nếu cuộc thi theo dõi các môn học (TOÁN, TIẾNG ANH, v.v.), hãy lọc theo môn.
 
 Nhấp **Đặt lại** để xóa tất cả các bộ lọc và hiển thị tất cả các bản ghi.
 
@@ -26,9 +26,9 @@ Nhấp **Đặt lại** để xóa tất cả các bộ lọc và hiển thị t
 
 Cài đặt `display.layout` kiểm soát cách kết quả được hiển thị:
 
-- **Thẻ** — chế độ xem thư viện với ảnh, tên, trường học, xếp hạng và huy chương của học sinh.
-- **Bảng** — chế độ xem bảng dày đặc hiển thị tất cả các cột cùng một lúc.
-- **Cả hai** — các tab để chuyển đổi giữa hai chế độ xem.
+- **Thẻ**: chế độ xem thư viện với ảnh, tên, trường học, xếp hạng và huy chương của học sinh.
+- **Bảng**: chế độ xem bảng dày đặc hiển thị tất cả các cột cùng một lúc.
+- **Cả hai**: các tab để chuyển đổi giữa hai chế độ xem.
 
 ## Trang tìm kiếm
 
@@ -71,10 +71,10 @@ URL: `https://<your-portal>/admin`
 
 Truy cập yêu cầu mật khẩu. Bề mặt quản trị cho phép bạn:
 
-- **Thêm thành tích** — tải lên tệp CSV/Excel/JSON để nhập các bản ghi học sinh mới.
-- **Xóa thành tích** — loại bỏ các mục nhập không chính xác.
-- **Xem số liệu thống kê** — tổng số học sinh, huy chương trên từng cấp, cuộc thi, năm.
-- **Quản lý cấu hình** — chỉnh sửa `honor.config.json` qua giao diện web (dự kiến; hiện tại qua CLI).
+- **Thêm thành tích**: tải lên tệp CSV/Excel/JSON để nhập các bản ghi học sinh mới.
+- **Xóa thành tích**: loại bỏ các mục nhập không chính xác.
+- **Xem số liệu thống kê**: tổng số học sinh, huy chương trên từng cấp, cuộc thi, năm.
+- **Quản lý cấu hình**: chỉnh sửa `honor.config.json` qua giao diện web (dự kiến; hiện tại qua CLI).
 
 ### Đăng nhập
 

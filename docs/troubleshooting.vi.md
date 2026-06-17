@@ -148,7 +148,7 @@ Ví dụ:
 
 **Sửa chữa:**
 
-1. Kiểm tra các bộ lọc trên trang chủ — chúng có thể làm hẹp chế độ xem.
+1. Kiểm tra các bộ lọc trên trang chủ. Chúng có thể làm hẹp chế độ xem.
 2. Sử dụng bảng điều khiển quản trị để xác minh học sinh có trong cơ sở dữ liệu:
 
 ```bash
@@ -180,7 +180,7 @@ sqlite3 data/honor.db "SELECT DISTINCT year FROM achievements WHERE competition_
 
 **Sửa chữa:**
 
-1. Kiểm tra `data_mapping` trong cấu hình — `photo_col` sẽ chỉ đến cột CSV chính xác.
+1. Kiểm tra `data_mapping` trong cấu hình. `photo_col` sẽ chỉ đến cột CSV chính xác.
 2. Xác minh URL ảnh là tuyệt đối (bắt đầu bằng `http://`, `https://` hoặc `data:image/`).
 3. Kiểm tra rằng các URL vẫn hợp lệ:
 
@@ -235,7 +235,7 @@ lvt-honor dev
 **Sửa chữa:**
 
 1. Mở DevTools trình duyệt (F12) và kiểm tra Console để tìm lỗi.
-2. Kiểm tra tab Network — các yêu cầu đến `/api/admin/*` có trả về 200 không?
+2. Kiểm tra tab Network. Các yêu cầu đến `/api/admin/*` có trả về 200 không?
 3. Thử xóa cookie và đăng nhập lại:
 
 ```bash
@@ -390,11 +390,11 @@ echo $ADMIN_PASSWORD
 
 Nếu không có giải pháp nào hoạt động:
 
-1. **Kiểm tra nhật ký** — cả nhật ký ứng dụng và nhật ký hệ thống (`docker logs`, `vercel logs --follow`).
-2. **Đọc thông báo lỗi cẩn thận** — nó thường gợi ý nguyên nhân gốc.
-3. **Cô lập vấn đề** — đó là trong quá trình thiết lập, nhập, duyệt hay triển khai?
-4. **Tìm kiếm các vấn đề GitHub** — vấn đề của bạn có thể được ghi lại.
-5. **Yêu cầu trợ giúp** — mở Thảo luận hoặc vấn đề GitHub với:
+1. **Kiểm tra nhật ký**: kiểm tra cả nhật ký ứng dụng và nhật ký hệ thống (`docker logs`, `vercel logs --follow`).
+2. **Đọc thông báo lỗi cẩn thận**: nó thường gợi ý nguyên nhân gốc.
+3. **Cô lập vấn đề**: đó là trong quá trình thiết lập, nhập, duyệt hay triển khai?
+4. **Tìm kiếm các vấn đề GitHub**: vấn đề của bạn có thể được ghi lại.
+5. **Yêu cầu trợ giúp**: mở Thảo luận hoặc vấn đề GitHub với:
    - Phiên bản Python (`python --version`)
    - Hệ điều hành và môi trường (Docker, Vercel, dev cục bộ)
    - Các bước để tái tạo

@@ -148,7 +148,7 @@ Example:
 
 **Fix:**
 
-1. Check the filters on the home page — they might be narrowing the view.
+1. Check the filters on the home page; they may be narrowing the view.
 2. Use the admin panel to verify the student is in the database:
 
 ```bash
@@ -180,7 +180,7 @@ sqlite3 data/honor.db "SELECT DISTINCT year FROM achievements WHERE competition_
 
 **Fix:**
 
-1. Check the `data_mapping` in the config — `photo_col` should point to the correct CSV column.
+1. Check the `data_mapping` in the config; `photo_col` should point to the correct CSV column.
 2. Verify photo URLs are absolute (start with `http://`, `https://`, or `data:image/`).
 3. Check that the URLs are still valid:
 
@@ -235,7 +235,7 @@ lvt-honor dev
 **Fix:**
 
 1. Open browser DevTools (F12) and check the Console for errors.
-2. Check the Network tab — are requests to `/api/admin/*` returning 200?
+2. Check the Network tab to determine if requests to `/api/admin/*` are returning 200.
 3. Try clearing cookies and logging in again:
 
 ```bash
@@ -390,11 +390,11 @@ echo $ADMIN_PASSWORD
 
 If none of these solutions work:
 
-1. **Check the logs** — both the application logs and system logs (`docker logs`, `vercel logs --follow`).
-2. **Read the error message carefully** — it often hints at the root cause.
-3. **Isolate the issue** — is it during setup, import, browsing, or deployment?
-4. **Search the GitHub issues** — your problem might be documented.
-5. **Ask for help** — open a GitHub Discussion or issue with:
+1. **Check the logs**: Review both application logs and system logs (`docker logs`, `vercel logs --follow`).
+2. **Read the error message carefully**: It often hints at the root cause.
+3. **Isolate the issue**: Determine whether the problem occurs during setup, import, browsing, or deployment.
+4. **Search the GitHub issues**: Your problem may already be documented.
+5. **Ask for help**: Open a GitHub Discussion or issue with the following information:
    - Python version (`python --version`)
    - OS and environment (Docker, Vercel, local dev)
    - Steps to reproduce

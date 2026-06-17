@@ -27,7 +27,7 @@ Những thông báo to lớn đáng để cảnh báo:
 | `luonvuitoi_honor_cli.server.app` | `ADMIN_PASSWORD not set` | Đăng nhập quản trị bị tắt. Đặt biến env để bật nó. |
 | `luonvuitoi_honor.config` | `Cross-field validation failed` | `honor.config.json` có lỗi cấu trúc (ví dụ: một huy chương được tham chiếu không tồn tại). Cổng thông tin sẽ không khởi động. |
 
-Các lỗi được xử lý (tìm kiếm 404, bộ lọc không hợp lệ) **không** được ghi lại — chúng là lưu lượng bình thường.
+Các lỗi được xử lý (tìm kiếm 404, bộ lọc không hợp lệ) không được ghi lại. Chúng là lưu lượng bình thường.
 
 ## Cơ sở dữ liệu
 
@@ -35,10 +35,10 @@ Cổng thông tin lưu trữ các thành tích trong cơ sở dữ liệu SQLite
 
 ### Vòng đời dữ liệu
 
-- **Gieo hạt** — sử dụng `lvt-honor seed` để tạo dữ liệu giả để kiểm tra cục bộ.
-- **Nhập** — sử dụng `lvt-honor import <file>` để tải các thành tích từ CSV/Excel/JSON.
-- **Xóa** — sử dụng bảng điều khiển quản trị (`/admin`) hoặc các lệnh SQLite trực tiếp.
-- **Sao lưu** — sao chép `data/<slug>.db` sang một vị trí an toàn.
+- **Gieo hạt**: sử dụng `lvt-honor seed` để tạo dữ liệu giả để kiểm tra cục bộ.
+- **Nhập**: sử dụng `lvt-honor import <file>` để tải các thành tích từ CSV/Excel/JSON.
+- **Xóa**: sử dụng bảng điều khiển quản trị (`/admin`) hoặc các lệnh SQLite trực tiếp.
+- **Sao lưu**: sao chép `data/<slug>.db` sang một vị trí an toàn.
 
 ### Truy vấn cơ sở dữ liệu
 
@@ -49,7 +49,7 @@ sqlite3 data/honor.db "SELECT name, school, medal, subject_code FROM achievement
 # Đếm huy chương theo cấp
 sqlite3 data/honor.db "SELECT medal, COUNT(*) FROM achievements WHERE year = 2025 GROUP BY medal;"
 
-# Tìm học sinh trùng lặp (cùng candidate_no, tên khác nhau — kiểm tra chất lượng dữ liệu)
+# Tìm học sinh trùng lặp (cùng candidate_no, tên khác nhau). Kiểm tra chất lượng dữ liệu
 sqlite3 data/honor.db "SELECT candidate_no, COUNT(DISTINCT name) FROM achievements GROUP BY candidate_no HAVING COUNT(DISTINCT name) > 1;"
 
 # Xem hoạt động quản trị (thành công/thất bại đăng nhập, hành động ghi)
@@ -77,7 +77,7 @@ SQLite is not safe with 4 workers. Either drop to WEB_CONCURRENCY=1 or migrate t
 export ADMIN_PASSWORD="your-secure-password"
 ```
 
-Mật khẩu **không** được lưu trữ trong cấu hình được cam kết — nó được đọc từ môi trường chỉ. Điều này đảm bảo mật khẩu không bao giờ được cam kết vô tình vào git.
+Mật khẩu không được lưu trữ trong cấu hình được cam kết. Nó được đọc từ môi trường chỉ. Điều này đảm bảo mật khẩu không bao giờ được cam kết vô tình vào git.
 
 ### Thay đổi mật khẩu
 
@@ -99,19 +99,19 @@ Chỉnh sửa `honor.config.json` trong khi cổng thông tin đang chạy:
 
 - **Docker:** cập nhật `project/honor.config.json` trên máy chủ, sau đó `docker compose restart`.
 - **Vercel:** cập nhật cấu hình trong mã nguồn của bạn, triển khai lại hoặc sử dụng ghi đè biến môi trường của Vercel (nếu cấu hình được tham số hóa).
-- **Dev cục bộ:** cổng thông tin tải lại trên mỗi yêu cầu — chỉ cần lưu tệp.
+- **Dev cục bộ**: cổng thông tin tải lại trên mỗi yêu cầu, chỉ cần lưu tệp.
 
 Nếu cấu hình mới không hợp lệ, cổng thông tin trả về HTTP 500 với thông báo lỗi xác thực.
 
 ## Danh sách kiểm tra giám sát
 
-- [ ] **Kiểm tra sức khỏe thành công** — `curl https://<portal>/health` trả về 200.
-- [ ] **Tìm kiếm hoạt động** — `/search?q=<name>` trả về kết quả hoặc "not found", không phải lỗi.
-- [ ] **Đăng nhập quản trị hoạt động** — `/login` chấp nhận mật khẩu và cấp quyền truy cập vào `/admin`.
-- [ ] **Bộ lọc hoạt động** — menu thả xuống cuộc thi, năm, huy chương, môn học thu hẹp kết quả.
-- [ ] **Nhập thành công** — `lvt-honor import <file>` báo cáo số hàng.
-- [ ] **Nhật ký sạch** — `docker logs <container>` không hiển thị dòng `ERROR` hoặc `CRITICAL`.
-- [ ] **Cơ sở dữ liệu có thể truy cập được** — `sqlite3 data/honor.db ".tables"` liệt kê lược đồ.
+- [ ] **Kiểm tra sức khỏe thành công**: `curl https://<portal>/health` trả về 200.
+- [ ] **Tìm kiếm hoạt động**: `/search?q=<name>` trả về kết quả hoặc "not found", không phải lỗi.
+- [ ] **Đăng nhập quản trị hoạt động**: `/login` chấp nhận mật khẩu và cấp quyền truy cập vào `/admin`.
+- [ ] **Bộ lọc hoạt động**: menu thả xuống cuộc thi, năm, huy chương, môn học thu hẹp kết quả.
+- [ ] **Nhập thành công**: `lvt-honor import <file>` báo cáo số hàng.
+- [ ] **Nhật ký sạch**: `docker logs <container>` không hiển thị dòng `ERROR` hoặc `CRITICAL`.
+- [ ] **Cơ sở dữ liệu có thể truy cập được**: `sqlite3 data/honor.db ".tables"` liệt kê lược đồ.
 
 ## Phản ứng sự cố
 
@@ -125,7 +125,7 @@ Nếu cấu hình mới không hợp lệ, cổng thông tin trả về HTTP 500
 
 ## Mở rộng
 
-- **Triển khai một hộp** — `WEB_CONCURRENCY=1`, tệp SQLite trên đĩa cục bộ. Phù hợp với tối đa ~ 50k học sinh.
-- **Nhiều worker** — di chuyển sang PostgreSQL, đặt `WEB_CONCURRENCY=4` hoặc cao hơn. Phù hợp với bất kỳ quy mô nào.
+- **Triển khai một hộp**: `WEB_CONCURRENCY=1`, tệp SQLite trên đĩa cục bộ. Phù hợp với tối đa khoảng 50k học sinh.
+- **Nhiều worker**: di chuyển sang PostgreSQL, đặt `WEB_CONCURRENCY=4` hoặc cao hơn. Phù hợp với bất kỳ quy mô nào.
 
-Công cụ truy vấn bị ràng buộc I/O, không bị ràng buộc CPU — thêm lõi chỉ giúp nếu cơ sở dữ liệu ở xa và bị ràng buộc độ trễ. Đối với hầu hết các triển khai, một worker duy nhất với lưu trữ cục bộ nhanh là đủ.
+Công cụ truy vấn bị ràng buộc I/O, không bị ràng buộc CPU. Thêm lõi chỉ giúp nếu cơ sở dữ liệu ở xa và bị ràng buộc độ trễ. Đối với hầu hết các triển khai, một worker duy nhất với lưu trữ cục bộ nhanh là đủ.

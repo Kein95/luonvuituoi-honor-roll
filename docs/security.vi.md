@@ -8,7 +8,7 @@ Cổng thông tin được thiết kế như một hệ thống **read-public, w
 
 - **Các bề mặt công khai** (`/`, `/search`, `/hall-of-fame`, `/teams`) phục vụ lưu lượng khách truy cập chưa xác thực.
 - **Bề mặt quản trị** (`/admin`, `/api/admin/*`) yêu cầu xác thực bằng mật khẩu.
-- **Không PII** được công khai — chỉ tên, trường học, huy chương, môn học và xếp hạng.
+- Không PII được công khai. Chỉ tên, trường học, huy chương, môn học và xếp hạng được hiển thị.
 
 ## Xác thực quản trị
 
@@ -127,9 +127,9 @@ sqlite3 data/honor.db "VACUUM;"
 
 Luôn sử dụng HTTPS trong sản xuất. Lấy chứng chỉ từ Cơ quan cấp chứng chỉ đáng tin cậy:
 
-- **Vercel** — tự động cấp phát HTTPS qua Let's Encrypt.
-- **Docker + Nginx** — sử dụng Certbot cho Let's Encrypt hoặc chứng chỉ CA của bạn.
-- **Docker + Traefik** — Traefik tự động gia hạn HTTPS.
+- **Vercel**: tự động cấp phát HTTPS qua Let's Encrypt.
+- **Docker + Nginx**: sử dụng Certbot cho Let's Encrypt hoặc chứng chỉ CA của bạn.
+- **Docker + Traefik**: Traefik tự động gia hạn HTTPS.
 
 ### CSP (Content Security Policy)
 
@@ -151,7 +151,7 @@ Cổng thông tin **không** hiển thị tiêu đề CORS. Các bề mặt côn
 
 - `candidate_no`, `name`, `school`, `subject_code`, `medal` được xác thực bằng lược đồ cấu hình.
 - Các mã cuộc thi/huy chương bị thiếu hoặc không được công nhận sẽ bị từ chối trong quá trình nhập.
-- `data_mapping` ngăn chặn tiêm đầu tiên — các cột được ánh xạ theo tên, không phải theo vị trí.
+- `data_mapping` ngăn chặn tiêm đầu tiên. Các cột được ánh xạ theo tên, không phải theo vị trí.
 
 ### Truy vấn tìm kiếm
 
@@ -170,7 +170,7 @@ Cổng thông tin **không** hiển thị tiêu đề CORS. Các bề mặt côn
 ### Dữ liệu nhạy cảm
 
 - Mật khẩu **không bao giờ** được ghi nhật ký.
-- Nhật ký kiểm toán ghi lại hành động, IP và dấu thời gian — không phải tên học sinh hoặc chi tiết.
+- Nhật ký kiểm toán ghi lại hành động, IP và dấu thời gian. Không ghi tên học sinh hoặc chi tiết nhạy cảm.
 - Stack trace ngoại lệ được ghi lại ở mức DEBUG (không hiển thị trong sản xuất).
 
 ### Nhật ký hoạt động
@@ -189,10 +189,10 @@ sqlite3 data/honor.db "SELECT timestamp, action, ip FROM admin_activity WHERE ti
 
 ## Những hạn chế đã biết
 
-- **Không có mã hóa dữ liệu khi đang lưu trữ** — cơ sở dữ liệu SQLite được lưu trữ dưới dạng văn bản thuần túy trên đĩa. Đối với dữ liệu rất nhạy cảm, hãy áp dụng mã hóa cấp hệ thống tệp (LUKS, FileVault, BitLocker).
-- **Không có tính bất biến của nhật ký kiểm toán** — quản trị viên có quyền truy cập cơ sở dữ liệu có thể chỉnh sửa hoặc xóa nhật ký kiểm toán. Để tuân thủ, hãy sử dụng kho kiểm toán chỉ nối thêm riêng (Cloudflare Logs, AWS CloudTrail, v.v.).
-- **Thời lượng phiên** — các phiên có giá trị cho vòng đời của tab trình duyệt. Hãy xem xét thêm thời gian chờ phiên rõ ràng (ví dụ: 1 giờ không hoạt động) nếu cần.
-- **Không giới hạn tỷ lệ trên các điểm cuối công khai** — tìm kiếm, bộ lọc và chế độ xem thư viện không được điều chỉnh. Đối với các cổng thông tin công khai có lưu lượng cao, hãy thêm giới hạn tỷ lệ ở proxy ngược.
+- **Không có mã hóa dữ liệu khi đang lưu trữ**: cơ sở dữ liệu SQLite được lưu trữ dưới dạng văn bản thuần túy trên đĩa. Đối với dữ liệu rất nhạy cảm, hãy áp dụng mã hóa cấp hệ thống tệp (LUKS, FileVault, BitLocker).
+- **Không có tính bất biến của nhật ký kiểm toán**: quản trị viên có quyền truy cập cơ sở dữ liệu có thể chỉnh sửa hoặc xóa nhật ký kiểm toán. Để tuân thủ, hãy sử dụng kho kiểm toán chỉ nối thêm riêng (Cloudflare Logs, AWS CloudTrail, v.v.).
+- **Thời lượng phiên**: các phiên có giá trị cho vòng đời của tab trình duyệt. Hãy xem xét thêm thời gian chờ phiên rõ ràng (chẳng hạn 1 giờ không hoạt động) nếu cần.
+- **Không giới hạn tỷ lệ trên các điểm cuối công khai**: tìm kiếm, bộ lọc và chế độ xem thư viện không được điều chỉnh. Đối với các cổng thông tin công khai có lưu lượng cao, hãy thêm giới hạn tỷ lệ ở proxy ngược.
 
 ## Báo cáo các vấn đề bảo mật
 

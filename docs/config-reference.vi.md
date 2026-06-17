@@ -1,6 +1,6 @@
 # Tài liệu tham khảo cấu hình
 
-`honor.config.json` là toàn bộ cổng thông tin. Mọi khóa được xác thực bởi các mô hình Pydantic (`extra="forbid"`), vì vậy lỗi đánh máy sẽ thất bại to lớn khi tải. Tệp [`honor.schema.json`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/honor.schema.json) được cam kết cung cấp hoàn thiện tự động cho trình soạn thảo — trỏ tệp của bạn vào nó:
+`honor.config.json` là toàn bộ cổng thông tin. Mọi khóa được xác thực bởi các mô hình Pydantic (`extra="forbid"`), vì vậy lỗi đánh máy sẽ thất bại to lớn khi tải. Tệp [`honor.schema.json`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/honor.schema.json) được cam kết cung cấp hoàn thiện tự động cho trình soạn thảo. Trỏ tệp của bạn vào nó:
 
 ```jsonc
 {
@@ -62,7 +62,7 @@
 ```
 
 - `competition_id` phải tham chiếu một cuộc thi được khai báo (xác thực giữa các trường).
-- Các cặp `(competition_id, year)` phải là duy nhất — một phiên bản cho mỗi cuộc thi mỗi năm.
+- Các cặp `(competition_id, year)` phải là duy nhất. Mỗi phiên bản được gán cho mỗi cuộc thi và mỗi năm.
 
 ## `medals`
 

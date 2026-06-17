@@ -1,6 +1,6 @@
 # Contributing to LUONVUITUOI-HONOR ROLL
 
-Thanks for taking an interest. This project is a small-surface toolkit; the bar for new features is "would I want this in my own deploy tomorrow?" If yes, read on.
+Thanks for taking an interest. This project is a small-surface toolkit. The bar for new features is whether you would want it in your own deploy tomorrow. If yes, read on.
 
 ## Dev setup
 
@@ -44,10 +44,10 @@ The `test_schema_in_sync_with_models` test fails if you forget.
 ## Conventions
 
 - **Config-driven over code.** A new capability belongs in `honor.config.json` + a Pydantic model, not a hardcoded constant. Operators should be able to enable/disable it without editing Python.
-- **Pure functions in `core/`.** The engine stays web-framework-agnostic. The Flask app factory (`cli/.../server/app.py`) is a thin layer that calls pure handlers and serialises results — no business logic in routes.
+- **Pure functions in `core/`.** The engine stays web-framework-agnostic. The Flask app factory (`cli/.../server/app.py`) is a thin layer that calls pure handlers and serializes results without any business logic in routes.
 - **Cross-field invariants live in `@model_validator`** on `HonorConfig`, so a malformed config fails loud at load time rather than producing a half-rendered portal.
 - **Tests mirror the module under test.** `config/models.py` → `tests/test_config_models.py`. E2E coverage (Flask test client) lives under `tests/e2e/` and is marked `e2e` so it can be skipped in the fast loop.
 
 ## Sibling project
 
-This toolkit mirrors the architecture of [**LUONVUITUOI-CERT**](https://github.com/Kein95/luonvuituoi-cert) (certificate portal). When in doubt about a convention, check how CERT does it — the two should feel like one codebase.
+This toolkit mirrors the architecture of [**LUONVUITUOI-CERT**](https://github.com/Kein95/luonvuituoi-cert) (certificate portal). When in doubt about a convention, check how CERT does it. The two should feel like one codebase.

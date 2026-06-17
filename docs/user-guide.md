@@ -4,8 +4,8 @@ How to use the honor roll portal: browse the gallery, search for students, view 
 
 ## Who reads this
 
-- **Visitors** (students, parents, prospective employers) — section [Browsing the honor roll](#browsing-the-honor-roll).
-- **Operators** (competition staff, training admins) — section [Admin panel](#admin-panel).
+- **Visitors** (students, parents, prospective employers): See section [Browsing the honor roll](#browsing-the-honor-roll).
+- **Operators** (competition staff, training admins): See section [Admin panel](#admin-panel).
 
 ## Browsing the honor roll
 
@@ -15,10 +15,10 @@ URL: `https://<your-portal>/`
 
 The honor roll displays all achievements by default. Use the filter dropdowns to narrow the view:
 
-1. **Competition** — select which olympiad or contest to view.
-2. **Year** — select the year/season.
-3. **Medal** — filter by award tier (Gold, Silver, Bronze, Merit, or custom tiers).
-4. **Subject** — if the competition tracks subjects (MATH, ENGLISH, etc.), filter by subject.
+1. **Competition**: Select which olympiad or contest to view.
+2. **Year**: Select the year or season.
+3. **Medal**: Filter by award tier (Gold, Silver, Bronze, Merit, or custom tiers).
+4. **Subject**: If the competition tracks subjects (MATH, ENGLISH, etc.), filter by subject.
 
 Click **Reset** to clear all filters and show all records.
 
@@ -26,9 +26,9 @@ Click **Reset** to clear all filters and show all records.
 
 The `display.layout` setting controls how results are shown:
 
-- **Cards** — gallery view with student photo, name, school, rank, and medal.
-- **Table** — dense tabular view showing all columns at once.
-- **Both** — tabs to switch between the two views.
+- **Cards**: Gallery view with student photo, name, school, rank, and medal.
+- **Table**: Dense tabular view showing all columns at once.
+- **Both**: Tabs to switch between the two views.
 
 ## Search page
 
@@ -71,10 +71,10 @@ URL: `https://<your-portal>/admin`
 
 Access requires a password. The admin surface lets you:
 
-- **Add achievements** — upload a CSV/Excel/JSON file to ingest new student records.
-- **Delete achievements** — remove incorrect entries.
-- **View stats** — total students, medals per tier, competitions, years.
-- **Manage config** — edit `honor.config.json` via the web UI (planned; currently via CLI).
+- **Add achievements**: Upload a CSV/Excel/JSON file to ingest new student records.
+- **Delete achievements**: Remove incorrect entries.
+- **View stats**: Total students, medals per tier, competitions, and years.
+- **Manage config**: Edit `honor.config.json` via the web UI (planned; currently via CLI).
 
 ### Login
 

@@ -1,6 +1,6 @@
 # Configuration reference
 
-`honor.config.json` is the whole portal. Every key is validated by Pydantic models (`extra="forbid"`), so typos fail loud at load time. The committed [`honor.schema.json`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/honor.schema.json) gives editors autocomplete — point your file at it:
+`honor.config.json` constitutes the entire portal. Every key is validated by Pydantic models (`extra="forbid"`), causing typos to fail at load time. The committed [`honor.schema.json`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/honor.schema.json) provides editors with autocomplete capability; point your file to it:
 
 ```jsonc
 {
@@ -62,7 +62,7 @@
 ```
 
 - `competition_id` must reference a declared competition (validated cross-field).
-- `(competition_id, year)` pairs must be unique — one edition per competition per year.
+- `(competition_id, year)` pairs must be unique, with one edition per competition per year.
 
 ## `medals`
 

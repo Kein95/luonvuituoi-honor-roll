@@ -28,11 +28,11 @@ flowchart TD
     CFG -.validates.-> CORE
 ```
 
-The core package stays **web-framework-agnostic**. Every handler is a pure function: take a `db_path` + filters, return dataclasses / rendered HTML. The Flask app factory in `cli/.../server/app.py` is a thin layer that calls these handlers and serialises results — no business logic in routes. This means a future serverless handler (Vercel, Cloud Run) reuses every pure function unchanged.
+The core package remains **web-framework-agnostic**. Each handler is a pure function that accepts a `db_path` plus filters and returns dataclasses or rendered HTML. The Flask app factory in `cli/.../server/app.py` constitutes a thin layer that calls these handlers and serializes results, without any business logic in routes. Consequently, a future serverless handler (Vercel, Cloud Run) can reuse every pure function unchanged.
 
 ## Data model: one flat table
 
-Unlike CERT (which keeps a table per round), the honor roll uses a **single flat `achievements` table** — one row per award. This is the natural unit: a student with three medals produces three rows, and every public listing is a single indexed `SELECT` with filters, not a fan-out across per-edition tables.
+Unlike CERT (which maintains a table per round), the honor roll uses a **single flat `achievements` table** with one row per award. This represents the natural unit: a student with three medals produces three rows, and every public listing executes a single indexed `SELECT` with filters rather than fanning out across per-edition tables.
 
 | column | purpose |
 |--------|---------|
@@ -46,7 +46,7 @@ Indexes on `(competition_id, year, medal, subject_code)`, `name`, and `candidate
 
 ## Config validation
 
-`honor.config.json` is validated by Pydantic models with `extra="forbid"`. Cross-field invariants (editions reference declared competitions, every competition's medals exist in the global registry, IDs/codes/ranks are unique) live in `@model_validator` hooks on `HonorConfig`, so a malformed config fails loud at load time — never producing a half-rendered portal.
+`honor.config.json` undergoes validation by Pydantic models with `extra="forbid"`. Cross-field invariants (editions reference declared competitions, every competition's medals exist in the global registry, IDs/codes/ranks are unique) reside in `@model_validator` hooks on `HonorConfig`, ensuring that a malformed config fails at load time rather than producing a half-rendered portal.
 
 ## Domain difference from CERT
 

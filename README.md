@@ -3,7 +3,7 @@
 # 🏆 LUONVUITUOI-HONOR ROLL
 
 **Config-driven student honor-roll toolkit.**
-Bring your results CSV/Excel/JSON + one config → ship a bilingual award gallery, student search, an all-time Hall of Fame, team awards, and a password-protected admin — to Vercel or Docker in an afternoon.
+Bring your results CSV/Excel/JSON + one config → ship a bilingual award gallery, student search, an all-time Hall of Fame, team awards, and a password-protected admin to Vercel or Docker in an afternoon.
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-honor--roll-2ea44f?style=for-the-badge&logo=vercel&logoColor=white)](https://honor-roll-vercel-demo.vercel.app)
 [![Tests](https://img.shields.io/github/actions/workflow/status/Kein95/luonvuituoi-honor-roll/test.yml?style=for-the-badge&label=tests&logo=github)](https://github.com/Kein95/luonvuituoi-honor-roll/actions/workflows/test.yml)
@@ -25,7 +25,7 @@ Sibling project of [**LUONVUITUOI-CERT**](https://github.com/Kein95/luonvuituoi-
 
 ## 💡 Why
 
-You ran a competition (a math olympiad, a science challenge, a school contest…) and now have a spreadsheet of medal winners. You need:
+You ran a competition (a math olympiad, a science challenge, a school contest, and so on) and now have a spreadsheet of medal winners. You need:
 
 - A **public honor roll** where students, parents, and schools see the achievements, filterable by competition / year / medal / subject / school, styled like a real award gallery.
 - A **student search** so anyone can look up a name and see every medal they've earned across editions.
@@ -35,14 +35,14 @@ LUONVUITUOI-HONOR ROLL ships these and more, config-driven and zero-code, deploy
 
 ## ✨ Features
 
-- **🌏 Bilingual UI (VI / EN)** — auto-detects the browser language, with a manual VI|EN toggle remembered via cookie. Project name, labels, medals, subjects, and taglines all switch.
-- **🖥️ Public surfaces** — honor roll (`/`), student search (`/search`), **Hall of Fame** (`/hall-of-fame`, all-time top achievers across editions), and **All-Star Teams** (`/teams`, group/team awards).
-- **🎓 Student cards** — photo avatar, grade, school, medal badge. Click a card for a detail popup listing all of that student's awards, with a one-click **PNG download** (rounded "certificate" image). A whole-board PNG export is one click away too.
-- **🎛️ Filters & facets** — competition, year, medal, subject, and school, plus a stat dashboard and medal legend.
-- **🗓️ Multi-competition / multi-year** — one config declares every competition, their subjects, and the editions (competition + year). A global medal registry (rank, EN/VI label, color, icon) keeps badges consistent everywhere. Upcoming editions show a friendly "coming soon" banner.
-- **🔐 Password-protected admin** — a separate `/login` page gates `/admin` and the write API; credentials come from environment variables only. Hardened with login rate-limiting, CSRF tokens, and an audit log.
-- **📥 Flexible ingest** — CSV / Excel / JSON for achievements, JSON for teams, mapped through `data_mapping` so a renamed column needs only a config edit.
-- **🚀 Deploy-ready & hardened** — Vercel serverless (`api/index.py`) or Docker (`wsgi.py`); optional HSTS, proxy-header trust, and CORS allow-listing via environment variables.
+- **🌏 Bilingual UI (VI / EN)**: Auto-detects the browser language, with a manual VI|EN toggle remembered via cookie. Project name, labels, medals, subjects, and taglines all switch.
+- **🖥️ Public surfaces**: Honor roll (`/`), student search (`/search`), **Hall of Fame** (`/hall-of-fame`, all-time top achievers across editions), and **All-Star Teams** (`/teams`, group/team awards).
+- **🎓 Student cards**: Photo avatar, grade, school, medal badge. Click a card for a detail popup listing all of that student's awards, with a one-click **PNG download** (rounded "certificate" image). A whole-board PNG export is one click away too.
+- **🎛️ Filters & facets**: Competition, year, medal, subject, and school, plus a stat dashboard and medal legend.
+- **🗓️ Multi-competition / multi-year**: One config declares every competition, their subjects, and the editions (competition + year). A global medal registry (rank, EN/VI label, color, icon) keeps badges consistent everywhere. Upcoming editions show a friendly "coming soon" banner.
+- **🔐 Password-protected admin**: A separate `/login` page gates `/admin` and the write API; credentials come from environment variables only. Hardened with login rate-limiting, CSRF tokens, and an audit log.
+- **📥 Flexible ingest**: CSV / Excel / JSON for achievements, JSON for teams, mapped through `data_mapping` so a renamed column needs only a config edit.
+- **🚀 Deploy-ready & hardened**: Vercel serverless (`api/index.py`) or Docker (`wsgi.py`); optional HSTS, proxy-header trust, and CORS allow-listing via environment variables.
 
 ## ⚡ Quickstart
 
@@ -60,7 +60,7 @@ lvt-honor dev                             # http://localhost:5000
 
 ## 🎬 Reference demo
 
-The `examples/demo-honor/` project ships with **synthetic placeholder data** (anonymised students X/Y/Z, schools labelled "School") so you can explore every surface without any real personal data:
+The `examples/demo-honor/` project ships with **synthetic placeholder data** (anonymized students X/Y/Z, schools labeled "School") so you can explore every surface without any real personal data:
 
 ```bash
 cd examples/demo-honor
@@ -70,7 +70,7 @@ lvt-honor import-teams data/demo-teams-2025.json --competition demo-a --year 202
 lvt-honor dev                                                            # http://localhost:5000
 ```
 
-> 👉 Or just open the **[live demo](https://honor-roll-vercel-demo.vercel.app)** — the same project deployed on Vercel.
+> 👉 Or just open the **[live demo](https://honor-roll-vercel-demo.vercel.app)** if you prefer to explore it without setup.
 
 ## 🛠️ CLI
 
@@ -106,8 +106,8 @@ lvt-honor dev                                                            # http:
 
 ## ☁️ Deploy
 
-- **Vercel** — `vercel deploy` against the scaffolded `api/index.py`.
-- **Docker** — `docker compose up -d` against the repo-root `wsgi.py`.
+- **Vercel**: Run `vercel deploy` against the scaffolded `api/index.py`.
+- **Docker**: Run `docker compose up -d` against the repo-root `wsgi.py`.
 
 Environment variables (set in your host / `.env`, never committed):
 
@@ -116,17 +116,17 @@ Environment variables (set in your host / `.env`, never committed):
 | `ADMIN_PASSWORD` | Enables admin login. Unset = admin stays locked. |
 | `SECRET_KEY` | Signs the session cookie (set a long random value in production). |
 | `ADMIN_LOGIN_MAX_ATTEMPTS` / `ADMIN_LOGIN_LOCKOUT_SECONDS` | Login brute-force guard (defaults 5 / 60s). |
-| `PUBLIC_BASE_URL` | Canonical origin for `<link rel=canonical>` / `og:url`. |
+| `PUBLIC_BASE_URL` | Canonical origin for `<link rel=canonical>` and `og:url`. |
 | `ALLOWED_ORIGINS` | Comma-separated CORS allow-list for `/api/*` (`*` for any). |
 | `FORCE_HSTS` | `1` to emit `Strict-Transport-Security` (HTTPS only). |
-| `TRUST_PROXY_HEADERS` | `1` behind a reverse proxy (Nginx / Caddy / Vercel). |
+| `TRUST_PROXY_HEADERS` | `1` behind a reverse proxy (Nginx, Caddy, or Vercel). |
 
 ## 📁 Repo layout
 
 ```text
 packages/
-  core/    # luonvuitoi-honor — engine (config, storage, ingest, queries, ui, api)
-  cli/     # luonvuitoi-honor-cli — lvt-honor scaffolder + Flask dev server
+  core/    # luonvuitoi-honor: engine (config, storage, ingest, queries, ui, api)
+  cli/     # luonvuitoi-honor-cli: lvt-honor scaffolder + Flask dev server
 examples/
   demo-honor/   # full-feature reference project (synthetic data)
 ```

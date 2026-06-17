@@ -27,7 +27,7 @@ Loud messages worth alerting on:
 | `luonvuitoi_honor_cli.server.app` | `ADMIN_PASSWORD not set` | Admin login is disabled. Set the env var to enable it. |
 | `luonvuitoi_honor.config` | `Cross-field validation failed` | The `honor.config.json` has a structural error (e.g., a medal referenced that doesn't exist). The portal will not start. |
 
-Handled errors (404 searches, invalid filters) are **not** logged — they are normal traffic.
+Handled errors (404 searches, invalid filters) are not logged; they constitute normal traffic.
 
 ## Database
 
@@ -35,10 +35,10 @@ The portal stores achievements in an SQLite database at `data/<slug>.db` (path d
 
 ### Data lifecycle
 
-- **Seeding** — use `lvt-honor seed` to generate fake data for local testing.
-- **Importing** — use `lvt-honor import <file>` to load achievements from CSV/Excel/JSON.
-- **Deleting** — use the admin panel (`/admin`) or direct SQLite commands.
-- **Backing up** — copy `data/<slug>.db` to a safe location.
+- **Seeding**: Use `lvt-honor seed` to generate fake data for local testing.
+- **Importing**: Use `lvt-honor import <file>` to load achievements from CSV/Excel/JSON.
+- **Deleting**: Use the admin panel (`/admin`) or direct SQLite commands.
+- **Backing up**: Copy `data/<slug>.db` to a safe location.
 
 ### Querying the database
 
@@ -49,7 +49,7 @@ sqlite3 data/honor.db "SELECT name, school, medal, subject_code FROM achievement
 # Count medals by tier
 sqlite3 data/honor.db "SELECT medal, COUNT(*) FROM achievements WHERE year = 2025 GROUP BY medal;"
 
-# Find duplicate students (same candidate_no, different names — data quality check)
+# Find duplicate students (same candidate_no, different names; data quality check)
 sqlite3 data/honor.db "SELECT candidate_no, COUNT(DISTINCT name) FROM achievements GROUP BY candidate_no HAVING COUNT(DISTINCT name) > 1;"
 
 # View admin activity (login success/failure, write actions)
@@ -77,7 +77,7 @@ SQLite is not safe with 4 workers. Either drop to WEB_CONCURRENCY=1 or migrate t
 export ADMIN_PASSWORD="your-secure-password"
 ```
 
-The password is **not** stored in the committed config — it is read from the environment only. This ensures the password is never accidentally committed to git.
+The password is not stored in the committed config; it is read from the environment only. This ensures the password is never accidentally committed to git.
 
 ### Changing the password
 
@@ -99,19 +99,19 @@ Edit `honor.config.json` while the portal is running:
 
 - **Docker:** update `project/honor.config.json` on the host, then `docker compose restart`.
 - **Vercel:** update the config in your source code, redeploy, or use Vercel's environment variable override (if config is parameterized).
-- **Local dev:** the portal reloads on each request — just save the file.
+- **Local dev**: The portal reloads on each request; save the file to apply changes.
 
 If the new config is invalid, the portal returns HTTP 500 with a validation error message.
 
 ## Monitoring checklist
 
-- [ ] **Health probe passes** — `curl https://<portal>/health` returns 200.
-- [ ] **Search works** — `/search?q=<name>` returns results or "not found", not errors.
-- [ ] **Admin login works** — `/login` accepts the password and grants access to `/admin`.
-- [ ] **Filters work** — competition, year, medal, subject dropdowns narrow the results.
-- [ ] **Import succeeds** — `lvt-honor import <file>` reports the row count.
-- [ ] **Logs are clean** — `docker logs <container>` shows no `ERROR` or `CRITICAL` lines.
-- [ ] **Database is reachable** — `sqlite3 data/honor.db ".tables"` lists the schema.
+- [ ] **Health probe passes**: `curl https://<portal>/health` returns 200.
+- [ ] **Search works**: `/search?q=<name>` returns results or "not found", not errors.
+- [ ] **Admin login works**: `/login` accepts the password and grants access to `/admin`.
+- [ ] **Filters work**: Competition, year, medal, and subject dropdowns narrow results.
+- [ ] **Import succeeds**: `lvt-honor import <file>` reports the row count.
+- [ ] **Logs are clean**: `docker logs <container>` shows no `ERROR` or `CRITICAL` lines.
+- [ ] **Database is reachable**: `sqlite3 data/honor.db ".tables"` lists the schema.
 
 ## Incident response
 
@@ -125,7 +125,7 @@ If the new config is invalid, the portal returns HTTP 500 with a validation erro
 
 ## Scaling
 
-- **Single-box deployment** — `WEB_CONCURRENCY=1`, SQLite file on local disk. Suitable for up to ~50k students.
-- **Multi-worker** — migrate to PostgreSQL, set `WEB_CONCURRENCY=4` or higher. Suitable for any scale.
+- **Single-box deployment**: Set `WEB_CONCURRENCY=1` with SQLite on local disk. Suitable for up to approximately 50,000 students.
+- **Multi-worker**: Migrate to PostgreSQL and set `WEB_CONCURRENCY=4` or higher. Suitable for any scale.
 
-The query engine is I/O-bound, not CPU-bound — adding cores helps only if the database is remote and latency-bound. For most deployments, a single worker with fast local storage is sufficient.
+The query engine is I/O-bound rather than CPU-bound. Adding cores helps only if the database is remote and latency-bound. For most deployments, a single worker with fast local storage proves sufficient.

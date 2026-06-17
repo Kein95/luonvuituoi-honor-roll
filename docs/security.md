@@ -8,7 +8,7 @@ The portal is designed as a **read-public, write-gated** system:
 
 - **Public surfaces** (`/`, `/search`, `/hall-of-fame`, `/teams`) serve unauthenticated visitor traffic.
 - **Admin surface** (`/admin`, `/api/admin/*`) requires password authentication.
-- **No PII** is exposed publicly — only name, school, medal, subject, and rank.
+- **No PII** is exposed publicly; only name, school, medal, subject, and rank are visible.
 
 ## Admin authentication
 
@@ -127,9 +127,9 @@ sqlite3 data/honor.db "VACUUM;"
 
 Always use HTTPS in production. Obtain a certificate from a trusted CA:
 
-- **Vercel** — auto-provisions HTTPS via Let's Encrypt.
-- **Docker + Nginx** — use Certbot for Let's Encrypt or your CA's certificate.
-- **Docker + Traefik** — Traefik auto-renews HTTPS.
+- **Vercel**: Auto-provisions HTTPS via Let's Encrypt.
+- **Docker + Nginx**: Use Certbot for Let's Encrypt or your CA's certificate.
+- **Docker + Traefik**: Traefik auto-renews HTTPS.
 
 ### CSP (Content Security Policy)
 
@@ -151,7 +151,7 @@ The portal does **not** expose CORS headers. Public surfaces are for human visit
 
 - `candidate_no`, `name`, `school`, `subject_code`, `medal` are validated by the config schema.
 - Missing or unrecognized competition/medal codes are rejected during import.
-- The `data_mapping` prevents header injection — columns are mapped by name, not by position.
+- The `data_mapping` prevents header injection; columns are mapped by name rather than by position.
 
 ### Search queries
 
@@ -170,7 +170,7 @@ The portal does **not** expose CORS headers. Public surfaces are for human visit
 ### Sensitive data
 
 - Passwords are **never** logged.
-- Audit logs record action, IP, and timestamp — not student names or details.
+- Audit logs record action, IP, and timestamp without recording student names or details.
 - Exception stack traces are logged at DEBUG level (not shown in production).
 
 ### Activity log
@@ -189,10 +189,10 @@ sqlite3 data/honor.db "SELECT timestamp, action, ip FROM admin_activity WHERE ti
 
 ## Known limitations
 
-- **No data encryption at rest** — the SQLite database is stored plaintext on disk. For highly sensitive data, apply filesystem-level encryption (LUKS, FileVault, BitLocker).
-- **No audit-log immutability** — an admin with database access can edit or delete the audit log. For compliance, use a separate, append-only audit store (Cloudflare Logs, AWS CloudTrail, etc.).
-- **Session duration** — sessions are valid for the browser tab's lifetime. Consider adding an explicit session timeout (e.g., 1 hour of inactivity) if needed.
-- **No rate limiting on public endpoints** — search, filter, and gallery views are unthrottled. For public portals with high traffic, add rate limiting at the reverse proxy.
+- **No data encryption at rest**: The SQLite database is stored as plaintext on disk. For highly sensitive data, apply filesystem-level encryption (LUKS, FileVault, or BitLocker).
+- **No audit-log immutability**: An admin with database access can edit or delete the audit log. For compliance, implement a separate, append-only audit store (Cloudflare Logs, AWS CloudTrail, or similar).
+- **Session duration**: Sessions are valid for the browser tab's lifetime. Consider adding an explicit session timeout (for example, 1 hour of inactivity) if needed.
+- **No rate limiting on public endpoints**: Search, filter, and gallery views are unthrottled. For public portals with high traffic, implement rate limiting at the reverse proxy.
 
 ## Reporting security issues
 

@@ -41,5 +41,5 @@ Mở `http://localhost:8000` cho bảng vinh danh, `/search` và `/admin`.
 - **Không phải root**: vùng chứa chạy như một người dùng hệ thống `app:app`.
 - **Healthcheck**: kiểm tra `/health` (không có phụ thuộc) mỗi 30 giây.
 - **Single worker**: `WEB_CONCURRENCY=1` vì kho SQLite mặc định không an toàn với nhiều quy trình. Để mở rộng theo chiều ngang, hãy chuyển kho đến máy chủ được chia sẻ và tăng `WEB_CONCURRENCY`.
-- **Chỉnh sửa cấu hình**: thay đổi `project/honor.config.json` trên máy chủ và `docker compose restart` — không cần xây dựng lại.
+- **Chỉnh sửa cấu hình**: thay đổi `project/honor.config.json` trên máy chủ, chạy `docker compose restart`. Không cần xây dựng lại.
 - **Bề mặt quản trị viên**: đặt vùng chứa đằng sau proxy ngược (Nginx / Caddy / Traefik) với TLS + xác thực trước khi công khai `/admin`.
