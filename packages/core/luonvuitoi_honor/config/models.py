@@ -64,6 +64,9 @@ class Branding(_Strict):
 
 class Project(_Strict):
     name: str = Field(min_length=1, max_length=120)
+    name_en: str | None = Field(
+        default=None, max_length=120, description="English project name (bilingual UI header)."
+    )
     slug: str = Field(min_length=1, max_length=60)
     locale: LocaleCode = "vi"
     tagline: str | None = Field(default=None, max_length=160)
@@ -216,6 +219,16 @@ class Contact(_Strict):
     email: str | None = Field(default=None, max_length=120)
     phone: str | None = Field(default=None, max_length=40)
     note: str | None = Field(default=None, max_length=160)
+    repo_url: str | None = Field(
+        default=None, max_length=200, description="Public source repo link shown in the footer."
+    )
+
+    @field_validator("repo_url")
+    @classmethod
+    def _repo_url(cls, v: str | None) -> str | None:
+        if v is not None and not v.startswith(("https://", "http://")):
+            raise ValueError(f"contact.repo_url must be an http(s) URL, got {v!r}")
+        return v
 
 
 class HonorConfig(_Strict):

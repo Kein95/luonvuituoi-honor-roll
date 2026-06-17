@@ -46,7 +46,10 @@ def _base_context(
         "csp_nonce": csp_nonce,
         "locale": locale,
         "locale_code": lang or config.project.locale,
-        "project_name": config.project.name,
+        "project_name": (
+            config.project.name_en if (lang or config.project.locale) == "en" else config.project.name
+        )
+        or config.project.name,
         "tagline": (
             config.project.tagline_en if (lang or config.project.locale) == "en" else config.project.tagline
         )

@@ -150,6 +150,20 @@
           ],
           "default": null,
           "title": "Note"
+        },
+        "repo_url": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Public source repo link shown in the footer.",
+          "title": "Repo Url"
         }
       },
       "title": "Contact",
@@ -417,6 +431,20 @@
           "minLength": 1,
           "title": "Name",
           "type": "string"
+        },
+        "name_en": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "English project name (bilingual UI header).",
+          "title": "Name En"
         },
         "slug": {
           "maxLength": 60,

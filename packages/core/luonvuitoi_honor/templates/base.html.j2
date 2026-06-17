@@ -110,6 +110,7 @@
       <div class="contact">📞 {% if contact.note %}{{ contact.note }}{% endif %}{% if contact.email %} · <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}{% if contact.phone %} · {{ contact.phone }}{% endif %}</div>
       {% endif %}
       {{ locale.footer.powered_by }}
+      {% if contact and contact.repo_url %} · <a href="{{ contact.repo_url }}" target="_blank" rel="noopener">⭐ GitHub</a>{% endif %}
     </footer>
   </div>
   {% block scripts %}{% endblock %}
