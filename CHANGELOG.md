@@ -4,6 +4,13 @@ All notable changes to LUONVUITUOI-HONOR ROLL. Format follows [Keep a Changelog]
 
 ## [Unreleased]
 
+### Added
+
+- **Login brute-force rate limiting** — per-IP guard locks the login form after `ADMIN_LOGIN_MAX_ATTEMPTS` (default 5) failed attempts for `ADMIN_LOGIN_LOCKOUT_SECONDS` (default 60); returns HTTP 429 + `Retry-After` while locked. In-process (single-instance) by design.
+- **CSRF protection on admin writes** — per-session token, hidden field on the login form and `X-CSRF-Token` header on the admin write API; missing/invalid token → 403 (API) or 400 (login form). Token rotates on login/logout.
+- **Audit logging** — login success/failure/lockout and admin add/delete are appended to an `admin_activity` SQLite table (timestamp, action, IP, target).
+- **Docs parity with LUONVUITUOI-CERT** — all docs now bilingual (EN + VI); new guides: user guide, admin auth, operations, security, troubleshooting.
+
 ## [0.1.0] - 2026-06-15
 
 Initial public release. Config-driven student honor-roll toolkit — the publishing sibling of [LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert).

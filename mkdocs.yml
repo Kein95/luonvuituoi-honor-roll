@@ -64,8 +64,14 @@ extra:
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
+  - User guide: user-guide.md
   - Configuration: config-reference.md
   - Architecture: architecture.md
+  - Guides:
+      - Admin Auth: admin-auth.md
+      - Security: security.md
+      - Operations: operations.md
+      - Troubleshooting: troubleshooting.md
   - Deploy:
       - Vercel: deploy-vercel.md
       - Docker: deploy-docker.md
@@ -112,8 +118,14 @@ plugins:
           nav_translations:
             Home: Trang chủ
             Quickstart: Bắt đầu nhanh
+            User guide: Hướng dẫn sử dụng
             Configuration: Cấu hình
             Architecture: Kiến trúc
+            Guides: Hướng dẫn
+            Admin Auth: Xác thực quản trị
+            Security: Bảo mật
+            Operations: Vận hành
+            Troubleshooting: Khắc phục sự cố
             Deploy: Triển khai
             Vercel: Vercel
             Docker: Docker
