@@ -15,7 +15,7 @@ Bring your results CSV/Excel/JSON + one config → ship a bilingual award galler
 ![Bilingual](https://img.shields.io/badge/UI-VI%20%2F%20EN-0ea5e9?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
 
-### [🔴 Live demo →](https://honor-roll-vercel-demo.vercel.app) &nbsp;·&nbsp; [🥇 Hall of Fame](https://honor-roll-vercel-demo.vercel.app/hall-of-fame) &nbsp;·&nbsp; [🔍 Search](https://honor-roll-vercel-demo.vercel.app/search) &nbsp;·&nbsp; [🤝 Teams](https://honor-roll-vercel-demo.vercel.app/teams)
+### [🔴 Live demo →](https://honor-roll-vercel-demo.vercel.app) &nbsp;·&nbsp; [🥇 Hall of Fame](https://honor-roll-vercel-demo.vercel.app/hall-of-fame) &nbsp;·&nbsp; [🔍 Search](https://honor-roll-vercel-demo.vercel.app/search) &nbsp;·&nbsp; [🤝 Teams](https://honor-roll-vercel-demo.vercel.app/teams) &nbsp;·&nbsp; [🔐 Admin](https://honor-roll-vercel-demo.vercel.app/login)
 
 </div>
 

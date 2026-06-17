@@ -1,24 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <!-- Honor roll crown + star emblem -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="Honor Roll capybara mascot">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#7c5cff"/>
-      <stop offset="100%" stop-color="#a78bfa"/>
-    </linearGradient>
-    <linearGradient id="gstar" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#fb7185"/>
-      <stop offset="100%" stop-color="#f87171"/>
+    <linearGradient id="hrbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c5cff"/>
+      <stop offset="1" stop-color="#fb7185"/>
     </linearGradient>
   </defs>
-  <!-- Crown base -->
-  <rect x="10" y="18" width="44" height="32" rx="6" fill="url(#g)"/>
-  <rect x="10" y="18" width="44" height="32" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1"/>
-  <!-- Crown peaks -->
-  <polygon points="18,18 22,8 26,18" fill="url(#g)"/>
-  <polygon points="32,18 36,6 40,18" fill="url(#g)"/>
-  <polygon points="46,18 50,8 54,18" fill="url(#g)"/>
-  <!-- Center star emblem -->
-  <circle cx="32" cy="34" r="12" fill="url(#gstar)"/>
-  <!-- Inner star shape -->
-  <path d="M32 26 L35 32 L41 32 L37 37 L39 43 L32 38 L25 43 L27 37 L23 32 L29 32 Z" fill="#ffffff" fill-opacity="0.95"/>
+  <rect x="4" y="4" width="88" height="88" rx="26" fill="url(#hrbg)"/>
+  <!-- ears -->
+  <ellipse cx="33" cy="35" rx="9" ry="8" fill="#a9764e"/>
+  <ellipse cx="63" cy="35" rx="9" ry="8" fill="#a9764e"/>
+  <ellipse cx="33" cy="36" rx="4.3" ry="3.8" fill="#7f553a"/>
+  <ellipse cx="63" cy="36" rx="4.3" ry="3.8" fill="#7f553a"/>
+  <!-- head -->
+  <rect x="22" y="31" width="52" height="47" rx="21" fill="#c79a6b"/>
+  <!-- muzzle -->
+  <rect x="31" y="54" width="34" height="22" rx="11" fill="#b9885a"/>
+  <!-- eyes -->
+  <circle cx="38" cy="47" r="4.2" fill="#3a3266"/>
+  <circle cx="58" cy="47" r="4.2" fill="#3a3266"/>
+  <circle cx="39.4" cy="45.6" r="1.4" fill="#fff"/>
+  <circle cx="59.4" cy="45.6" r="1.4" fill="#fff"/>
+  <!-- nostrils + mouth -->
+  <ellipse cx="42" cy="63" rx="2.4" ry="2" fill="#6b4a2f"/>
+  <ellipse cx="54" cy="63" rx="2.4" ry="2" fill="#6b4a2f"/>
+  <path d="M44 69.5 q4 3.5 8 0" stroke="#6b4a2f" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- honor star, top-right -->
+  <path d="M74 17 l2.1 4.4 4.8.5-3.6 3.3 1.05 4.7-4.35-2.5-4.35 2.5 1.05-4.7-3.6-3.3 4.8-.5z" fill="#ffd23f" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>
 </svg>
