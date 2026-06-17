@@ -177,7 +177,11 @@ def ingest_teams(
             raw_members = team.get("members") or []
             members = (
                 [
-                    {"name": _str(m.get("name")), "grade": _str(m.get("grade")), "school": _str(m.get("school"))}
+                    {
+                        "name": _str(m.get("name")),
+                        "grade": _str(m.get("grade")),
+                        "school": _str(m.get("school")),
+                    }
                     for m in raw_members
                     if isinstance(m, dict) and _str(m.get("name"))
                 ]

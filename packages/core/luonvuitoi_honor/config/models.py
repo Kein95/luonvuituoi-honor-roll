@@ -67,7 +67,9 @@ class Project(_Strict):
     slug: str = Field(min_length=1, max_length=60)
     locale: LocaleCode = "vi"
     tagline: str | None = Field(default=None, max_length=160)
-    tagline_en: str | None = Field(default=None, max_length=160, description="English tagline (bilingual UI).")
+    tagline_en: str | None = Field(
+        default=None, max_length=160, description="English tagline (bilingual UI)."
+    )
     branding: Branding = Field(default_factory=Branding)
 
     @field_validator("slug")
@@ -130,7 +132,9 @@ class Edition(_Strict):
     competition_id: str = Field(min_length=1, max_length=40)
     year: int = Field(ge=1900, le=2100)
     label: str = Field(min_length=1, max_length=160, description="Human label shown in the UI.")
-    upcoming: bool = Field(default=False, description="Declared but no data yet — shown as a 'coming soon' note.")
+    upcoming: bool = Field(
+        default=False, description="Declared but no data yet — shown as a 'coming soon' note."
+    )
 
     @field_validator("competition_id")
     @classmethod

@@ -136,15 +136,23 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
     @app.get("/hall-of-fame")
     def _hall():
         return render_hall_of_fame_page(
-            config=config, locale=g.locale, db_path=db_path, csp_nonce=g.csp_nonce,
-            admin_authed=_authed(), lang=g.lang,
+            config=config,
+            locale=g.locale,
+            db_path=db_path,
+            csp_nonce=g.csp_nonce,
+            admin_authed=_authed(),
+            lang=g.lang,
         )
 
     @app.get("/teams")
     def _teams():
         return render_teams_page(
-            config=config, locale=g.locale, db_path=db_path, csp_nonce=g.csp_nonce,
-            admin_authed=_authed(), lang=g.lang,
+            config=config,
+            locale=g.locale,
+            db_path=db_path,
+            csp_nonce=g.csp_nonce,
+            admin_authed=_authed(),
+            lang=g.lang,
         )
 
     @app.get("/login")
@@ -154,8 +162,12 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
         if _authed():
             return redirect("/admin")
         return render_login_page(
-            config=config, locale=g.locale, csp_nonce=g.csp_nonce,
-            configured=bool(admin_password), csrf_token=ensure_csrf_token(session), lang=g.lang,
+            config=config,
+            locale=g.locale,
+            csp_nonce=g.csp_nonce,
+            configured=bool(admin_password),
+            csrf_token=ensure_csrf_token(session),
+            lang=g.lang,
         )
 
     @app.post("/login")
@@ -165,7 +177,9 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
         ip = _client_ip()
         if not admin_password:
             return (
-                render_login_page(config=config, locale=g.locale, csp_nonce=g.csp_nonce, configured=False, lang=g.lang),
+                render_login_page(
+                    config=config, locale=g.locale, csp_nonce=g.csp_nonce, configured=False, lang=g.lang
+                ),
                 503,
             )
         # CSRF: the token is minted on GET /login and echoed back in a hidden field.
@@ -173,8 +187,12 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
             record_activity(db_path, "login.csrf_reject", ip=ip)
             return (
                 render_login_page(
-                    config=config, locale=g.locale, csp_nonce=g.csp_nonce, error=True,
-                    csrf_token=ensure_csrf_token(session), lang=g.lang,
+                    config=config,
+                    locale=g.locale,
+                    csp_nonce=g.csp_nonce,
+                    error=True,
+                    csrf_token=ensure_csrf_token(session),
+                    lang=g.lang,
                 ),
                 400,
             )
@@ -184,8 +202,13 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
             record_activity(db_path, "login.lockout", ip=ip, detail=f"retry_after={wait}s")
             resp = make_response(
                 render_login_page(
-                    config=config, locale=g.locale, csp_nonce=g.csp_nonce,
-                    locked_out=True, retry_after=wait, csrf_token=ensure_csrf_token(session), lang=g.lang,
+                    config=config,
+                    locale=g.locale,
+                    csp_nonce=g.csp_nonce,
+                    locked_out=True,
+                    retry_after=wait,
+                    csrf_token=ensure_csrf_token(session),
+                    lang=g.lang,
                 ),
                 429,
             )
@@ -202,8 +225,12 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
         record_activity(db_path, "login.failure", ip=ip)
         return (
             render_login_page(
-                config=config, locale=g.locale, csp_nonce=g.csp_nonce, error=True,
-                csrf_token=ensure_csrf_token(session), lang=g.lang,
+                config=config,
+                locale=g.locale,
+                csp_nonce=g.csp_nonce,
+                error=True,
+                csrf_token=ensure_csrf_token(session),
+                lang=g.lang,
             ),
             401,
         )
@@ -223,8 +250,13 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
         if not _authed():
             return redirect("/login")
         return render_admin_page(
-            config=config, locale=g.locale, db_path=db_path, csp_nonce=g.csp_nonce,
-            admin_authed=True, csrf_token=ensure_csrf_token(session), lang=g.lang,
+            config=config,
+            locale=g.locale,
+            db_path=db_path,
+            csp_nonce=g.csp_nonce,
+            admin_authed=True,
+            csrf_token=ensure_csrf_token(session),
+            lang=g.lang,
         )
 
     @app.post("/api/admin/achievements")

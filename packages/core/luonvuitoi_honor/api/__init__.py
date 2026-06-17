@@ -58,7 +58,7 @@ def add_achievement(
         raise ApiError("name is required")
 
     year_raw = payload.get("year")
-    if year_raw in (None, ""):
+    if year_raw is None or year_raw == "":
         years = [e.year for e in config.editions if e.competition_id == competition_id]
         year = max(years) if years else 0
     else:

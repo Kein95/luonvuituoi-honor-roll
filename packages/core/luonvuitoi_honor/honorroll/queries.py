@@ -251,7 +251,15 @@ def hall_of_fame(config: HonorConfig, db_path: str | Path, *, limit: int = 60) -
         name = r["name"]
         star = by_name.setdefault(
             name,
-            {"name": name, "grade": "", "photo_url": "", "school": "", "count": 0, "best_rank": 1_000_000, "best_medal": ""},
+            {
+                "name": name,
+                "grade": "",
+                "photo_url": "",
+                "school": "",
+                "count": 0,
+                "best_rank": 1_000_000,
+                "best_medal": "",
+            },
         )
         star["count"] += 1
         if not star["grade"] and (r["grade"] or ""):

@@ -105,7 +105,9 @@ def test_login_lockout_after_repeated_failures(app_client):  # type: ignore[no-u
 def test_admin_write_requires_csrf_header(admin_client):  # type: ignore[no-untyped-def]
     # Authenticated but no X-CSRF-Token header → 403.
     payload = {"competition_id": "demo-a", "name": "NoToken", "medal": "GOLD"}
-    r = admin_client.post("/api/admin/achievements", data=json.dumps(payload), content_type="application/json")
+    r = admin_client.post(
+        "/api/admin/achievements", data=json.dumps(payload), content_type="application/json"
+    )
     assert r.status_code == 403
     assert "CSRF" in r.get_json()["error"]
     assert admin_client.delete("/api/admin/achievements/1").status_code == 403
@@ -202,9 +204,7 @@ def test_api_admin_add_rejects_oversized_body(admin_client):  # type: ignore[no-
 
 
 def test_api_admin_delete_achievement(admin_client):  # type: ignore[no-untyped-def]
-    r = admin_client.delete(
-        "/api/admin/achievements/1", headers={"X-CSRF-Token": admin_client.csrf_token}
-    )
+    r = admin_client.delete("/api/admin/achievements/1", headers={"X-CSRF-Token": admin_client.csrf_token})
     assert r.status_code == 200
     assert r.get_json()["deleted"] is True
 
