@@ -6,24 +6,27 @@
     </linearGradient>
   </defs>
   <rect x="4" y="4" width="88" height="88" rx="26" fill="url(#hrbg)"/>
-  <!-- ears -->
-  <ellipse cx="33" cy="35" rx="9" ry="8" fill="#a9764e"/>
-  <ellipse cx="63" cy="35" rx="9" ry="8" fill="#a9764e"/>
-  <ellipse cx="33" cy="36" rx="4.3" ry="3.8" fill="#7f553a"/>
-  <ellipse cx="63" cy="36" rx="4.3" ry="3.8" fill="#7f553a"/>
-  <!-- head -->
-  <rect x="22" y="31" width="52" height="47" rx="21" fill="#c79a6b"/>
-  <!-- muzzle -->
-  <rect x="31" y="54" width="34" height="22" rx="11" fill="#b9885a"/>
-  <!-- eyes -->
-  <circle cx="38" cy="47" r="4.2" fill="#3a3266"/>
-  <circle cx="58" cy="47" r="4.2" fill="#3a3266"/>
-  <circle cx="39.4" cy="45.6" r="1.4" fill="#fff"/>
-  <circle cx="59.4" cy="45.6" r="1.4" fill="#fff"/>
-  <!-- nostrils + mouth -->
-  <ellipse cx="42" cy="63" rx="2.4" ry="2" fill="#6b4a2f"/>
-  <ellipse cx="54" cy="63" rx="2.4" ry="2" fill="#6b4a2f"/>
-  <path d="M44 69.5 q4 3.5 8 0" stroke="#6b4a2f" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <!-- honor star, top-right -->
-  <path d="M74 17 l2.1 4.4 4.8.5-3.6 3.3 1.05 4.7-4.35-2.5-4.35 2.5 1.05-4.7-3.6-3.3 4.8-.5z" fill="#ffd23f" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>
+
+  <!-- capybara: blocky loaf head, calm meme face -->
+  <!-- ears (small, set wide and low like a capybara) -->
+  <ellipse cx="29" cy="44" rx="6.5" ry="6" fill="#a07a55"/>
+  <ellipse cx="67" cy="44" rx="6.5" ry="6" fill="#a07a55"/>
+  <!-- head: wide, blunt, slightly rectangular -->
+  <rect x="24" y="40" width="48" height="40" rx="16" fill="#c79a6b"/>
+  <!-- big blunt muzzle (the capybara signature) -->
+  <rect x="30" y="58" width="36" height="22" rx="13" fill="#bb8c5d"/>
+  <!-- sleepy half-closed eyes -->
+  <path d="M35 51 q4 3 8 0" stroke="#3a3266" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M53 51 q4 3 8 0" stroke="#3a3266" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- nostrils + soft smile -->
+  <ellipse cx="42" cy="65" rx="2.3" ry="1.8" fill="#6b4a2f"/>
+  <ellipse cx="54" cy="65" rx="2.3" ry="1.8" fill="#6b4a2f"/>
+  <path d="M43 72 q5 4 10 0" stroke="#6b4a2f" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- iconic yuzu orange resting on the head -->
+  <circle cx="48" cy="33" r="9" fill="#ff9f43"/>
+  <circle cx="48" cy="33" r="9" fill="none" stroke="#e8852a" stroke-width="1.2"/>
+  <path d="M48 25 q3 -3 6 -2 q-1 3 -4 3.5 z" fill="#4caf50"/>
+  <path d="M48 24.5 l0 3" stroke="#7a5230" stroke-width="1.6" stroke-linecap="round"/>
+  <ellipse cx="50" cy="29.5" rx="2.4" ry="1.4" fill="#ffd9a8" opacity="0.8"/>
 </svg>
