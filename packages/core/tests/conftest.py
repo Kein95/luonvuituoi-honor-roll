@@ -150,7 +150,17 @@ def app_client(honor_config, populated_db, tmp_path, monkeypatch):  # type: igno
 
 @pytest.fixture
 def admin_client(app_client):  # type: ignore[no-untyped-def]
-    """An ``app_client`` already authenticated into the admin surface."""
-    resp = app_client.post("/login", data={"password": "test-secret"})
+    """An ``app_client`` already authenticated into the admin surface.
+
+    Carries a fresh ``csrf_token`` attribute (login rotates the token, so this is
+    the post-login one) for use in the ``X-CSRF-Token`` header on write calls.
+    """
+    app_client.get("/login")  # mint the CSRF token the login form needs
+    with app_client.session_transaction() as sess:
+        token = sess.get("csrf_token")
+    resp = app_client.post("/login", data={"password": "test-secret", "csrf_token": token})
     assert resp.status_code in (302, 303)
+    app_client.get("/admin")  # login rotated the token; mint a fresh one
+    with app_client.session_transaction() as sess:
+        app_client.csrf_token = sess.get("csrf_token")
     return app_client

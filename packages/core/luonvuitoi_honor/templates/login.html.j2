@@ -18,9 +18,11 @@
 <div class="login-box">
   <h2>🔐 {{ locale.admin.login }}</h2>
   <div class="sub">{{ locale.admin.title }}</div>
+  {% if locked_out %}<div class="login-err" role="alert">{{ locale.admin.login_locked }} {{ retry_after }}s</div>{% endif %}
   {% if login_error %}<div class="login-err" role="alert">{{ locale.admin.login_error }}</div>{% endif %}
   {% if not admin_configured %}<div class="login-warn" role="alert">{{ locale.admin.login_unconfigured }}</div>{% endif %}
   <form method="post" action="/login">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <label for="pw">{{ locale.admin.password }}</label>
     <input id="pw" type="password" name="password" autocomplete="current-password" required autofocus {{ 'disabled' if not admin_configured }}>
     <button type="submit" {{ 'disabled' if not admin_configured }}>{{ locale.admin.login }}</button>

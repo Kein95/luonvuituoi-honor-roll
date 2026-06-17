@@ -70,12 +70,61 @@ def test_admin_requires_login(app_client):  # type: ignore[no-untyped-def]
 
 
 def test_login_flow(app_client):  # type: ignore[no-untyped-def]
-    assert app_client.post("/login", data={"password": "nope"}).status_code == 401
-    ok = app_client.post("/login", data={"password": "test-secret"})
+    app_client.get("/login")  # mint a CSRF token for the form
+    with app_client.session_transaction() as sess:
+        token = sess.get("csrf_token")
+    assert app_client.post("/login", data={"password": "nope", "csrf_token": token}).status_code == 401
+    ok = app_client.post("/login", data={"password": "test-secret", "csrf_token": token})
     assert ok.status_code in (302, 303)
     assert app_client.get("/admin").status_code == 200
     app_client.get("/logout")
     assert app_client.get("/admin").status_code in (301, 302, 303, 307, 308)
+
+
+def test_login_rejects_missing_csrf(app_client):  # type: ignore[no-untyped-def]
+    # A correct password with no CSRF token is refused (400), not logged in.
+    r = app_client.post("/login", data={"password": "test-secret"})
+    assert r.status_code == 400
+    assert app_client.get("/admin").status_code in (301, 302, 303, 307, 308)
+
+
+def test_login_lockout_after_repeated_failures(app_client):  # type: ignore[no-untyped-def]
+    app_client.get("/login")
+    with app_client.session_transaction() as sess:
+        token = sess.get("csrf_token")
+    # default ADMIN_LOGIN_MAX_ATTEMPTS=5 → the 6th attempt is locked out (429).
+    for _ in range(5):
+        assert app_client.post("/login", data={"password": "wrong", "csrf_token": token}).status_code == 401
+    locked = app_client.post("/login", data={"password": "wrong", "csrf_token": token})
+    assert locked.status_code == 429
+    assert "Retry-After" in locked.headers
+    # Even the *correct* password is locked out while the cooldown holds.
+    assert app_client.post("/login", data={"password": "test-secret", "csrf_token": token}).status_code == 429
+
+
+def test_admin_write_requires_csrf_header(admin_client):  # type: ignore[no-untyped-def]
+    # Authenticated but no X-CSRF-Token header → 403.
+    payload = {"competition_id": "demo-a", "name": "NoToken", "medal": "GOLD"}
+    r = admin_client.post("/api/admin/achievements", data=json.dumps(payload), content_type="application/json")
+    assert r.status_code == 403
+    assert "CSRF" in r.get_json()["error"]
+    assert admin_client.delete("/api/admin/achievements/1").status_code == 403
+
+
+def test_admin_actions_are_audited(admin_client):  # type: ignore[no-untyped-def]
+    from luonvuitoi_honor_cli.server.security import recent_activity
+
+    payload = {"competition_id": "demo-a", "year": 2025, "name": "Audited", "medal": "GOLD"}
+    admin_client.post(
+        "/api/admin/achievements",
+        data=json.dumps(payload),
+        content_type="application/json",
+        headers={"X-CSRF-Token": admin_client.csrf_token},
+    )
+    db = admin_client.application.config["HONOR_DB_PATH"]
+    actions = {row["action"] for row in recent_activity(db, limit=50)}
+    assert "login.success" in actions
+    assert "admin.add" in actions
 
 
 def test_hall_of_fame_page(app_client):  # type: ignore[no-untyped-def]
@@ -115,7 +164,12 @@ def test_api_admin_add_achievement(admin_client):  # type: ignore[no-untyped-def
         "medal": "GOLD",
         "subject_code": "MATH",
     }
-    r = admin_client.post("/api/admin/achievements", data=json.dumps(payload), content_type="application/json")
+    r = admin_client.post(
+        "/api/admin/achievements",
+        data=json.dumps(payload),
+        content_type="application/json",
+        headers={"X-CSRF-Token": admin_client.csrf_token},
+    )
     assert r.status_code == 201
     created = r.get_json()
     assert created["name"] == "Zoe New"
@@ -129,6 +183,7 @@ def test_api_admin_add_rejects_bad_payload(admin_client):  # type: ignore[no-unt
         "/api/admin/achievements",
         data=json.dumps({"competition_id": "demo-a", "name": "X", "medal": "PLATINUM"}),
         content_type="application/json",
+        headers={"X-CSRF-Token": admin_client.csrf_token},
     )
     assert r.status_code == 400
     assert "unknown medal" in r.get_json()["error"]
@@ -136,13 +191,20 @@ def test_api_admin_add_rejects_bad_payload(admin_client):  # type: ignore[no-unt
 
 def test_api_admin_add_rejects_oversized_body(admin_client):  # type: ignore[no-untyped-def]
     big = {"name": "x" * 100_000, "competition_id": "demo-a", "medal": "GOLD"}
-    r = admin_client.post("/api/admin/achievements", data=json.dumps(big), content_type="application/json")
+    r = admin_client.post(
+        "/api/admin/achievements",
+        data=json.dumps(big),
+        content_type="application/json",
+        headers={"X-CSRF-Token": admin_client.csrf_token},
+    )
     # 32KB cap → rejected
     assert r.status_code in (400, 413)
 
 
 def test_api_admin_delete_achievement(admin_client):  # type: ignore[no-untyped-def]
-    r = admin_client.delete("/api/admin/achievements/1")
+    r = admin_client.delete(
+        "/api/admin/achievements/1", headers={"X-CSRF-Token": admin_client.csrf_token}
+    )
     assert r.status_code == 200
     assert r.get_json()["deleted"] is True
 

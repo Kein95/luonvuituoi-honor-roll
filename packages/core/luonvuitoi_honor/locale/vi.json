@@ -73,7 +73,8 @@
     "logout": "Đăng xuất",
     "password": "Mật khẩu",
     "login_error": "Sai mật khẩu.",
-    "login_unconfigured": "Máy chủ chưa đặt ADMIN_PASSWORD."
+    "login_unconfigured": "Máy chủ chưa đặt ADMIN_PASSWORD.",
+    "login_locked": "Thử quá nhiều lần — vui lòng thử lại sau"
   },
   "footer": {
     "powered_by": "Vận hành bởi LUONVUITUOI-HONOR ROLL"

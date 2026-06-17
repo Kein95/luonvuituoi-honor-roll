@@ -230,6 +230,7 @@ def render_admin_page(
     db_path: str | Path,
     csp_nonce: str,
     admin_authed: bool = False,
+    csrf_token: str = "",
     lang: str | None = None,
 ) -> str:
     """Render the admin management surface (table + add form)."""
@@ -258,6 +259,7 @@ def render_admin_page(
             "page_title": locale["admin"]["title"],
             "achievements": achievements,
             "total": total,
+            "csrf_token": csrf_token,
         }
     )
     return render_template("admin.html.j2", **ctx)
@@ -270,6 +272,9 @@ def render_login_page(
     csp_nonce: str,
     configured: bool = True,
     error: bool = False,
+    locked_out: bool = False,
+    retry_after: int = 0,
+    csrf_token: str = "",
     lang: str | None = None,
 ) -> str:
     """Render the admin login page (its own tab/route)."""
@@ -279,6 +284,9 @@ def render_login_page(
             "page_title": locale["admin"]["login"],
             "login_error": error,
             "admin_configured": configured,
+            "locked_out": locked_out,
+            "retry_after": retry_after,
+            "csrf_token": csrf_token,
         }
     )
     return render_template("login.html.j2", **ctx)

@@ -15,7 +15,7 @@ import secrets
 from dataclasses import asdict
 from pathlib import Path
 
-from flask import Flask, Response, g, jsonify, redirect, request, session
+from flask import Flask, Response, g, jsonify, make_response, redirect, request, session
 from luonvuitoi_honor import api as honor_api
 from luonvuitoi_honor.config import HonorConfig, load_config
 from luonvuitoi_honor.locale import load_locale
@@ -27,6 +27,13 @@ from luonvuitoi_honor.ui import (
     render_search_page,
     render_teams_page,
     set_public_base_url,
+)
+
+from .security import (
+    LoginRateLimiter,
+    csrf_valid,
+    ensure_csrf_token,
+    record_activity,
 )
 
 MAX_BODY_BYTES = 32 * 1024
@@ -54,12 +61,19 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
 
     app = Flask(__name__, static_folder=None)
     app.config["MAX_CONTENT_LENGTH"] = MAX_BODY_BYTES
+    app.config["HONOR_DB_PATH"] = str(db_path)  # exposed for tooling/tests (e.g. audit reads)
     # Signed-cookie sessions for admin auth. SECRET_KEY persists logins across
     # restarts; an ephemeral key is fine for dev but logs everyone out on reboot.
     app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
     app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax")
     # Admin password is read from the environment only — never from the committed config.
     admin_password = os.environ.get("ADMIN_PASSWORD", "")
+
+    # Brute-force guard for the login form. Per-IP, per-process (see security.py).
+    login_limiter = LoginRateLimiter(
+        max_attempts=_int_env("ADMIN_LOGIN_MAX_ATTEMPTS", 5),
+        lockout_seconds=_int_env("ADMIN_LOGIN_LOCKOUT_SECONDS", 60),
+    )
 
     # Deploy hardening knobs (read from env so docker-compose / Vercel can set them).
     force_hsts = _flag("FORCE_HSTS")
@@ -141,30 +155,65 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
             return redirect("/admin")
         return render_login_page(
             config=config, locale=g.locale, csp_nonce=g.csp_nonce,
-            configured=bool(admin_password), lang=g.lang,
+            configured=bool(admin_password), csrf_token=ensure_csrf_token(session), lang=g.lang,
         )
 
     @app.post("/login")
     def _login():
         if not config.admin.enabled:
             return ("admin disabled", 404)
+        ip = _client_ip()
         if not admin_password:
             return (
                 render_login_page(config=config, locale=g.locale, csp_nonce=g.csp_nonce, configured=False, lang=g.lang),
                 503,
             )
+        # CSRF: the token is minted on GET /login and echoed back in a hidden field.
+        if not csrf_valid(session, request.form.get("csrf_token")):
+            record_activity(db_path, "login.csrf_reject", ip=ip)
+            return (
+                render_login_page(
+                    config=config, locale=g.locale, csp_nonce=g.csp_nonce, error=True,
+                    csrf_token=ensure_csrf_token(session), lang=g.lang,
+                ),
+                400,
+            )
+        # Brute-force lockout takes precedence over checking the password.
+        wait = login_limiter.retry_after(ip)
+        if wait > 0:
+            record_activity(db_path, "login.lockout", ip=ip, detail=f"retry_after={wait}s")
+            resp = make_response(
+                render_login_page(
+                    config=config, locale=g.locale, csp_nonce=g.csp_nonce,
+                    locked_out=True, retry_after=wait, csrf_token=ensure_csrf_token(session), lang=g.lang,
+                ),
+                429,
+            )
+            resp.headers["Retry-After"] = str(wait)
+            return resp
         supplied = request.form.get("password") or ""
         if hmac.compare_digest(supplied, admin_password):
+            login_limiter.reset(ip)
             session["admin"] = True
+            session.pop("csrf_token", None)  # rotate the token on privilege change
+            record_activity(db_path, "login.success", ip=ip)
             return redirect("/admin")
+        login_limiter.record_failure(ip)
+        record_activity(db_path, "login.failure", ip=ip)
         return (
-            render_login_page(config=config, locale=g.locale, csp_nonce=g.csp_nonce, error=True, lang=g.lang),
+            render_login_page(
+                config=config, locale=g.locale, csp_nonce=g.csp_nonce, error=True,
+                csrf_token=ensure_csrf_token(session), lang=g.lang,
+            ),
             401,
         )
 
     @app.route("/logout", methods=["GET", "POST"])
     def _logout():
+        if session.get("admin"):
+            record_activity(db_path, "logout", ip=_client_ip())
         session.pop("admin", None)
+        session.pop("csrf_token", None)
         return redirect("/")
 
     @app.get("/admin")
@@ -175,7 +224,7 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
             return redirect("/login")
         return render_admin_page(
             config=config, locale=g.locale, db_path=db_path, csp_nonce=g.csp_nonce,
-            admin_authed=True, lang=g.lang,
+            admin_authed=True, csrf_token=ensure_csrf_token(session), lang=g.lang,
         )
 
     @app.post("/api/admin/achievements")
@@ -184,7 +233,10 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
             return jsonify({"error": "admin disabled"}), 404
         if not _authed():
             return jsonify({"error": "authentication required"}), 401
+        if not csrf_valid(session, request.headers.get("X-CSRF-Token")):
+            return jsonify({"error": "invalid CSRF token"}), 403
         created = honor_api.add_achievement(config=config, db_path=db_path, payload=_json_body())
+        record_activity(db_path, "admin.add", ip=_client_ip(), target=created.id)
         return jsonify(asdict(created)), 201
 
     @app.delete("/api/admin/achievements/<int:achievement_id>")
@@ -193,7 +245,10 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
             return jsonify({"error": "admin disabled"}), 404
         if not _authed():
             return jsonify({"error": "authentication required"}), 401
+        if not csrf_valid(session, request.headers.get("X-CSRF-Token")):
+            return jsonify({"error": "invalid CSRF token"}), 403
         removed = honor_api.delete_achievement(db_path, achievement_id=achievement_id)
+        record_activity(db_path, "admin.delete", ip=_client_ip(), target=achievement_id)
         return jsonify({"deleted": removed, "id": achievement_id})
 
     @app.get("/api/stats")
@@ -245,6 +300,21 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
 def _flag(name: str) -> bool:
     """Truthy check for an env flag (1/true/yes/on)."""
     return os.environ.get(name, "").strip().lower() in ("1", "true", "yes", "on")
+
+
+def _int_env(name: str, default: int) -> int:
+    """Read a positive integer env var, falling back to ``default`` if unset/invalid."""
+    try:
+        value = int(os.environ.get(name, ""))
+    except ValueError:
+        return default
+    return value if value >= 1 else default
+
+
+def _client_ip() -> str:
+    """Best-effort client IP. ProxyFix rewrites remote_addr from X-Forwarded-For
+    when TRUST_PROXY_HEADERS is set, so this is correct behind a trusted proxy."""
+    return request.remote_addr or "unknown"
 
 
 def _resolve_lang(config: HonorConfig) -> str:
