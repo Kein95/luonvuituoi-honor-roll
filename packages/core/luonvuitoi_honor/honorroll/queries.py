@@ -159,7 +159,7 @@ def list_honor_roll(
         subjects = [
             SubjectBreakdown(subject_code=r["subject_code"] or "", count=int(r["c"]))
             for r in conn.execute(
-                f"SELECT COALESCE(NULLIF(subject_code,''), '—') subject_code, COUNT(*) c "
+                f"SELECT COALESCE(NULLIF(subject_code,''), '-') subject_code, COUNT(*) c "
                 f"FROM achievements{clause} GROUP BY subject_code ORDER BY COUNT(*) DESC",
                 params,
             )
@@ -178,7 +178,7 @@ def search_student(
     name_query: str,
     limit: int = 50,
 ) -> list[Achievement]:
-    """Case-insensitive name search across all editions — the portal lookup."""
+    """Case-insensitive name search across all editions. This is the portal lookup."""
     q = f"%{name_query.strip().lower()}%"
     with closing(_connect(db_path)) as conn:
         rows = conn.execute(
@@ -226,7 +226,7 @@ def stats(config: HonorConfig, db_path: str | Path) -> dict[str, Any]:
 
 
 def list_schools(db_path: str | Path) -> list[str]:
-    """Distinct, non-empty school names (alphabetical) — populates the roll's school filter."""
+    """Distinct, non-empty school names (alphabetical). Populates the roll's school filter."""
     with closing(_connect(db_path)) as conn:
         rows = conn.execute(
             "SELECT DISTINCT school FROM achievements WHERE school != '' ORDER BY school"

@@ -22,7 +22,7 @@ def _coerce_cell(v: Any) -> object:
         return None
     # pandas/numpy scalar wrappers → native
     if hasattr(v, "item"):
-        with contextlib.suppress(Exception):  # pragma: no cover — defensive
+        with contextlib.suppress(Exception):  # pragma: no cover: defensive
             v = v.item()
     if isinstance(v, float) and v.is_integer():
         # keep ranks/years clean ints when the source stored them as floats
@@ -70,7 +70,7 @@ def read_excel(path: str | Path, *, sheet: int | str = 0, header_row: int = 0) -
         raise IngestError(f"Excel file not found: {p}")
     try:
         df = pd.read_excel(p, sheet_name=sheet, header=header_row, dtype=object)
-    except Exception as e:  # noqa: BLE001 — surface a readable message
+    except Exception as e:  # noqa: BLE001 - surface a readable message
         raise IngestError(f"failed to read Excel ({p}): {e}") from e
     df = df.dropna(how="all")
     out: list[SourceRow] = []

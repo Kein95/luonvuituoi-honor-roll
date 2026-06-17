@@ -29,9 +29,9 @@ AdminAuthMode = Literal["password"]
 _HEX_COLOR = re.compile(r"^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")
 # Slug: lowercase kebab-case segments joined by single hyphens, no leading/trailing hyphen.
 _SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-# Identifier used as a dict/URL key — letters/digits/_/- only, no path separators.
+# Identifier used as a dict/URL key: letters/digits/_/- only, no path separators.
 _IDENT = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
-# Medal/subject code — uppercase A-Z, digits and underscore, short.
+# Medal/subject code: uppercase A-Z, digits and underscore, short.
 _CODE = re.compile(r"^[A-Z][A-Z0-9_]*$")
 _SAFE_LOGO_SCHEMES = ("/", "http://", "https://", "data:image/")
 
@@ -136,7 +136,7 @@ class Edition(_Strict):
     year: int = Field(ge=1900, le=2100)
     label: str = Field(min_length=1, max_length=160, description="Human label shown in the UI.")
     upcoming: bool = Field(
-        default=False, description="Declared but no data yet — shown as a 'coming soon' note."
+        default=False, description="Declared but no data yet, shown as a 'coming soon' note."
     )
 
     @field_validator("competition_id")
@@ -192,7 +192,7 @@ class DataMapping(_Strict):
     """Column-name mapping used when ingesting achievement source files.
 
     Each field names the header the operator's CSV/Excel/JSON uses for that
-    logical concept, so a renamed column only needs a config edit — no code change.
+    logical concept, so a renamed column only needs a config edit, no code change.
     """
 
     candidate_no_col: str = "candidate_no"
@@ -300,7 +300,7 @@ class HonorConfig(_Strict):
     @model_validator(mode="after")
     def _registry_codes_safe(self) -> HonorConfig:
         """Medal/team-award codes are interpolated into SQL CASE clauses, so they
-        must be safe identifiers (no quotes/spaces) — this closes any injection path."""
+        must be safe identifiers (no quotes/spaces). This closes any injection path."""
         for key in self.medals:
             if not _CODE.match(key):
                 raise ValueError(f"medal registry code {key!r} must match {_CODE.pattern}")

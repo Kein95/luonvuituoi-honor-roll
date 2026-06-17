@@ -74,7 +74,7 @@
     "password": "Password",
     "login_error": "Wrong password.",
     "login_unconfigured": "ADMIN_PASSWORD is not set on the server.",
-    "login_locked": "Too many attempts — try again in"
+    "login_locked": "Too many attempts. Try again in"
   },
   "footer": {
     "powered_by": "Powered by LUONVUITUOI-HONOR ROLL"

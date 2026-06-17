@@ -66,7 +66,7 @@ def build_app(config_path: Path, project_root: Path) -> Flask:
     # restarts; an ephemeral key is fine for dev but logs everyone out on reboot.
     app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
     app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax")
-    # Admin password is read from the environment only — never from the committed config.
+    # Admin password is read from the environment only, never from the committed config.
     admin_password = os.environ.get("ADMIN_PASSWORD", "")
 
     # Brute-force guard for the login form. Per-IP, per-process (see security.py).

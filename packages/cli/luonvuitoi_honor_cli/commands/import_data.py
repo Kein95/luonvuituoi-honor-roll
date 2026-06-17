@@ -1,4 +1,4 @@
-"""``lvt-honor import`` — load achievements from a CSV/Excel/JSON source file.
+"""``lvt-honor import``: load achievements from a CSV/Excel/JSON source file.
 
 Reads ``honor.config.json``, reads the source file, projects rows through the
 config's ``data_mapping``, and writes them into ``data/<slug>.db`` for the given

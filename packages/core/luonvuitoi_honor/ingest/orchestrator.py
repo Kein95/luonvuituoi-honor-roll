@@ -2,11 +2,11 @@
 
 The orchestrator owns three concerns:
 
-1. **Schema bootstrap** — calls :func:`init_db` idempotently.
-2. **Column projection** — maps the source file's headers (via
+1. **Schema bootstrap**: calls :func:`init_db` idempotently.
+2. **Column projection**: maps the source file's headers (via
    :class:`DataMapping`) onto the logical achievement fields, normalising
    medals to uppercase and skipping rows without a name or medal.
-3. **Competition/year context** — every ingest call is bound to one
+3. **Competition/year context**: every ingest call is bound to one
    ``competition_id`` + ``year`` (an edition), so a single source file always
    lands in the right slice of the honor roll without per-row guessing.
 """
@@ -59,7 +59,7 @@ def project_row(
     competition = next((c for c in config.competitions if c.id == competition_id), None)
     if competition is None:
         raise IngestError(f"competition_id {competition_id!r} not declared in config")
-    candidate_no = _str(row.get(m.candidate_no_col)) or "—"
+    candidate_no = _str(row.get(m.candidate_no_col)) or "-"
     grade = _str(row.get(m.grade_col)) if m.grade_col else ""
     photo_url = _str(row.get(m.photo_col)) if m.photo_col else ""
     school = _str(row.get(m.school_col)) if m.school_col else ""

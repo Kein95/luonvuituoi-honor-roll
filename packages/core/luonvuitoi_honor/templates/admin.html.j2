@@ -48,7 +48,7 @@ table.atbl{width:100%;border-collapse:collapse;font-size:.88em;background:#fff;b
         {% for code, md in medals.items() %}<option value="{{ code }}">{{ md.icon }} {{ locale_code == 'vi' and md.label_vi or md.label_en }}</option>{% endfor %}
       </select></div>
     <div><label for="a-rank">{{ locale.admin.rank }}</label><input id="a-rank" name="rank" placeholder="1"></div>
-    <div><label for="a-candidate">{{ locale.admin.candidate_no }}</label><input id="a-candidate" name="candidate_no" placeholder="—"></div>
+    <div><label for="a-candidate">{{ locale.admin.candidate_no }}</label><input id="a-candidate" name="candidate_no" placeholder="optional"></div>
   </div>
   <div class="actions"><button type="submit" class="btn-save">💾 {{ locale.admin.save }}</button></div>
 </form>

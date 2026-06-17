@@ -6,7 +6,7 @@ rows, and every public listing is a single indexed SELECT (filter by
 competition / year / medal / subject / school) instead of a fan-out across
 per-edition tables.
 
-All data columns are TEXT — SQLite is dynamically typed and source values can
+All data columns are TEXT. SQLite is dynamically typed and source values can
 be mixed numeric/string without penalty. Handlers cast when needed.
 """
 
@@ -77,7 +77,7 @@ class AchievementRow:
 def init_db(db_path: str) -> None:
     """Create the achievements table + indexes if they don't yet exist.
 
-    Idempotent — safe to call on every boot and every ingest.
+    Idempotent: safe to call on every boot and every ingest.
     """
     import sqlite3
     from contextlib import closing

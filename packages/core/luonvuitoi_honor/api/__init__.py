@@ -70,7 +70,7 @@ def add_achievement(
     rec = {
         "competition_id": competition_id,
         "year": year,
-        "candidate_no": _str(payload.get("candidate_no")) or "—",
+        "candidate_no": _str(payload.get("candidate_no")) or "-",
         "name": name,
         "grade": _str(payload.get("grade")),
         "photo_url": _str(payload.get("photo_url")),

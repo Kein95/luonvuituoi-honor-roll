@@ -1,4 +1,4 @@
-"""``lvt-honor seed`` — generate fake achievements for local testing.
+"""``lvt-honor seed``: generate fake achievements for local testing.
 
 Reads ``honor.config.json`` from the current directory, invents ``--count``
 achievements across the declared competitions/editions with Faker, and writes

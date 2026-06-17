@@ -1,4 +1,4 @@
-"""``lvt-honor dev`` — run the honor-roll portal locally.
+"""``lvt-honor dev``: run the honor-roll portal locally.
 
 Builds the Flask app from ``honor.config.json`` in the current directory (or a
 config path override) and serves it on ``--host`` / ``--port``.

@@ -1,4 +1,4 @@
-"""``lvt-honor import-teams`` — load team/group awards from a JSON file.
+"""``lvt-honor import-teams``: load team/group awards from a JSON file.
 
 Reads ``honor.config.json``, reads a JSON list of team objects, validates each
 team's ``award`` against the config's ``team_awards`` registry, and writes them
@@ -44,7 +44,7 @@ def import_teams(
 
     if not config.team_awards:
         console.print(
-            "[yellow]![/] config has no 'team_awards' registry — teams import will store rows, "
+            "[yellow]![/] config has no 'team_awards' registry, teams import will store rows, "
             "but the All-Star Teams page only shows once you declare team_awards."
         )
     if not any(c.id == competition for c in config.competitions):

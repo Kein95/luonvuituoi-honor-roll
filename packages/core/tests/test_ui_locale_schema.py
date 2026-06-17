@@ -89,6 +89,6 @@ def test_schema_in_sync_with_models() -> None:
     committed = json.loads(_SCHEMA_PATH.read_text(encoding="utf-8"))
     live = HonorConfig.model_json_schema()
     assert committed == live, (
-        "honor.schema.json is out of sync with config.models — run "
+        "honor.schema.json is out of sync with config.models. Run "
         "`python scripts/export_schema.py` to regenerate."
     )

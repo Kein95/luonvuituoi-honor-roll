@@ -1,6 +1,6 @@
 """Shared pytest fixtures for engine + CLI tests.
 
-No external assets needed — the honor-roll domain is pure SQLite + JSON, so
+No external assets needed. The honor-roll domain is pure SQLite + JSON, so
 every fixture builds its data in ``tmp_path``. This keeps the suite hermetic
 and fast (no reportlab/pypdf/font files, unlike the CERT sibling).
 """

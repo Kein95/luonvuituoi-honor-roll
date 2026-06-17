@@ -1,6 +1,6 @@
 """Unit tests for the login hardening primitives in ``server.security``.
 
-Pure and fast — no Flask app needed. The rate limiter uses an injected clock so
+Pure and fast, no Flask app needed. The rate limiter uses an injected clock so
 lockout timing is deterministic.
 """
 

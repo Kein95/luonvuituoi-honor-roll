@@ -87,7 +87,7 @@ def _competition_name(config: HonorConfig, competition_id: str, *, vi: bool = Tr
 
 
 def _subject_options(config: HonorConfig, *, vi: bool) -> list[tuple[str, str, str]]:
-    """Distinct subject (code, display-name, icon) across all competitions — populates the roll filter."""
+    """Distinct subject (code, display-name, icon) across all competitions. Populates the roll filter."""
     seen: dict[str, tuple[str, str]] = {}
     for c in config.competitions:
         for s in c.subjects:

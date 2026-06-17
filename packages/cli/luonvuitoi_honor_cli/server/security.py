@@ -2,9 +2,9 @@
 
 Three concerns, deliberately small:
 
-* :class:`LoginRateLimiter` — in-process brute-force guard keyed by client IP.
-* CSRF tokens — per-session token issued to admin forms and required on writes.
-* Audit log — append-only ``admin_activity`` rows in the project SQLite db.
+* :class:`LoginRateLimiter`: in-process brute-force guard keyed by client IP.
+* CSRF tokens: per-session token issued to admin forms and required on writes.
+* Audit log: append-only ``admin_activity`` rows in the project SQLite db.
 
 The rate limiter is per-process by design: it fits the single-instance dev /
 Docker deploy this project targets. A multi-instance serverless deploy would
@@ -32,7 +32,7 @@ class LoginRateLimiter:
 
     Tracks ``(fail_count, last_attempt_ts)`` per identifier. Once ``fail_count``
     reaches ``max_attempts`` the identifier is blocked until ``lockout_seconds``
-    have elapsed since its *last* failed attempt — so hammering the form during
+    have elapsed since its *last* failed attempt, so hammering the form during
     a lockout keeps pushing the unlock time out. A success clears the entry.
     Thread-safe for the threaded Flask dev server.
     """
@@ -133,7 +133,7 @@ def record_activity(
     target: Any = None,
     detail: str | None = None,
 ) -> None:
-    """Append one audit row. Never raises into the request path — a failed
+    """Append one audit row. Never raises into the request path; a failed
     audit write must not break the operation it was recording."""
     try:
         conn = _connect(db_path)

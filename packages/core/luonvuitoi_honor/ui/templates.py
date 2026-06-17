@@ -43,5 +43,5 @@ def render_template(name: str, **context: Any) -> str:
         raise RenderError(f"template not found: {name}")
     try:
         return _env.get_template(name).render(**context)
-    except Exception as e:  # noqa: BLE001 — surface a readable message
+    except Exception as e:  # noqa: BLE001 - surface a readable message
         raise RenderError(f"failed to render {name}: {e}") from e

@@ -2,7 +2,7 @@
 
 Marked ``e2e`` so they can be skipped with ``pytest -m 'not e2e'`` for the fast
 unit-only loop. They build the real app factory, hit every route, and assert
-on status codes + visible content — catching wiring regressions the pure unit
+on status codes + visible content, catching wiring regressions the pure unit
 tests can't see.
 """
 

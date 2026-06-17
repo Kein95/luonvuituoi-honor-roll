@@ -17,7 +17,7 @@ console = Console()
 
 app = typer.Typer(
     name="lvt-honor",
-    help="LUONVUITUOI-HONOR ROLL — scaffold, seed, import, and run student honor-roll portals.",
+    help="LUONVUITUOI-HONOR ROLL: scaffold, seed, import, and run student honor-roll portals.",
     no_args_is_help=True,
     add_completion=False,
 )

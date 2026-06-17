@@ -171,7 +171,7 @@
     },
     "DataMapping": {
       "additionalProperties": false,
-      "description": "Column-name mapping used when ingesting achievement source files.\n\nEach field names the header the operator's CSV/Excel/JSON uses for that\nlogical concept, so a renamed column only needs a config edit — no code change.",
+      "description": "Column-name mapping used when ingesting achievement source files.\n\nEach field names the header the operator's CSV/Excel/JSON uses for that\nlogical concept, so a renamed column only needs a config edit, no code change.",
       "properties": {
         "candidate_no_col": {
           "default": "candidate_no",
@@ -370,7 +370,7 @@
         },
         "upcoming": {
           "default": false,
-          "description": "Declared but no data yet — shown as a 'coming soon' note.",
+          "description": "Declared but no data yet, shown as a 'coming soon' note.",
           "title": "Upcoming",
           "type": "boolean"
         }

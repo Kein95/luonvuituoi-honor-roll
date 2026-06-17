@@ -24,6 +24,9 @@
     a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
       outline:3px solid var(--sun);outline-offset:2px;border-radius:10px;
     }
+    /* Form controls don't inherit font-family by default, so buttons fell back to
+       the browser UA font (wrong look, weak Vietnamese diacritics). Force inherit. */
+    button,input,select,textarea{font-family:inherit}
     body{
       font-family:'Nunito','Segoe UI',Tahoma,sans-serif;font-weight:600;
       background:linear-gradient(-45deg,var(--primary),var(--accent),#56ccf2,#ffd23f);
