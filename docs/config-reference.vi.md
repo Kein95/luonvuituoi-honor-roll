@@ -1,6 +1,6 @@
 # Tài liệu tham khảo cấu hình
 
-`honor.config.json` là toàn bộ cổng thông tin. Mọi khóa được xác thực bởi các mô hình Pydantic (`extra="forbid"`), vì vậy lỗi đánh máy sẽ thất bại to lớn khi tải. Tệp [`honor.schema.json`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/honor.schema.json) được cam kết cung cấp hoàn thiện tự động cho trình soạn thảo. Trỏ tệp của bạn vào nó:
+`honor.config.json` định nghĩa toàn bộ cổng thông tin. Mọi khóa đều được xác thực bằng các mô hình Pydantic (`extra="forbid"`), nên lỗi gõ sai sẽ báo lỗi ngay khi tải. Tệp [`honor.schema.json`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/honor.schema.json) đi kèm trong kho cung cấp gợi ý tự động cho trình soạn thảo. Hãy trỏ tệp cấu hình của bạn tới schema này:
 
 ```jsonc
 {
@@ -15,11 +15,11 @@
 |------|------|---------|-------|
 | `project` | object | ✓ | Tên hiển thị, slug, locale, khẩu hiệu, thương hiệu. |
 | `competitions` | array | ✓ (≥1) | Các cuộc thi bạn công bố (Demo Olympiad A, Demo Olympiad B, …). |
-| `editions` | array | ✓ (≥1) | Các cặp cuộc thi + năm bạn đã chạy. |
-| `medals` | object | ✓ (≥1) | Sổ đăng ký huy chương toàn cầu: mã → định nghĩa. |
-| `data_mapping` | object | | Ánh xạ tên cột để nhập. |
-| `display` | object | | Bố cục UI + mặc định. |
-| `admin` | object | | Chuyển đổi bề mặt quản trị viên + chế độ xác thực. |
+| `editions` | array | ✓ (≥1) | Các cặp cuộc thi và năm mà bạn đã tổ chức. |
+| `medals` | object | ✓ (≥1) | Sổ đăng ký huy chương toàn cục: mã → định nghĩa. |
+| `data_mapping` | object | | Ánh xạ tên cột khi nhập dữ liệu. |
+| `display` | object | | Bố cục giao diện và giá trị mặc định. |
+| `admin` | object | | Công tắc bật/tắt bề mặt quản trị và chế độ xác thực. |
 
 ## `project`
 
@@ -33,9 +33,9 @@
 }
 ```
 
-- `slug` phải là kebab-case chữ thường; nó đặt tên cho tệp SQLite (`data/<slug>.db`).
-- `locale` là `"en"` hoặc `"vi"`; chọn chuỗi UI.
-- `branding.logo_url` phải bắt đầu bằng `/`, `http://`, `https://` hoặc `data:image/` (XSS sink đóng).
+- `slug` phải là kebab-case chữ thường; giá trị này dùng để đặt tên tệp SQLite (`data/<slug>.db`).
+- `locale` nhận giá trị `"en"` hoặc `"vi"`, quyết định bộ chuỗi giao diện hiển thị.
+- `branding.logo_url` phải bắt đầu bằng `/`, `http://`, `https://` hoặc `data:image/` (nhằm chặn đường rò rỉ qua XSS).
 
 ## `competitions[]`
 
@@ -52,8 +52,8 @@
 }
 ```
 
-- `id` là một mã định danh an toàn URL `[A-Za-z0-9_-]+`.
-- `medals` được viết hoa + khử trùng khi tải; mỗi mục **phải** tồn tại trong sổ đăng ký huy chương `medals` cấp cao nhất (xác thực giữa các trường).
+- `id` là một mã định danh an toàn cho URL theo dạng `[A-Za-z0-9_-]+`.
+- `medals` được chuyển thành chữ hoa và loại bỏ trùng lặp khi tải; mỗi mục **phải** tồn tại trong sổ đăng ký `medals` ở cấp cao nhất (kiểm tra liên trường).
 
 ## `editions[]`
 
@@ -61,8 +61,8 @@
 { "competition_id": "demo-a", "year": 2025, "label": "Demo Olympiad A 2025" }
 ```
 
-- `competition_id` phải tham chiếu một cuộc thi được khai báo (xác thực giữa các trường).
-- Các cặp `(competition_id, year)` phải là duy nhất. Mỗi phiên bản được gán cho mỗi cuộc thi và mỗi năm.
+- `competition_id` phải tham chiếu một cuộc thi đã được khai báo (kiểm tra liên trường).
+- Các cặp `(competition_id, year)` phải là duy nhất: mỗi cuộc thi trong mỗi năm chỉ có một phiên bản.
 
 ## `medals`
 
@@ -73,12 +73,12 @@
 }
 ```
 
-- `rank` xác định thứ tự sắp xếp (thấp hơn = uy tín cao hơn; xếp hạng phải là duy nhất).
-- `color` là chuỗi hex được sử dụng cho nền huy chương.
+- `rank` quyết định thứ tự sắp xếp (giá trị càng thấp thì càng danh giá; thứ hạng phải là duy nhất).
+- `color` là chuỗi mã hex dùng làm màu nền cho huy hiệu huy chương.
 
 ## `data_mapping`
 
-Ánh xạ tiêu đề tệp nguồn của bạn vào các trường logic. Mặc định giả định các cột `candidate_no`, `name`, `grade`, `photo`, `school`, `rank`, `medal`, `subject`. `photo` là URL (https, đường dẫn tương đối tại site `/path` hoặc URI `data:`) được hiển thị dưới dạng avatar của học sinh:
+Ánh xạ các tiêu đề cột trong tệp nguồn của bạn sang các trường logic. Theo mặc định, hệ thống giả định có các cột `candidate_no`, `name`, `grade`, `photo`, `school`, `rank`, `medal`, `subject`. Trường `photo` là một URL (https, đường dẫn tương đối trong site dạng `/path`, hoặc URI `data:`) được hiển thị làm ảnh đại diện của học sinh:
 
 ```json
 "data_mapping": {
@@ -94,7 +94,7 @@
 }
 ```
 
-Đặt bất kỳ cột tùy chọn nào thành `null` (hoặc bỏ qua nó) khi nguồn của bạn không có nó.
+Với bất kỳ cột tùy chọn nào mà nguồn dữ liệu của bạn không có, hãy đặt giá trị `null` hoặc bỏ qua cột đó.
 
 ## `display`
 
@@ -110,7 +110,7 @@
 ```
 
 - `layout`: `"cards"`, `"table"` hoặc `"both"`.
-- `cards_per_row`: 1–8 (lưới đáp ứng bị sập trên thiết bị di động bất kể).
+- `cards_per_row`: 1–8 (dù đặt giá trị nào, lưới responsive vẫn tự co lại trên thiết bị di động).
 
 ## `admin`
 
@@ -118,5 +118,5 @@
 "admin": { "enabled": true, "auth_mode": "password" }
 ```
 
-!!! warning "Phạm vi xác thực quản trị viên"
-    Bề mặt quản trị viên v0.1 (`/admin` + `/api/admin/*`) **không có xác thực phiên làm việc tích hợp**. Các triển khai công khai phơi bày nó phải gating nó đằng sau proxy ngược (Xác thực cơ bản / OAuth / danh sách IP). Xem [`SECURITY.md`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/SECURITY.md). Đặt `enabled: false` để tắt toàn bộ bề mặt ghi.
+!!! warning "Phạm vi xác thực của quản trị"
+    Bề mặt quản trị phiên bản v0.1 (`/admin` + `/api/admin/*`) **không có sẵn cơ chế xác thực session tích hợp**. Các bản triển khai công khai có mở bề mặt này bắt buộc phải đặt nó sau một reverse proxy để kiểm soát truy cập (Basic Auth / OAuth / danh sách IP cho phép). Xem [`SECURITY.md`](https://github.com/Kein95/luonvuituoi-honor-roll/blob/main/SECURITY.md). Đặt `enabled: false` để tắt hoàn toàn bề mặt ghi.

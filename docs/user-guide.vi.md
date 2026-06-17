@@ -1,11 +1,11 @@
 # Hướng dẫn sử dụng
 
-Cách sử dụng cổng thông tin bảng vinh danh: duyệt thư viện, tìm kiếm học sinh, xem hall of fame và quản lý các đội. Nếu bạn là nhà phát triển triển khai cổng thông tin, hãy bắt đầu từ [quickstart.md](quickstart.md) thay thế.
+Hướng dẫn cách dùng cổng thông tin bảng vinh danh: duyệt thư viện, tìm kiếm học sinh, xem hall of fame và quản lý các đội. Nếu bạn là nhà phát triển muốn triển khai cổng thông tin, hãy bắt đầu từ [quickstart.md](quickstart.md).
 
-## Ai đọc cái này
+## Tài liệu này dành cho ai
 
 - **Khách truy cập** (học sinh, phụ huynh, nhà tuyển dụng tiềm năng): xem phần "Duyệt bảng vinh danh".
-- **Nhà điều hành** (nhân viên cuộc thi, quản trị viên đào tạo): xem phần "Bảng điều khiển quản trị".
+- **Người vận hành** (cán bộ tổ chức cuộc thi, quản trị viên đào tạo): xem phần "Bảng điều khiển quản trị".
 
 ## Duyệt bảng vinh danh
 
@@ -13,109 +13,109 @@ URL: `https://<your-portal>/`
 
 ### Lọc theo cuộc thi, năm, huy chương và môn học
 
-Bảng vinh danh hiển thị tất cả các thành tích theo mặc định. Sử dụng các menu thả xuống bộ lọc để thu hẹp chế độ xem:
+Theo mặc định, bảng vinh danh hiển thị tất cả thành tích. Hãy dùng các menu thả xuống để thu hẹp phạm vi hiển thị:
 
-1. **Cuộc thi**: chọn cuộc thi hay cuộc đua nào để xem.
-2. **Năm**: chọn năm/mùa.
-3. **Huy chương**: lọc theo cấp độ giải thưởng (Vàng, Bạc, Đồng, Công lao hoặc các cấp tùy chỉnh).
-4. **Môn học**: nếu cuộc thi theo dõi các môn học (TOÁN, TIẾNG ANH, v.v.), hãy lọc theo môn.
+1. **Cuộc thi**: chọn cuộc thi muốn xem.
+2. **Năm**: chọn năm hoặc mùa giải.
+3. **Huy chương**: lọc theo cấp giải thưởng (Vàng, Bạc, Đồng, Khuyến khích hoặc các cấp tùy chỉnh).
+4. **Môn học**: nếu cuộc thi có phân theo môn (TOÁN, TIẾNG ANH, v.v.), hãy lọc theo môn.
 
-Nhấp **Đặt lại** để xóa tất cả các bộ lọc và hiển thị tất cả các bản ghi.
+Nhấp **Đặt lại** để xóa toàn bộ bộ lọc và hiển thị lại tất cả bản ghi.
 
-### Bố cục xem
+### Bố cục hiển thị
 
-Cài đặt `display.layout` kiểm soát cách kết quả được hiển thị:
+Thiết lập `display.layout` quyết định cách hiển thị kết quả:
 
-- **Thẻ**: chế độ xem thư viện với ảnh, tên, trường học, xếp hạng và huy chương của học sinh.
-- **Bảng**: chế độ xem bảng dày đặc hiển thị tất cả các cột cùng một lúc.
-- **Cả hai**: các tab để chuyển đổi giữa hai chế độ xem.
+- **Thẻ**: chế độ xem dạng thư viện, kèm ảnh, tên, trường học, thứ hạng và huy chương của học sinh.
+- **Bảng**: chế độ xem dạng bảng dày đặc, hiển thị toàn bộ các cột cùng lúc.
+- **Cả hai**: có các tab để chuyển qua lại giữa hai chế độ xem.
 
 ## Trang tìm kiếm
 
 URL: `https://<your-portal>/search`
 
-Tìm học sinh theo tên bằng cách so khớp dung thích dấu. Công cụ tìm kiếm:
+Tìm học sinh theo tên với cơ chế so khớp không phân biệt dấu. Công cụ tìm kiếm:
 
-- Loại bỏ dấu phụ (`Nguyễn` phù hợp với `Nguyen`).
-- Tìm kiếm tên + họ.
-- Trả về tất cả các trận đấu trên tất cả các cuộc thi và năm.
+- Bỏ qua dấu phụ (`Nguyễn` khớp với `Nguyen`).
+- Tìm theo cả tên và họ.
+- Trả về mọi kết quả khớp trên tất cả cuộc thi và mọi năm.
 
-Hữu ích cho những khách truy cập muốn tìm một học sinh cụ thể hoặc xác minh tên của họ xuất hiện trong danh sách.
+Tính năng này hữu ích cho khách truy cập muốn tìm một học sinh cụ thể, hoặc xác nhận tên của mình có trong danh sách.
 
 ## Danh sách vinh danh
 
 URL: `https://<your-portal>/hall-of-fame`
 
-Bảng xếp hạng uy tín của những người đạt thành tích hàng đầu. Danh sách hiển thị:
+Bảng xếp hạng danh giá dành cho những cá nhân đạt thành tích cao nhất. Danh sách hiển thị:
 
-- Học sinh có huy chương uy tín nhất (được sắp xếp theo xếp hạng huy chương, sau đó theo tính nổi bật của cuộc thi).
-- Một chế độ xem "nhà vô địch mọi thời đại" hoặc "thành tích trọn đời" tùy chọn nếu cấu hình của bạn xác định nó.
+- Học sinh sở hữu huy chương danh giá nhất (sắp xếp theo hạng huy chương, sau đó theo mức độ uy tín của cuộc thi).
+- Một chế độ xem tùy chọn "nhà vô địch mọi thời đại" hoặc "thành tích trọn đời", nếu cấu hình của bạn có khai báo.
 - Huy hiệu trường học và cuộc thi.
 
-Tiêu chí chính xác phụ thuộc vào phần cấu hình `hall_of_fame` của bạn (cải tiến trong tương lai).
+Tiêu chí cụ thể phụ thuộc vào phần cấu hình `hall_of_fame` của bạn (sẽ được cải tiến trong tương lai).
 
 ## Trang đội
 
 URL: `https://<your-portal>/teams`
 
-Nếu `team_awards` được cấu hình trong `honor.config.json` của bạn, trang này hiển thị các khen thưởng nhóm/tập thể:
+Nếu `team_awards` được khai báo trong `honor.config.json`, trang này sẽ hiển thị các giải thưởng dành cho nhóm hoặc tập thể:
 
-- Tên đội và ảnh (nếu được cung cấp).
-- Cấp độ giải thưởng (Nhà vô địch, Runner-up, Đội giỏi nhất, v.v.).
+- Tên đội và ảnh (nếu có).
+- Cấp giải thưởng (Vô địch, Á quân, Đội xuất sắc nhất, v.v.).
 - Danh sách thành viên (nếu có trong dữ liệu nhập).
-- Liên kết trường học.
+- Liên kết tới trường học.
 
 ## Bảng điều khiển quản trị
 
 URL: `https://<your-portal>/admin`
 
-Truy cập yêu cầu mật khẩu. Bề mặt quản trị cho phép bạn:
+Việc truy cập yêu cầu mật khẩu. Khu vực quản trị cho phép bạn:
 
 - **Thêm thành tích**: tải lên tệp CSV/Excel/JSON để nhập các bản ghi học sinh mới.
-- **Xóa thành tích**: loại bỏ các mục nhập không chính xác.
-- **Xem số liệu thống kê**: tổng số học sinh, huy chương trên từng cấp, cuộc thi, năm.
-- **Quản lý cấu hình**: chỉnh sửa `honor.config.json` qua giao diện web (dự kiến; hiện tại qua CLI).
+- **Xóa thành tích**: loại bỏ những mục nhập sai.
+- **Xem số liệu thống kê**: tổng số học sinh, số huy chương theo từng cấp, theo cuộc thi và theo năm.
+- **Quản lý cấu hình**: chỉnh sửa `honor.config.json` qua giao diện web (dự kiến; hiện tại thực hiện qua CLI).
 
 ### Đăng nhập
 
-1. Điều hướng đến `/login`.
-2. Nhập mật khẩu quản trị (đặt thông qua biến môi trường `ADMIN_PASSWORD`).
-3. Nhấp **Đăng nhập**. Phiên của bạn có giá trị cho tab trình duyệt; đóng nó sẽ đăng xuất bạn.
+1. Truy cập `/login`.
+2. Nhập mật khẩu quản trị (cấu hình qua biến môi trường `ADMIN_PASSWORD`).
+3. Nhấp **Đăng nhập**. Phiên có hiệu lực trong tab trình duyệt; đóng tab sẽ tự động đăng xuất.
 
 ### Thêm thành tích
 
-1. Đi tới **Quản trị** > **Nhập dữ liệu**.
-2. Tải lên một tệp CSV hoặc Excel với các bản ghi học sinh.
+1. Vào **Quản trị** > **Nhập dữ liệu**.
+2. Tải lên một tệp CSV hoặc Excel chứa các bản ghi học sinh.
 3. Chỉ định cuộc thi và năm.
-4. Chọn **Append** (thêm hàng mới) hoặc **Replace** (xóa dữ liệu của năm trước).
-5. Xem lại tóm tắt nhập: số hàng được nhập, lỗi xác thực.
+4. Chọn **Append** (thêm hàng mới) hoặc **Replace** (xóa dữ liệu của năm trước rồi nhập lại).
+5. Xem lại bản tóm tắt sau khi nhập: số hàng đã nhập và các lỗi xác thực.
 
-Nhập sử dụng `data_mapping` trong cấu hình của bạn để phù hợp với tiêu đề cột. Nếu cột bị thiếu hoặc đặt tên sai, nhập sẽ báo cáo lỗi.
+Quá trình nhập dùng `data_mapping` trong cấu hình để khớp với tiêu đề cột. Nếu thiếu cột hoặc đặt sai tên cột, quá trình nhập sẽ báo lỗi.
 
 ### Xóa một thành tích
 
-1. Tìm kiếm học sinh theo bộ lọc cuộc thi, năm, huy chương hoặc môn học.
-2. Tìm hàng trong kết quả.
-3. Nhấp vào nút **Xóa**.
-4. Xác nhận việc xóa.
+1. Tìm học sinh bằng bộ lọc cuộc thi, năm, huy chương hoặc môn học.
+2. Xác định đúng hàng trong kết quả.
+3. Nhấp nút **Xóa**.
+4. Xác nhận thao tác xóa.
 
-Hàng bị xóa ngay lập tức; tệp nhập gốc không bị ảnh hưởng.
+Hàng sẽ bị xóa ngay lập tức; tệp nhập gốc không bị ảnh hưởng.
 
 ### Xem số liệu thống kê
 
-Điều hướng đến **Quản trị** > **Số liệu thống kê** để xem:
+Vào **Quản trị** > **Số liệu thống kê** để xem:
 
-- Tổng số học sinh độc nhất.
-- Phân phối huy chương (có bao nhiêu Vàng, Bạc, Đồng).
-- Cuộc thi được công bố.
-- Năm có dữ liệu.
+- Tổng số học sinh (không trùng lặp).
+- Phân bố huy chương (số lượng Vàng, Bạc, Đồng).
+- Các cuộc thi đã công bố.
+- Các năm đã có dữ liệu.
 
 ## Khắc phục sự cố
 
 | Vấn đề | Giải pháp |
 |--------|----------|
-| "Học sinh không tìm thấy" nhưng tôi nhìn thấy họ ở nơi khác | Kiểm tra cài đặt bộ lọc (cuộc thi, năm, môn học). Trang tìm kiếm tìm kiếm trên tất cả các bản ghi; trang chủ lọc theo lựa chọn hiện tại của bạn. |
-| Tìm kiếm quá nghiêm ngặt | Tìm kiếm loại bỏ dấu phụ; `Nguyễn` và `Nguyen` tương đương. Kiểm tra chính tả; tên lót có vấn đề. |
-| Nút quản trị bị thiếu | Bề mặt quản trị bị tắt (`admin.enabled: false`). Liên hệ với nhà điều hành trang web. |
-| Không thể đăng nhập vào quản trị | Xác minh mật khẩu là chính xác. Mật khẩu quản trị được đặt thông qua `ADMIN_PASSWORD` tại thời điểm triển khai, không có trong cấu hình. |
-| Nhập không thành công với "cột không tìm thấy" | Kiểm tra tiêu đề CSV của bạn khớp với `data_mapping` trong `honor.config.json` của bạn. |
+| "Không tìm thấy học sinh" nhưng tôi vẫn thấy họ ở nơi khác | Kiểm tra lại các bộ lọc đang đặt (cuộc thi, năm, môn học). Trang tìm kiếm tra trên toàn bộ bản ghi, còn trang chủ chỉ lọc theo lựa chọn hiện tại của bạn. |
+| Tìm kiếm quá khắt khe | Tìm kiếm bỏ qua dấu phụ; `Nguyễn` và `Nguyen` là tương đương. Hãy kiểm tra chính tả; tên lót cũng có thể gây sai lệch. |
+| Thiếu nút quản trị | Khu vực quản trị đang bị tắt (`admin.enabled: false`). Hãy liên hệ người vận hành trang web. |
+| Không đăng nhập được vào trang quản trị | Kiểm tra lại mật khẩu cho đúng. Mật khẩu quản trị được đặt qua `ADMIN_PASSWORD` tại thời điểm triển khai, không nằm trong cấu hình. |
+| Nhập dữ liệu thất bại với lỗi "không tìm thấy cột" | Kiểm tra xem tiêu đề trong tệp CSV có khớp với `data_mapping` trong `honor.config.json` hay không. |

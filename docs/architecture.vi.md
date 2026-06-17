@@ -28,11 +28,11 @@ flowchart TD
     CFG -.validates.-> CORE
 ```
 
-Gói lõi vẫn **độc lập với web framework**. Mỗi handler là một hàm tinh khiết: lấy `db_path` + bộ lọc, trả về dataclasses / HTML được kết xuất. Nhà máy ứng dụng Flask trong `cli/.../server/app.py` là một lớp mỏng gọi các handler này và tuần tự hóa kết quả. Trong các route không có logic kinh doanh nào. Điều này có nghĩa là một handler serverless trong tương lai (Vercel, Cloud Run) sẽ tái sử dụng mọi hàm tinh khiết không thay đổi.
+Gói lõi vẫn **độc lập với web framework**. Mỗi handler là một hàm thuần túy: nhận `db_path` cùng bộ lọc, trả về dataclass hoặc HTML đã kết xuất. App factory của Flask trong `cli/.../server/app.py` chỉ là một lớp mỏng, gọi các handler này rồi tuần tự hóa kết quả, không chứa bất kỳ logic nghiệp vụ nào trong route. Nhờ vậy, một handler serverless trong tương lai (Vercel, Cloud Run) có thể tái sử dụng mọi hàm thuần túy mà không cần thay đổi.
 
 ## Mô hình dữ liệu: một bảng phẳng
 
-Khác với CERT (lưu trữ một bảng cho mỗi vòng), bảng vinh danh sử dụng một **bảng `achievements` phẳng duy nhất**. Mỗi bảng chứa một hàng cho mỗi giải thưởng. Đây là đơn vị tự nhiên: một học sinh với ba huy chương tạo ra ba hàng, và mọi danh sách công khai là một `SELECT` được lập chỉ mục duy nhất với bộ lọc, không phải là fan-out trên các bảng theo từng phiên bản.
+Khác với CERT (lưu mỗi vòng thi một bảng), bảng vinh danh dùng một **bảng `achievements` phẳng duy nhất**, mỗi giải thưởng là một hàng. Đây là đơn vị tự nhiên: một học sinh có ba huy chương sẽ tạo ra ba hàng, và mọi danh sách công khai đều chạy một câu `SELECT` được lập chỉ mục kèm bộ lọc, thay vì phải truy vấn tản ra nhiều bảng theo từng phiên bản.
 
 | cột | mục đích |
 |-----|---------|
@@ -46,7 +46,7 @@ Chỉ mục trên `(competition_id, year, medal, subject_code)`, `name` và `can
 
 ## Xác thực cấu hình
 
-`honor.config.json` được xác thực bởi các mô hình Pydantic với `extra="forbid"`. Các bất biến giữa các trường (các phiên bản tham chiếu các cuộc thi được khai báo, mỗi cuộc thi có các huy chương tồn tại trong sổ đăng ký toàn cầu, ID/mã/xếp hạng là duy nhất) nằm trong các móc `@model_validator` trên `HonorConfig`. Một cấu hình sai định dạng sẽ không thành công to lớn khi tải, vì không bao giờ tạo ra một cổng thông tin được kết xuất một nửa.
+`honor.config.json` được xác thực bằng các mô hình Pydantic với `extra="forbid"`. Các bất biến liên trường (phiên bản phải tham chiếu cuộc thi đã khai báo, huy chương của mỗi cuộc thi phải tồn tại trong sổ đăng ký toàn cục, các ID/mã/thứ hạng phải là duy nhất) nằm trong các hàm `@model_validator` trên `HonorConfig`. Cấu hình sai định dạng sẽ báo lỗi ngay khi tải, nhờ đó không bao giờ tạo ra một cổng thông tin chỉ kết xuất được một nửa.
 
 ## Sự khác biệt về miền so với CERT
 
@@ -56,6 +56,6 @@ Chỉ mục trên `(competition_id, year, medal, subject_code)`, `name` và `can
 | **Lưu trữ** | bảng theo vòng | bảng `achievements` phẳng duy nhất |
 | **Đầu ra công khai** | tìm kiếm → tải xuống PDF | bộ lọc → duyệt thư viện |
 | **Bề mặt ghi** | quản trị viên cấp/sửa chữa chứng chỉ | quản trị viên thêm/xóa thành tích |
-| **Ký** | xác minh QR RSA-PSS | không (xuất bản, không xác thực) |
+| **Ký số** | xác minh QR bằng RSA-PSS | không có (chỉ xuất bản, không chứng thực) |
 
-Các quy ước được chia sẻ: được điều khiển bằng cấu hình, monorepo (`packages/core` + `packages/cli` + `examples`), lõi hàm tinh khiết, nhà máy Flask mỏng, CSP-nonce + tiêu đề bảo mật, i18n (EN + VI) và kinh tế ergonomics dev/deploy giống hệt (`lvt-*` CLI, Vercel + Docker).
+Các quy ước dùng chung: điều khiển bằng cấu hình, monorepo (`packages/core` + `packages/cli` + `examples`), lõi gồm các hàm thuần túy, app factory Flask mỏng, CSP-nonce kèm các header bảo mật, đa ngôn ngữ (EN + VI) và trải nghiệm phát triển/triển khai giống hệt nhau (`lvt-*` CLI, Vercel + Docker).

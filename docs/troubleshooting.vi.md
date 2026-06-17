@@ -1,35 +1,35 @@
 # Khắc phục sự cố
 
-Các vấn đề phổ biến và giải pháp khi thiết lập, chạy hoặc sử dụng LUONVUITUOI-HONOR ROLL.
+Các vấn đề thường gặp và cách xử lý khi cài đặt, chạy hoặc sử dụng LUONVUITUOI-HONOR ROLL.
 
 ## Cài đặt và thiết lập
 
-### Lệnh `lvt-honor` không tìm thấy
+### Không tìm thấy lệnh `lvt-honor`
 
-**Triệu chứng:** Chạy `lvt-honor init` trả về `command not found`.
+**Triệu chứng:** Chạy `lvt-honor init` báo `command not found`.
 
-**Nguyên nhân:** Gói CLI không được cài đặt hoặc không có trong PATH của bạn.
+**Nguyên nhân:** Gói CLI chưa được cài đặt hoặc không nằm trong PATH của bạn.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 ```bash
 # Cài đặt CLI từ PyPI
 pip install luonvuitoi-honor-cli
 
-# Hoặc từ sao chép dev cục bộ
+# Hoặc cài từ bản clone dev cục bộ
 cd packages/cli && pip install -e .
 
-# Xác minh
+# Kiểm tra lại
 lvt-honor --version
 ```
 
-### Không khớp phiên bản Python
+### Sai phiên bản Python
 
-**Triệu chứng:** `lvt-honor` không thành công với `SyntaxError` hoặc `TypeError` về gợi ý kiểu.
+**Triệu chứng:** `lvt-honor` lỗi với `SyntaxError` hoặc `TypeError` liên quan đến gợi ý kiểu (type hint).
 
-**Nguyên nhân:** Bạn đang chạy Python < 3.10. Dự án yêu cầu Python 3.10+.
+**Nguyên nhân:** Bạn đang chạy Python < 3.10. Dự án yêu cầu Python 3.10 trở lên.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 ```bash
 python3 --version
@@ -38,61 +38,61 @@ pyenv install 3.12
 pyenv local 3.12
 ```
 
-### Xác thực cấu hình không thành công khi tải
+### Xác thực cấu hình thất bại khi khởi động
 
-**Triệu chứng:** `lvt-honor dev` trả về `ValidationError: ...` và sẽ không khởi động.
+**Triệu chứng:** `lvt-honor dev` báo `ValidationError: ...` và không khởi động được.
 
-**Nguyên nhân:** `honor.config.json` của bạn có lỗi đánh máy hoặc cấu trúc không hợp lệ.
+**Nguyên nhân:** Tệp `honor.config.json` của bạn có lỗi đánh máy hoặc cấu trúc không hợp lệ.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-1. Mở `honor.config.json` trong trình soạn thảo JSON (VS Code, Sublime, v.v.).
-2. Kiểm tra các lỗi phổ biến:
-   - Dấu phẩy sau cùng trong mảng hoặc đối tượng.
-   - Các trường bắt buộc bị thiếu (`project`, `competitions`, `editions`, `medals`).
-   - Mã huy chương trong `competitions[].medals` không tồn tại trong sổ đăng ký huy chương cấp cao nhất `medals`.
-   - `edition.competition_id` tham chiếu đến một cuộc thi không tồn tại.
-3. Xác thực lại lược đồ:
+1. Mở `honor.config.json` bằng một trình soạn thảo JSON (VS Code, Sublime, v.v.).
+2. Kiểm tra các lỗi thường gặp:
+   - Dấu phẩy thừa ở cuối mảng hoặc đối tượng.
+   - Thiếu các trường bắt buộc (`project`, `competitions`, `editions`, `medals`).
+   - Mã huy chương trong `competitions[].medals` không có trong sổ đăng ký huy chương cấp cao nhất `medals`.
+   - `edition.competition_id` trỏ đến một cuộc thi không tồn tại.
+3. Xác thực lại theo lược đồ:
 
 ```bash
-# Tải xuống lược đồ
+# Tải lược đồ về
 curl -o honor.schema.json https://raw.githubusercontent.com/Kein95/luonvuituoi-honor-roll/main/honor.schema.json
 
-# Xác thực (yêu cầu ajv-cli)
+# Xác thực (cần có ajv-cli)
 npm install -g ajv-cli
 ajv validate -s honor.schema.json -d honor.config.json
 ```
 
 ## Chạy cục bộ
 
-### Cổng đã được sử dụng
+### Cổng đang bị chiếm dụng
 
-**Triệu chứng:** `lvt-honor dev` không thành công với `Address already in use: ('127.0.0.1', 8000)`.
+**Triệu chứng:** `lvt-honor dev` lỗi với `Address already in use: ('127.0.0.1', 8000)`.
 
-**Nguyên nhân:** Một quy trình khác đang lắng nghe cổng 8000.
+**Nguyên nhân:** Một tiến trình khác đang lắng nghe trên cổng 8000.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 ```bash
-# Tìm những gì đang sử dụng cổng 8000
+# Tìm tiến trình đang chiếm cổng 8000
 lsof -i :8000
-# Giết nó
+# Kết thúc tiến trình đó
 kill -9 <PID>
 
-# Hoặc sử dụng một cổng khác
+# Hoặc chạy trên một cổng khác
 lvt-honor dev --port 9000
 ```
 
 ### Cơ sở dữ liệu bị khóa
 
-**Triệu chứng:** Nhập dữ liệu hoặc xem trang trả về `database is locked`.
+**Triệu chứng:** Nhập dữ liệu hoặc xem trang đều báo `database is locked`.
 
-**Nguyên nhân:** Một quy trình khác (một phiên bản `lvt-honor` khác hoặc một quy trình Python bị bỏ đi) có khóa độc quyền trên cơ sở dữ liệu.
+**Nguyên nhân:** Một tiến trình khác (một phiên `lvt-honor` khác, hoặc một tiến trình Python còn sót lại) đang giữ khóa độc quyền trên cơ sở dữ liệu.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 ```bash
-# Giết bất kỳ quy trình Python lạc nào
+# Kết thúc mọi tiến trình Python còn sót lại
 pkill -f "lvt-honor dev"
 
 # Hoặc trên Windows
@@ -102,13 +102,13 @@ taskkill /F /IM python.exe
 lvt-honor dev
 ```
 
-### Nhập không thành công với "cột không tìm thấy"
+### Nhập dữ liệu thất bại với lỗi "không tìm thấy cột"
 
-**Triệu chứng:** `lvt-honor import results.csv` trả về `KeyError: 'expected_column_name'`.
+**Triệu chứng:** `lvt-honor import results.csv` báo `KeyError: 'expected_column_name'`.
 
-**Nguyên nhân:** Tiêu đề CSV của bạn không khớp với `data_mapping` trong cấu hình của bạn.
+**Nguyên nhân:** Tiêu đề trong tệp CSV không khớp với `data_mapping` trong cấu hình của bạn.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 1. Kiểm tra tiêu đề CSV:
 
@@ -123,9 +123,9 @@ head -1 results.csv
 grep -A 10 '"data_mapping"' honor.config.json
 ```
 
-3. Nếu tiêu đề không khớp, hãy:
-   - **Đổi tên các cột CSV** để khớp với cấu hình, HOẶC
-   - **Cập nhật `data_mapping`** trong cấu hình để khớp với CSV.
+3. Nếu tiêu đề không khớp, hãy chọn một trong hai cách:
+   - **Đổi tên các cột trong CSV** cho khớp với cấu hình, HOẶC
+   - **Cập nhật `data_mapping`** trong cấu hình cho khớp với CSV.
 
 Ví dụ:
 
@@ -142,51 +142,51 @@ Ví dụ:
 
 ## Duyệt cổng thông tin
 
-### Tìm kiếm không trả về kết quả, nhưng tôi thấy học sinh ở nơi khác
+### Tìm kiếm không ra kết quả, nhưng tôi thấy học sinh ở nơi khác
 
-**Nguyên nhân:** Tìm kiếm đang hoạt động, nhưng tên học sinh không được nhập hoặc được nhập với cách viết khác.
+**Nguyên nhân:** Tìm kiếm vẫn hoạt động, nhưng tên học sinh chưa được nhập hoặc đã nhập theo cách viết khác.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-1. Kiểm tra các bộ lọc trên trang chủ. Chúng có thể làm hẹp chế độ xem.
-2. Sử dụng bảng điều khiển quản trị để xác minh học sinh có trong cơ sở dữ liệu:
+1. Kiểm tra các bộ lọc trên trang chủ, vì chúng có thể đang thu hẹp phạm vi hiển thị.
+2. Dùng bảng điều khiển quản trị để xác nhận học sinh có trong cơ sở dữ liệu:
 
 ```bash
 sqlite3 data/honor.db "SELECT name, school, medal FROM achievements WHERE name LIKE '%nguyen%' LIMIT 5;"
 ```
 
-3. Nếu học sinh có trong cơ sở dữ liệu nhưng tìm kiếm không tìm thấy họ, hãy kiểm tra mã hóa tên (UTF-8 vs. Latin-1).
+3. Nếu học sinh có trong cơ sở dữ liệu nhưng tìm kiếm không thấy, hãy kiểm tra cách mã hóa tên (UTF-8 hay Latin-1).
 
-### Bộ lọc không làm hẹp kết quả
+### Bộ lọc không thu hẹp kết quả
 
-**Nguyên nhân:** Bạn đã chọn bộ lọc, nhưng trang vẫn hiển thị tất cả học sinh.
+**Nguyên nhân:** Bạn đã chọn bộ lọc nhưng trang vẫn hiển thị toàn bộ học sinh.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-1. Làm mới trang.
-2. Kiểm tra rằng giá trị bộ lọc tồn tại trong dữ liệu:
+1. Tải lại trang.
+2. Kiểm tra xem giá trị bộ lọc có tồn tại trong dữ liệu hay không:
 
 ```bash
-# Kiểm tra xem cuộc thi có tồn tại không
+# Kiểm tra cuộc thi có tồn tại không
 sqlite3 data/honor.db "SELECT DISTINCT competition_id FROM achievements;"
 
-# Kiểm tra nếu năm có dữ liệu
+# Kiểm tra năm có dữ liệu không
 sqlite3 data/honor.db "SELECT DISTINCT year FROM achievements WHERE competition_id = 'demo-a';"
 ```
 
-### Ảnh bị hỏng (404 hoặc trống)
+### Ảnh bị lỗi (404 hoặc trống)
 
-**Nguyên nhân:** URL ảnh trong dữ liệu nhập bị thiếu hoặc không chính xác.
+**Nguyên nhân:** URL ảnh trong dữ liệu nhập bị thiếu hoặc sai.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-1. Kiểm tra `data_mapping` trong cấu hình. `photo_col` sẽ chỉ đến cột CSV chính xác.
-2. Xác minh URL ảnh là tuyệt đối (bắt đầu bằng `http://`, `https://` hoặc `data:image/`).
-3. Kiểm tra rằng các URL vẫn hợp lệ:
+1. Kiểm tra `data_mapping` trong cấu hình. Trường `photo_col` phải trỏ đúng cột CSV.
+2. Đảm bảo URL ảnh là URL tuyệt đối (bắt đầu bằng `http://`, `https://` hoặc `data:image/`).
+3. Kiểm tra xem các URL còn hợp lệ hay không:
 
 ```bash
 curl -I "https://example.com/student-photo.jpg"
-# Nên trả về 200, không phải 404
+# Phải trả về 200, không phải 404
 ```
 
 4. Nếu ảnh là tùy chọn, hãy đặt `photo_col: null` trong cấu hình:
@@ -197,13 +197,13 @@ curl -I "https://example.com/student-photo.jpg"
 
 ## Bảng điều khiển quản trị
 
-### Nút quản trị bị thiếu
+### Thiếu nút quản trị
 
-**Nguyên nhân:** Bề mặt quản trị bị tắt (`admin.enabled: false`).
+**Nguyên nhân:** Khu vực quản trị đang bị tắt (`admin.enabled: false`).
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-Chỉnh sửa `honor.config.json` và đặt:
+Sửa `honor.config.json` và đặt:
 
 ```json
 "admin": { "enabled": true, "auth_mode": "password" }
@@ -211,35 +211,35 @@ Chỉnh sửa `honor.config.json` và đặt:
 
 Sau đó khởi động lại cổng thông tin.
 
-### Không thể đăng nhập (mật khẩu luôn sai)
+### Không đăng nhập được (mật khẩu luôn báo sai)
 
-**Nguyên nhân:** Biến môi trường `ADMIN_PASSWORD` không được đặt hoặc không chính xác.
+**Nguyên nhân:** Biến môi trường `ADMIN_PASSWORD` chưa được đặt hoặc bị sai.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 ```bash
-# Kiểm tra xem biến có được đặt không
+# Kiểm tra xem biến đã được đặt chưa
 echo $ADMIN_PASSWORD
 
-# Nếu trống, hãy đặt nó
+# Nếu trống, hãy đặt giá trị cho biến
 export ADMIN_PASSWORD="your-secure-password"
 
 # Khởi động lại
 lvt-honor dev
 ```
 
-### Đăng nhập hoạt động, nhưng trang quản trị trống hoặc bị hỏng
+### Đăng nhập được, nhưng trang quản trị trống hoặc bị lỗi
 
-**Nguyên nhân:** Lỗi JavaScript hoặc vấn đề cookie phiên.
+**Nguyên nhân:** Lỗi JavaScript hoặc trục trặc cookie phiên.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-1. Mở DevTools trình duyệt (F12) và kiểm tra Console để tìm lỗi.
-2. Kiểm tra tab Network. Các yêu cầu đến `/api/admin/*` có trả về 200 không?
-3. Thử xóa cookie và đăng nhập lại:
+1. Mở DevTools của trình duyệt (F12) và xem tab Console để tìm lỗi.
+2. Kiểm tra tab Network: các yêu cầu đến `/api/admin/*` có trả về 200 không?
+3. Thử xóa cookie rồi đăng nhập lại:
 
 ```bash
-# Trong bảng điều khiển trình duyệt
+# Trong bảng điều khiển (console) của trình duyệt
 document.cookie.split(";").forEach(c => {
   const eqPos = c.indexOf("=");
   const name = eqPos > -1 ? c.substr(0, eqPos).trim() : c.trim();
@@ -251,34 +251,34 @@ Sau đó tải lại trang và đăng nhập lại.
 
 ## Triển khai Docker
 
-### Vùng chứa thoát ngay lập tức
+### Container thoát ngay lập tức
 
-**Triệu chứng:** `docker compose up` cho thấy vùng chứa thoát với mã 1.
+**Triệu chứng:** `docker compose up` cho thấy container thoát với mã 1.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 ```bash
-# Kiểm tra nhật ký
+# Xem nhật ký
 docker compose logs honor
 
-# Các nguyên nhân phổ biến:
-# - ADMIN_PASSWORD không được đặt trong .env
+# Các nguyên nhân thường gặp:
+# - ADMIN_PASSWORD chưa được đặt trong .env
 # - honor.config.json không hợp lệ
-# - thư mục project/data/ bị thiếu
+# - thiếu thư mục project/data/
 
-# Xác minh
+# Kiểm tra lại
 ls -la project/honor.config.json
 grep ADMIN_PASSWORD .env
 ```
 
-### `Permission denied` khi gắn dự án
+### `Permission denied` khi mount thư mục dự án
 
-**Triệu chứng:** Vùng chứa chạy nhưng không thể đọc `project/honor.config.json`.
+**Triệu chứng:** Container chạy được nhưng không đọc được `project/honor.config.json`.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 ```bash
-# Đảm bảo thư mục dự án có thể đọc được
+# Đảm bảo thư mục dự án có quyền đọc
 chmod 755 project/
 chmod 644 project/honor.config.json
 
@@ -288,9 +288,9 @@ docker compose restart
 
 ### Cơ sở dữ liệu bị khóa trong Docker
 
-**Nguyên nhân:** Nhiều quy trình worker đua tranh trên SQLite (phổ biến với `WEB_CONCURRENCY > 1`).
+**Nguyên nhân:** Nhiều tiến trình worker tranh chấp trên SQLite (thường xảy ra khi `WEB_CONCURRENCY > 1`).
 
-**Sửa chữa:**
+**Cách xử lý:**
 
 Trong `docker-compose.yml`, hãy đảm bảo:
 
@@ -299,57 +299,57 @@ environment:
   WEB_CONCURRENCY: 1
 ```
 
-Nếu bạn cần mở rộng, hãy di chuyển đến PostgreSQL.
+Nếu cần mở rộng quy mô, hãy chuyển sang PostgreSQL.
 
 ## Triển khai Vercel
 
-### Xây dựng không thành công: `ModuleNotFoundError`
+### Build thất bại: `ModuleNotFoundError`
 
-**Triệu chứng:** Nhật ký xây dựng Vercel cho thấy `ModuleNotFoundError: No module named 'luonvuitoi_honor'`.
+**Triệu chứng:** Nhật ký build trên Vercel hiển thị `ModuleNotFoundError: No module named 'luonvuitoi_honor'`.
 
-**Nguyên nhân:** Các phụ thuộc không được cài đặt trong quá trình xây dựng.
+**Nguyên nhân:** Các phụ thuộc không được cài đặt trong quá trình build.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-Đảm bảo `requirements.txt` của bạn (hoặc `pyproject.toml` với `poetry install`) nằm trong thư mục gốc dự án:
+Đảm bảo tệp `requirements.txt` (hoặc `pyproject.toml` dùng với `poetry install`) nằm ở thư mục gốc của dự án:
 
 ```bash
 cat requirements.txt
-# Nên liệt kê: luonvuitoi-honor-cli, ...
+# Phải liệt kê: luonvuitoi-honor-cli, ...
 
-# Nếu thiếu, hãy tạo nó
+# Nếu thiếu, hãy tạo tệp này
 pip freeze > requirements.txt
 git add requirements.txt
 git commit -m "chore: add requirements.txt"
 git push
 ```
 
-### Bề mặt quản trị trả về 401
+### Khu vực quản trị trả về 401
 
 **Triệu chứng:** Đăng nhập vào `/admin` trên Vercel luôn trả về 401.
 
-**Nguyên nhân:** `ADMIN_PASSWORD` không được đặt trong các biến môi trường Vercel.
+**Nguyên nhân:** `ADMIN_PASSWORD` chưa được đặt trong biến môi trường của Vercel.
 
-**Sửa chữa:**
+**Cách xử lý:**
 
-1. Đi tới **Settings** > **Environment Variables** trong bảng điều khiển Vercel.
-2. Thêm `ADMIN_PASSWORD` với mật khẩu an toàn của bạn.
+1. Vào **Settings** > **Environment Variables** trong bảng điều khiển Vercel.
+2. Thêm `ADMIN_PASSWORD` cùng mật khẩu an toàn của bạn.
 3. Triển khai lại.
 
 ### Cold start chậm
 
-**Triệu chứng:** Yêu cầu đầu tiên mất 3–5 giây.
+**Triệu chứng:** Yêu cầu đầu tiên mất 3-5 giây.
 
-**Nguyên nhân:** Cold start serverless là bình thường. Khởi tạo thời gian chạy Python mất ~ 200ms, cộng với nhập.
+**Nguyên nhân:** Cold start là điều bình thường với serverless. Việc khởi tạo môi trường chạy Python mất khoảng 200ms, cộng thêm thời gian import.
 
-**Giảm nhẹ:**
+**Cách giảm thiểu:**
 
-- Sử dụng tính năng **Concurrency** của Vercel để giữ hàm ấm.
-- Hãy xem xét sử dụng lưu trữ thường trực hơn (Docker trên Railway, Render, v.v.).
+- Dùng tính năng **Concurrency** của Vercel để giữ hàm luôn ở trạng thái nóng (warm).
+- Cân nhắc dùng hình thức lưu trữ thường trực hơn (Docker trên Railway, Render, v.v.).
 
 ## Gỡ lỗi chung
 
-### Bật ghi nhật ký gỡ lỗi
+### Bật ghi nhật ký ở mức gỡ lỗi
 
 ```bash
 # Đặt mức nhật ký
@@ -363,39 +363,39 @@ lvt-honor dev
 # Mở CLI SQLite
 sqlite3 data/honor.db
 
-# Liệt kê bảng
+# Liệt kê các bảng
 .tables
 
 # Hiển thị lược đồ
 .schema achievements
 
-# Đếm hàng
+# Đếm số hàng
 SELECT COUNT(*) FROM achievements;
 
-# Tìm các vấn đề dữ liệu
+# Tìm các vấn đề về dữ liệu
 SELECT * FROM achievements WHERE name LIKE '%unknown%' LIMIT 5;
 ```
 
 ### Kiểm tra các biến môi trường
 
 ```bash
-# Liệt kê tất cả các biến env mà ứng dụng nhìn thấy
+# Liệt kê tất cả biến môi trường mà ứng dụng nhìn thấy
 env | grep -E "ADMIN|SECRET|PUBLIC"
 
 # Kiểm tra một biến cụ thể
 echo $ADMIN_PASSWORD
 ```
 
-## Vẫn còn bị mắc kẹt?
+## Vẫn chưa khắc phục được?
 
-Nếu không có giải pháp nào hoạt động:
+Nếu không cách nào ở trên hiệu quả:
 
-1. **Kiểm tra nhật ký**: kiểm tra cả nhật ký ứng dụng và nhật ký hệ thống (`docker logs`, `vercel logs --follow`).
-2. **Đọc thông báo lỗi cẩn thận**: nó thường gợi ý nguyên nhân gốc.
-3. **Cô lập vấn đề**: đó là trong quá trình thiết lập, nhập, duyệt hay triển khai?
-4. **Tìm kiếm các vấn đề GitHub**: vấn đề của bạn có thể được ghi lại.
-5. **Yêu cầu trợ giúp**: mở Thảo luận hoặc vấn đề GitHub với:
+1. **Xem nhật ký**: kiểm tra cả nhật ký ứng dụng lẫn nhật ký hệ thống (`docker logs`, `vercel logs --follow`).
+2. **Đọc kỹ thông báo lỗi**: thông báo này thường gợi ý nguyên nhân gốc rễ.
+3. **Khoanh vùng vấn đề**: lỗi nằm ở khâu thiết lập, nhập liệu, duyệt trang hay triển khai?
+4. **Tìm trong các issue trên GitHub**: vấn đề của bạn có thể đã được ghi nhận.
+5. **Nhờ hỗ trợ**: tạo một Discussion hoặc issue trên GitHub, kèm theo:
    - Phiên bản Python (`python --version`)
    - Hệ điều hành và môi trường (Docker, Vercel, dev cục bộ)
-   - Các bước để tái tạo
-   - Thông báo lỗi đầy đủ và nhật ký
+   - Các bước để tái hiện lỗi
+   - Toàn bộ thông báo lỗi và nhật ký

@@ -1,10 +1,10 @@
 # Triển khai trên Docker
 
-`Dockerfile` của gốc kho lưu trữ + `docker-compose.yml` xây dựng hình ảnh không phải root phục vụ cổng thông tin qua gunicorn trên cổng 8000.
+`Dockerfile` ở thư mục gốc của kho cùng với `docker-compose.yml` sẽ build một image chạy với quyền non-root, phục vụ cổng thông tin qua gunicorn trên cổng 8000.
 
 ## 1. Chuẩn bị thư mục dự án
 
-Vùng chứa bind-mount `./project` để `/app/project`, vì vậy hãy đặt `honor.config.json` + `data/` của bạn ở đó:
+Container sẽ bind-mount `./project` vào `/app/project`, vì vậy hãy đặt `honor.config.json` và thư mục `data/` của bạn vào đó:
 
 ```
 project/
@@ -13,7 +13,7 @@ project/
     └── <slug>.db      # tạo bởi lvt-honor import
 ```
 
-Bạn có thể tạo những điều này trên máy chủ (không cần Python bên trong vùng chứa):
+Bạn có thể tạo các thư mục này ngay trên máy chủ (không cần Python bên trong container):
 
 ```bash
 mkdir -p project/data
@@ -38,8 +38,8 @@ Mở `http://localhost:8000` cho bảng vinh danh, `/search` và `/admin`.
 
 ## Ghi chú
 
-- **Không phải root**: vùng chứa chạy như một người dùng hệ thống `app:app`.
-- **Healthcheck**: kiểm tra `/health` (không có phụ thuộc) mỗi 30 giây.
-- **Single worker**: `WEB_CONCURRENCY=1` vì kho SQLite mặc định không an toàn với nhiều quy trình. Để mở rộng theo chiều ngang, hãy chuyển kho đến máy chủ được chia sẻ và tăng `WEB_CONCURRENCY`.
-- **Chỉnh sửa cấu hình**: thay đổi `project/honor.config.json` trên máy chủ, chạy `docker compose restart`. Không cần xây dựng lại.
-- **Bề mặt quản trị viên**: đặt vùng chứa đằng sau proxy ngược (Nginx / Caddy / Traefik) với TLS + xác thực trước khi công khai `/admin`.
+- **Non-root**: container chạy dưới người dùng hệ thống `app:app`.
+- **Healthcheck**: kiểm tra `/health` (không phụ thuộc thành phần nào) sau mỗi 30 giây.
+- **Một worker duy nhất**: đặt `WEB_CONCURRENCY=1` vì kho SQLite mặc định không an toàn khi chạy đa tiến trình. Để mở rộng theo chiều ngang, hãy chuyển kho dữ liệu sang một máy chủ dùng chung rồi tăng `WEB_CONCURRENCY`.
+- **Chỉnh sửa cấu hình**: sửa `project/honor.config.json` trên máy chủ rồi chạy `docker compose restart`, không cần build lại.
+- **Bề mặt quản trị**: đặt container sau một reverse proxy (Nginx / Caddy / Traefik) có TLS và xác thực trước khi công khai `/admin`.

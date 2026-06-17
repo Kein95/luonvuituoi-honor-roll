@@ -32,7 +32,7 @@ Bộ công cụ bảng vinh danh học sinh theo cấu hình. Chỉ cần file k
 
 ## Vì sao có dự án này
 
-Tổ chức một cuộc thi, trao huy chương, chạy một kỳ olympic? Bạn thường cần một nơi trưng bày công khai để học sinh thấy thành tích, phụ huynh xác nhận kết quả, và nhà trường theo dõi huy chương. Tất cả đều tra cứu được, trình bày đẹp, dễ quản lý. **LUONVUITUOI-HONOR ROLL cho bạn cả ba**, triển khai được lên gói miễn phí của Vercel hoặc bất kỳ máy chủ Docker nào, không cần viết khung sườn.
+Bạn tổ chức một cuộc thi, trao huy chương, hay chạy một kỳ olympic? Thường thì bạn sẽ cần một nơi trưng bày công khai để học sinh xem thành tích, phụ huynh xác nhận kết quả, và nhà trường theo dõi huy chương. Tất cả đều tra cứu được, trình bày đẹp và dễ quản lý. **LUONVUITUOI-HONOR ROLL mang lại cho bạn cả ba điều đó**, triển khai được lên gói miễn phí của Vercel hoặc bất kỳ máy chủ Docker nào, mà không cần viết phần khung sườn.
 
 <div class="lvt-features" markdown>
 
