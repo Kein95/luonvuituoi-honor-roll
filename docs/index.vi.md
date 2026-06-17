@@ -1,43 +1,144 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
+<div class="lvt-hero" markdown>
+
+<img src="../assets/logo.svg" alt="Logo LUONVUITUOI-HONOR ROLL" class="lvt-hero-logo">
+
 # LUONVUITUOI-HONOR ROLL
 
-> Bộ công cụ bảng vinh danh học sinh theo cấu hình. Chỉ cần file kết quả CSV/Excel/JSON + một file cấu hình → triển khai bảng vinh danh công khai (thẻ + bảng + thống kê), tra cứu học sinh, và trang quản trị lên Vercel hoặc Docker trong một buổi chiều.
+<p class="lvt-hero-tagline">
+Bộ công cụ bảng vinh danh học sinh theo cấu hình. Chỉ cần file kết quả CSV/Excel/JSON và một file cấu hình — có ngay bảng vinh danh công khai kèm tra cứu, trang quản trị, và phòng trưng bày đa kỳ thi trong vài phút.
+</p>
 
-Dự án anh em của [**LUONVUITUOI-CERT**](https://github.com/Kein95/luonvuituoi-cert) — bộ công cụ cổng chứng chỉ. Trong khi CERT *cấp phát và xác thực* chứng chỉ PDF, HONOR ROLL **xuất bản và vinh danh** các thành tích.
+<div class="lvt-cta-row">
+  <a href="https://honor-roll-vercel-demo.vercel.app" class="lvt-btn lvt-btn-primary">🌟 Xem demo</a>
+  <a href="quickstart/" class="lvt-btn lvt-btn-primary">🚀 Bắt đầu nhanh (10 phút)</a>
+  <a href="https://github.com/Kein95/luonvuituoi-honor-roll" class="lvt-btn lvt-btn-ghost" target="_blank" rel="noopener">⭐ Xem trên GitHub</a>
+</div>
 
-## Tại sao
+<div class="lvt-badges">
+  <img src="https://img.shields.io/github/v/release/Kein95/luonvuituoi-honor-roll?style=flat-square&color=7c5cff&label=release" alt="release">
+  <img src="https://img.shields.io/github/license/Kein95/luonvuituoi-honor-roll?style=flat-square&color=7c5cff" alt="license">
+  <img src="https://img.shields.io/github/actions/workflow/status/Kein95/luonvuituoi-honor-roll/test.yml?style=flat-square&color=7c5cff&label=tests" alt="tests">
+  <img src="https://img.shields.io/github/stars/Kein95/luonvuituoi-honor-roll?style=flat-square&color=fb7185" alt="stars">
+</div>
 
-Bạn tổ chức một cuộc thi (Demo Olympiad A, Demo Olympiad B, Olympic trường…) và có một bảng tính danh sách học sinh đạt giải. Bạn cần:
+</div>
 
-- Một **bảng vinh danh công khai** để học sinh, phụ huynh và trường xem thành tích.
-- Một **trang tra cứu** để ai cũng có thể tìm tên và xem toàn bộ huy chương học sinh đó đạt được qua các kỳ.
-- Một **trang quản trị** để thêm/sửa/xoá mà không cần đụng tới file.
+## Vì sao có dự án này
 
-Bộ công cụ này có đầy đủ ba thứ — theo cấu hình, không cần viết code.
+Tổ chức một cuộc thi, trao huy chương, chạy một kỳ olympic? Bạn thường cần một nơi trưng bày công khai để học sinh thấy thành tích, phụ huynh xác nhận kết quả, và nhà trường theo dõi huy chương — tất cả đều tra cứu được, trình bày đẹp, dễ quản lý. **LUONVUITUOI-HONOR ROLL cho bạn cả ba**, triển khai được lên gói miễn phí của Vercel hoặc bất kỳ máy chủ Docker nào, không cần viết khung sườn.
 
-## Tính năng
+<div class="lvt-features" markdown>
 
-- :material-trophy: **Đa cuộc thi / đa năm** — một file cấu hình khai báo mọi cuộc thi, môn học và kỳ thi bạn đã tổ chức.
-- :material-medal: **Bảng huy chương chung** — định nghĩa mỗi huy chương một lần (thứ hạng, nhãn Anh/Việt, màu, icon); badge hiển thị đồng nhất mọi nơi.
-- :material-magnify: **Ba giao diện** — bảng vinh danh, tra cứu học sinh, quản trị.
-- :material-file-import: **Nhập linh hoạt** — CSV / Excel / JSON, ánh xạ qua `data_mapping`.
-- :material-cellphone-link: **Giao diện động, responsive** — desktop, tablet, mobile.
-- :material-translate: **Đa ngôn ngữ** — Tiếng Anh + Tiếng Việt.
-- :material-rocket-launch: **Sẵn sàng triển khai** — Vercel hoặc Docker.
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🏆</span>
+### Phòng trưng bày đa kỳ thi
+Khai báo một hay nhiều cuộc thi qua các năm. Mỗi cuộc thi chạy độc lập; học sinh thấy mọi huy chương qua từng kỳ.
+</div>
 
-## Demo tham chiếu
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🎖️</span>
+### Sổ huy chương linh hoạt
+Khai báo mỗi huy chương một lần (hạng, nhãn, màu, icon). Huy hiệu luôn nhất quán. Nạp dữ liệu CSV/Excel/JSON.
+</div>
 
-`examples/demo-honor/` đi kèm dữ liệu thật **Demo Olympiad A 2025** (66 giải thuộc MATHS / ENGLISH / SCIENCE).
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🔍</span>
+### Bảng vinh danh + tra cứu
+Giao diện thẻ và bảng đẹp mắt. Khách tra cứu theo tên hoặc số báo danh, thấy ngay mọi thành tích.
+</div>
 
-```bash
-cd examples/demo-honor
-python prepare_demo.py
-lvt-honor import data/demo-2025.json --competition demo-a --year 2025 --replace
-lvt-honor dev
-```
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🛠️</span>
+### Trang quản trị tích hợp
+Thêm, sửa, xoá mục mà không cần đụng tới file. Bảo vệ bằng mật khẩu, có nhật ký kiểm toán.
+</div>
 
-## Liên kết nhanh
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">⚡</span>
+### Triển khai ở đâu cũng được
+Một lệnh deploy Vercel (gói miễn phí), Dockerfile sản xuất, docker-compose — tuỳ hạ tầng của bạn.
+</div>
 
-- [:material-fast-forward: Bắt đầu nhanh](quickstart.vi.md)
-- [:material-cog: Tham khảo cấu hình](config-reference.md)
-- [:material-sitemap: Kiến trúc](architecture.md)
-- [:material-cloud: Triển khai Vercel](deploy-vercel.md) · [:material-docker: Triển khai Docker](deploy-docker.md)
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🌐</span>
+### Song ngữ & hợp mọi màn hình
+Tiếng Việt + tiếng Anh. Giao diện responsive, có hiệu ứng, đẹp trên máy tính, máy tính bảng, điện thoại.
+</div>
+
+</div>
+
+<div class="lvt-stats" markdown>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">10 phút</div>
+<div class="lvt-stat-label">Lần deploy đầu</div>
+</div>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">0</div>
+<div class="lvt-stat-label">Dòng khung sườn</div>
+</div>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">0đ</div>
+<div class="lvt-stat-label">Gói Vercel miễn phí</div>
+</div>
+
+<div class="lvt-stat">
+<div class="lvt-stat-num">MIT</div>
+<div class="lvt-stat-label">Giấy phép</div>
+</div>
+
+</div>
+
+## Bắt đầu
+
+<div class="lvt-features" markdown>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🚀</span>
+### [Bắt đầu nhanh →](quickstart.md)
+Triển khai bảng vinh danh đầu tiên trong 10 phút. Scaffold bằng CLI, đi qua cấu hình, chạy local, đẩy lên Vercel.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">⚙️</span>
+### [Cấu hình →](config-reference.md)
+Mọi trường trong `honor.config.json` + biến môi trường đều được ghi rõ. Cách khai báo cuộc thi, huy chương và quy tắc.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🏛️</span>
+### [Kiến trúc →](architecture.md)
+Các mảnh ghép — handler, mô hình dữ liệu, chỉ mục tra cứu, xác thực quản trị, và lớp giao diện.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🔐</span>
+### [Bảo mật →](security.md)
+Checklist gia cố cho production. Xác thực quản trị, kiểm tra dữ liệu, giới hạn tần suất.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">🛠️</span>
+### [Vận hành →](operations.md)
+Health probe, đọc log, chiến lược sao lưu, checklist xử lý sự cố.
+</div>
+
+<div class="lvt-feature" markdown>
+<span class="lvt-feature-icon">❓</span>
+### [Khắc phục sự cố →](troubleshooting.md)
+Các lỗi thường gặp, vấn đề nạp dữ liệu, và cách xử lý.
+</div>
+
+</div>
+
+## Dự án anh em
+
+- **[LUONVUITUOI-CERT](https://github.com/Kein95/luonvuituoi-cert)** — bộ công cụ cổng chứng chỉ. Cấp phát và xác thực chứng chỉ PDF kèm mã QR và trang quản trị. HONOR ROLL vinh danh thành tích, còn CERT chứng minh chúng.
