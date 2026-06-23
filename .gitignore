@@ -26,8 +26,13 @@ site/
 .idea/
 *.swp
 
-# Project data (generated, not committed)
+# Project data (generated, not committed) — match at any depth
 data/*.db
 data/*.db-journal
+**/data/*.db
+**/data/*.db-journal
 .DS_Store
 Thumbs.db
+
+# Internal planning artifacts (not part of the published toolkit)
+plans/
