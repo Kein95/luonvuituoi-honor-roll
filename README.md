@@ -5,7 +5,7 @@
 **Config-driven student honor-roll toolkit.**
 Bring your results CSV/Excel/JSON + one config → ship a bilingual award gallery, student search, an all-time Hall of Fame, team awards, and a password-protected admin to Vercel or Docker in an afternoon.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-honor--roll-2ea44f?style=for-the-badge&logo=vercel&logoColor=white)](https://honor-roll-vercel-demo.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-honor--roll-2ea44f?style=for-the-badge&logo=vercel&logoColor=white)](https://honor-roll.luonvuituoi.work)
 [![Tests](https://img.shields.io/github/actions/workflow/status/Kein95/luonvuituoi-honor-roll/test.yml?style=for-the-badge&label=tests&logo=github)](https://github.com/Kein95/luonvuituoi-honor-roll/actions/workflows/test.yml)
 &nbsp;
 
@@ -15,7 +15,7 @@ Bring your results CSV/Excel/JSON + one config → ship a bilingual award galler
 ![Bilingual](https://img.shields.io/badge/UI-VI%20%2F%20EN-0ea5e9?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
 
-### [🔴 Live demo →](https://honor-roll-vercel-demo.vercel.app) &nbsp;·&nbsp; [🥇 Hall of Fame](https://honor-roll-vercel-demo.vercel.app/hall-of-fame) &nbsp;·&nbsp; [🔍 Search](https://honor-roll-vercel-demo.vercel.app/search) &nbsp;·&nbsp; [🤝 Teams](https://honor-roll-vercel-demo.vercel.app/teams) &nbsp;·&nbsp; [🔐 Admin](https://honor-roll-vercel-demo.vercel.app/login)
+### [🔴 Live demo →](https://honor-roll.luonvuituoi.work) &nbsp;·&nbsp; [🥇 Hall of Fame](https://honor-roll.luonvuituoi.work/hall-of-fame) &nbsp;·&nbsp; [🔍 Search](https://honor-roll.luonvuituoi.work/search) &nbsp;·&nbsp; [🤝 Teams](https://honor-roll.luonvuituoi.work/teams) &nbsp;·&nbsp; [🔐 Admin](https://honor-roll.luonvuituoi.work/login)
 
 </div>
 
@@ -70,7 +70,7 @@ lvt-honor import-teams data/demo-teams-2025.json --competition demo-a --year 202
 lvt-honor dev                                                            # http://localhost:5000
 ```
 
-> 👉 Or just open the **[live demo](https://honor-roll-vercel-demo.vercel.app)** if you prefer to explore it without setup.
+> 👉 Or just open the **[live demo](https://honor-roll.luonvuituoi.work)** if you prefer to explore it without setup.
 
 ## 🛠️ CLI
 

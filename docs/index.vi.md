@@ -16,8 +16,8 @@ Bộ công cụ bảng vinh danh học sinh theo cấu hình. Chỉ cần file k
 
 <div class="lvt-cta-row">
   <a href="quickstart/" class="lvt-btn lvt-btn-primary">🚀 Bắt đầu nhanh (10 phút)</a>
-  <a href="https://honor-roll-vercel-demo.vercel.app" class="lvt-btn lvt-btn-primary">🌟 Xem demo</a>
-  <a href="https://honor-roll-vercel-demo.vercel.app/login" class="lvt-btn lvt-btn-ghost" target="_blank" rel="noopener">🔐 Trang quản trị</a>
+  <a href="https://honor-roll.luonvuituoi.work" class="lvt-btn lvt-btn-primary">🌟 Xem demo</a>
+  <a href="https://honor-roll.luonvuituoi.work/login" class="lvt-btn lvt-btn-ghost" target="_blank" rel="noopener">🔐 Trang quản trị</a>
   <a href="https://github.com/Kein95/luonvuituoi-honor-roll" class="lvt-btn lvt-btn-ghost" target="_blank" rel="noopener">⭐ Xem trên GitHub</a>
 </div>
 
